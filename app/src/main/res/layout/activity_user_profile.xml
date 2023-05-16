@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.UserProfile">
+    <Button
+        android:id="@+id/btn_back_profile"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/baseline_close_24"
+        android:text=" Profile"
+        android:textColor="#FF9800"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        />
+    <ImageButton
+        android:id="@+id/gdpro_imgvoucher"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/baseline_key_24" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_back_profile"
+        android:layout_above="@id/bottom_nav"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="250px"
+                android:layout_height="250px"
+                android:scaleType="centerCrop"
+
+                android:id="@+id/gdpro_imgprofile"
+                android:src="@drawable/img_5"
+
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:id="@+id/gdpro_txtnameclient"
+                android:text="Binh Nguyen"
+                android:textStyle="bold"
+                android:textSize="30dp"
+
+                android:layout_below="@id/gdpro_imgprofile"
+                android:layout_centerHorizontal="true"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/gdpro_ln1"
+                android:orientation="vertical"
+
+                android:layout_below="@id/gdpro_txtnameclient"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="Rank:       "
+                        android:textSize="20dp"/>
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:focusable="false"
+                        android:id="@+id/gdpro_txtrank"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:text="Diamond"
+                        android:textSize="20dp"
+                        android:gravity="end"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/gdpro_ln2"
+                android:orientation="vertical"
+                android:layout_margin="10dp"
+                android:layout_below="@id/gdpro_ln1"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="Gender:   "
+                        android:textSize="20dp"/>
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+
+                        android:id="@+id/gdpro_txtgender"
+                        android:text="Male"
+                        android:textColor="@color/black"
+                        android:enabled="false"
+                        android:focusable="false"
+                        android:textStyle="bold"
+                        android:textSize="20dp"
+                        android:gravity="end"/>
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/gdpro_ln3"
+                android:orientation="vertical"
+                android:layout_margin="10dp"
+
+                android:layout_below="@id/gdpro_ln2"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="Phone:    "
+                        android:textSize="20dp"/>
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+
+                        android:id="@+id/gdpro_txtphone"
+                        android:text="0963618637"
+                        android:textSize="20dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:enabled="false"
+                        android:focusable="false"
+                        android:gravity="end"/>
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/gdpro_ln4"
+                android:orientation="vertical"
+                android:layout_margin="10dp"
+                android:layout_below="@id/gdpro_ln3"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="Birthday: "
+                        android:textSize="20dp"/>
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+
+                        android:id="@+id/gdpro_txtdob"
+                        android:text="09/08/2003"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:enabled="false"
+                        android:focusable="false"
+                        android:textSize="20dp"
+                        android:gravity="end"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@id/gdpro_ln4"
+                app:cardCornerRadius="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/gdpro_btnedit"
+                android:backgroundTint="@color/yellow"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="EDIT PROFILE"
+                        android:textColor="@color/black"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/gdpro_btnlog"
+                app:cardCornerRadius="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@id/gdpro_btnedit"
+                android:backgroundTint="@color/yellow"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LOG OUT"
+                        android:textColor="@color/black"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+
+                android:paddingTop="5dp"
+                android:id="@+id/gdpro_imginf"
+                android:src="@drawable/img_7"
+
+                android:layout_below="@id/gdpro_btnlog"
+                />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+
+                android:id="@+id/gdpro_txtabout"
+                android:text="About us"
+                android:enabled="false"
+                android:focusable="false"
+                android:textColor="@color/black"
+                android:layout_toEndOf="@id/gdpro_imginf"
+                android:layout_below="@id/gdpro_btnlog"/>
+            <TextView
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/gdpro_txtinf"
+                android:text="Đường Hàn Thuyên, khu phố 6 P, Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam"
+                android:textColor="@color/black"
+                android:layout_below="@id/gdpro_imginf"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"/>
+        </RelativeLayout>
+    </ScrollView>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottom_nav"
+        app:menu="@menu/menu_bottom_nav"
+        app:labelVisibilityMode="labeled"
+        app:itemBackground="@color/white"
+        app:itemIconTint="@color/custom_bottom_nav"
+        app:itemTextColor="@color/custom_bottom_nav"
+        android:layout_alignParentBottom="true"
+        />
+</RelativeLayout>

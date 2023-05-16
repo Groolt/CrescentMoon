@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "42300111964",
+    "project_id": "crescentmoon-a4dbd",
+    "storage_bucket": "crescentmoon-a4dbd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:42300111964:android:648b5b52329728a2787a99",
+        "android_client_info": {
+          "package_name": "com.example.damb_qlnh"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "42300111964-7vselt7bk39fokj00rbhcsfp8k0d54ud.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGDgzBBnqa0oScRRAomsQPeBfPRh6GWns"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "42300111964-7vselt7bk39fokj00rbhcsfp8k0d54ud.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn = "navigation_view">
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/nav_home"
+            android:title="Trang chủ" />
+        <item
+            android:id="@+id/nav_password"
+            android:icon="@drawable/nav_password"
+            android:title="Đổi mật khẩu"/>
+        <item
+            android:id="@+id/nav_info"
+            android:icon="@drawable/nav_info"
+            android:title="Thông tin tài khoản"/>
+        <item
+            android:id="@+id/nav_report"
+            android:icon="@drawable/nav_report"
+            android:title="Báo lỗi kỹ thuật"/>
+    </group>
+    <item
+        android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/nav_logout"
+                android:title="Logout"
+                />
+        </menu>
+    </item>
+</menu>

@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.UserOrder">
+    <Button
+        android:id="@+id/btn_back_order"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/baseline_close_24"
+        android:text=" Order"
+        android:textColor="#FF9800"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        />
+    <ImageButton
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/baseline_table_bar1_24"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_back_order"
+        android:layout_above="@id/bottom_nav"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="13dp"
+                android:id="@+id/gdord_ln1"
+                android:orientation="vertical"
+                android:layout_alignParentTop="true"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:id="@+id/gdord_txtContact"
+                    android:text="Contact"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Phone: "
+                        android:textSize="14dp"
+
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:id="@+id/gdord_txtphoneadmin"
+                        android:text="0963618637 (Mr. Binh)"
+                        android:textStyle="bold"
+                        android:textSize="16dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Email: "
+                        android:textSize="14dp"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:id="@+id/gdord_txtmailadmin"
+                        android:text="binhnguyen9803@gmail.com"
+                        android:textStyle="bold"
+                        android:textSize="16dp"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="13dp"
+
+                android:id="@+id/gdord_ln2"
+                android:orientation="vertical"
+
+                android:layout_below="@id/gdord_ln1"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:textStyle="bold"
+                        android:text="Name:                         "
+                        android:textSize="14dp"/>
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+
+                        android:id="@+id/gdord_txtname"
+                        android:text="Binh Nguyen"
+                        android:textSize="14dp"
+                        android:gravity="end"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="13dp"
+                android:id="@+id/gdord_ln3"
+                android:orientation="vertical"
+
+                android:layout_below="@id/gdord_ln2"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:textStyle="bold"
+                        android:text="Phone:                        "
+                        android:textSize="14dp"/>
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+
+                        android:id="@+id/gdord_txtphone"
+                        android:text="0963618637"
+                        android:textSize="14dp"
+                        android:gravity="end"/>
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="13dp"
+                android:id="@+id/gdord_ln5"
+                android:orientation="vertical"
+
+                android:layout_below="@id/gdord_ln4"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="10"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:text="Time:"
+                        android:textStyle="bold"
+                        android:textSize="14dp"/>
+                    <Spinner
+                        android:layout_width="0dp"
+                        android:layout_weight="7"
+                        android:paddingBottom="5dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/gdord_spinner"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/gdord_ln6"
+                android:orientation="vertical"
+                android:layout_margin="13dp"
+
+                android:layout_below="@id/gdord_ln5"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Number of people:  "
+                        android:textStyle="bold"
+                        android:textSize="14dp"/>
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+
+                        android:id="@+id/gdord_txtnum"
+                        android:text="8"
+                        android:textSize="14dp"
+                        android:gravity="end"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/gdord_ln7"
+                android:orientation="vertical"
+                android:layout_margin="13dp"
+                android:layout_below="@id/gdord_ln6"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Note:                          "
+                        android:textStyle="bold"
+                        android:textSize="14dp"/>
+
+                    <EditText
+                        android:id="@+id/gdord_txtnote"
+                        android:layout_width="fill_parent"
+
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:textSize="14dp" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="13dp"
+                android:id="@+id/gdord_ln4"
+                android:orientation="vertical"
+
+                android:layout_below="@id/gdord_ln3"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="DD/MM/YY:               "
+                        android:textStyle="bold"
+                        android:textSize="14dp"/>
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+
+                        android:id="@+id/gdord_txtdmy"
+                        android:text="15/04/2023"
+                        android:textSize="14dp"
+                        android:gravity="end"/>
+                </LinearLayout>
+            </LinearLayout>
+            <androidx.cardview.widget.CardView
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:layout_below="@id/gdord_ln7"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/gdord_btnsend"
+                app:cardCornerRadius="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/yellow"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" SEND"
+                        android:textSize="16dp"
+                        android:id="@+id/txtedit"
+                        android:textColor="@color/black"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:textStyle="bold" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_notifications_24"
+                        android:layout_toStartOf="@+id/txtedit"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/gdord_txtinf"
+                android:layout_width="260dp"
+
+                android:layout_height="wrap_content"
+                android:layout_marginStart="13dp"
+
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="13dp"
+                android:layout_marginBottom="13dp"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="Đường Hàn Thuyên, khu phố 6 P, Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam"
+                android:layout_below="@id/gdord_btnsend"
+                />
+        </RelativeLayout>
+    </ScrollView>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottom_nav"
+        app:menu="@menu/menu_bottom_nav"
+        app:labelVisibilityMode="labeled"
+        app:itemBackground="@color/white"
+        app:itemIconTint="@color/custom_bottom_nav"
+        app:itemTextColor="@color/custom_bottom_nav"
+        android:layout_alignParentBottom="true"
+        />
+</RelativeLayout>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.UserCategories">
+    <Button
+        android:id="@+id/btn_back_categories"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/baseline_close_24"
+        android:text=" Drink"
+        android:textColor="#FF9800"
+        android:textStyle="bold"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        />
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:strokeColor="#ffc30f"
+        android:layout_marginTop="3dp"
+        android:layout_toEndOf="@id/btn_back_categories"
+        android:layout_toStartOf="@id/gdcategories_imgcart"
+        app:strokeWidth="1.5dp"
+        android:theme="@style/Theme.MaterialComponents.Light">
+        <SearchView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:id="@+id/gdcategories_searchview"
+            app:queryHint="Nhập tên món ăn"
+            />
+    </com.google.android.material.card.MaterialCardView>
+    <ImageButton
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/baseline_shopping_cart_24"
+        android:id="@+id/gdcategories_imgcart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/gdcategories_rcv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_below="@id/search"
+            android:layout_above="@id/bottom_nav"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/gdcategories_rl"
+        android:visibility="gone"
+        android:layout_above="@id/bottom_nav"
+        android:layout_below="@id/search">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NO DATA FOUND!"
+            android:textSize="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottom_nav"
+        app:menu="@menu/menu_bottom_nav"
+        app:labelVisibilityMode="labeled"
+        app:itemBackground="@color/white"
+        app:itemIconTint="@color/custom_bottom_nav"
+        app:itemTextColor="@color/custom_bottom_nav"
+        android:layout_alignParentBottom="true"
+        />
+</RelativeLayout>

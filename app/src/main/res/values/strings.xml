@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">DAMB_QLNH</string>
+    <string name="dangdung">Đang dùng</string>
+    <string name="controng">Còn trống</string>
+    <string name="tatca">Tất cả</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

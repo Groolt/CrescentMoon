@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.QLDTActivity"
+    android:background="#eaeef2"
+    android:orientation="vertical">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/lnl_toolbar"
+            tools:ignore="MissingConstraints"
+            android:background="@drawable/bg_title">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@null"
+                android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            </androidx.appcompat.widget.Toolbar>
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                android:text="Quản lý doanh thu"
+                android:textColor="@color/textcolor_primary"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:paddingTop="10dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:weightSum="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lnl_toolbar">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="20dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_weight="1"
+                android:backgroundTint="#fad745"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="16dp">
+
+                <TextView
+                    android:id="@+id/theongay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:text="Theo Ngày"
+                    android:textAlignment="center"
+                    android:textColor="#2f2e2a"
+                    android:textStyle="bold" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="20dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="40dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="16dp">
+
+                <TextView
+                    android:id="@+id/dapv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:text="Theo tháng"
+                    android:textAlignment="center"
+                    android:textColor="#2f2e2a"
+                    android:textStyle="bold" />
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/baseline_arrow_drop_down_24"
+                android:layout_marginLeft="16dp"
+                android:paddingLeft="11dp"
+                android:paddingBottom="4dp"
+                android:text="Hôm nay"
+                android:textColor="@color/textcolor_primary"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/tv1"
+                android:background="@drawable/bg_bottomborder"/>
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv1">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:theme="@style/Theme.MaterialComponents.Light"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#e6efff"
+                    app:cardCornerRadius="16dp"
+                    app:strokeColor="#6A87B3"
+                    app:strokeWidth="1dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:id="@+id/doanhthu"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="31tr"
+                            android:textColor="@color/textcolor_primary"
+                            android:textSize="23dp"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toLeftOf="parent"
+
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="6dp"
+                            android:paddingRight="10dp"
+                            android:text="vnđ"
+                            android:textColor="@color/textcolor_primary"
+                            android:textSize="12dp"
+                            app:layout_constraintBaseline_toBaselineOf="@id/doanhthu"
+                            app:layout_constraintBottom_toBottomOf="@id/doanhthu"
+                            app:layout_constraintLeft_toRightOf="@id/doanhthu" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingRight="10dp"
+                            android:text="Tổng doanh thu"
+                            android:textColor="@color/textcolor_primary"
+                            android:textSize="17dp"
+                            app:layout_constraintStart_toStartOf="@id/doanhthu"
+                            app:layout_constraintTop_toBottomOf="@+id/doanhthu" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:theme="@style/Theme.MaterialComponents.Light"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#EAFBFC"
+                    app:cardCornerRadius="16dp"
+                    app:strokeColor="#739165"
+                    app:strokeWidth="1dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:id="@+id/sodon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="78"
+                            android:textColor="@color/textcolor_primary"
+                            android:textSize="23dp"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="6dp"
+                            android:paddingRight="10dp"
+                            android:text="đơn"
+                            android:textColor="@color/textcolor_primary"
+                            android:textSize="12dp"
+                            app:layout_constraintBaseline_toBaselineOf="@id/sodon"
+                            app:layout_constraintBottom_toBottomOf="@id/sodon"
+                            app:layout_constraintLeft_toRightOf="@id/sodon" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingRight="10dp"
+                            android:text="Đã phục vụ"
+                            android:textColor="@color/textcolor_primary"
+                            android:textSize="17dp"
+                            app:layout_constraintStart_toStartOf="@id/sodon"
+                            app:layout_constraintTop_toBottomOf="@+id/sodon" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:layout_marginTop="10dp"
+                android:id="@+id/idBarChart"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:paddingHorizontal="8dp"
+                android:paddingBottom="4dp"
+                android:text="Doanh thu trung bình"
+                android:textColor="@color/textcolor_primary"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/idBarChart"
+                android:id="@+id/tv2"
+                android:background="@drawable/bg_bottomborder"/>
+            <Spinner
+                android:id="@+id/spn"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="30dp"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv2"
+                android:background="@drawable/style_spinner"/>
+            <TextView
+                app:layout_constraintBottom_toBottomOf="@+id/spn"
+                app:layout_constraintStart_toEndOf="@+id/spn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/dthutb"
+                android:layout_marginLeft="60dp"
+                android:text="27tr"
+                android:textColor="@color/textcolor_primary"
+                android:textSize="23dp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="vnđ"
+                android:textColor="@color/textcolor_primary"
+                android:textSize="14dp"
+                android:layout_margin="6dp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/dthutb"
+                app:layout_constraintBottom_toBottomOf="@+id/spn"
+                app:layout_constraintStart_toEndOf="@+id/dthutb" />
+
+            <TextView
+                android:id="@+id/hnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Hôm nay tăng"
+                android:textColor="@color/textcolor_primary"
+                android:textSize="23dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/spn"
+                app:layout_constraintTop_toBottomOf="@+id/spn"/>
+
+            <TextView
+                android:id="@+id/tbtang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="8dp"
+                android:text="14.81%"
+                android:textColor="#14B55D"
+                android:textSize="23dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/hnt"
+                app:layout_constraintTop_toBottomOf="@+id/spn"
+                android:drawableEnd="@drawable/round_arrow_drop_up_24"/>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:id="@+id/tv3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:background="@drawable/bg_bottomborder"
+                android:paddingHorizontal="8dp"
+                android:paddingBottom="4dp"
+                android:text="Bán chạy"
+                android:textColor="@color/textcolor_primary"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/hnt"/>
+            <LinearLayout
+                android:id="@+id/linear_banchay"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv3"
+                android:layout_marginHorizontal="16dp">
+            </LinearLayout>
+            <TextView
+                android:layout_marginTop="20dp"
+                android:id="@+id/tv4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:background="@drawable/bg_bottomborder"
+                android:paddingHorizontal="8dp"
+                android:paddingBottom="4dp"
+                android:text="Bán ít"
+                android:textColor="@color/textcolor_primary"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linear_banchay"/>
+            <LinearLayout
+                android:id="@+id/linear_banit"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv4"
+                android:layout_marginHorizontal="16dp">
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</LinearLayout>
