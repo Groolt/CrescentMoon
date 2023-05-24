@@ -41,7 +41,7 @@ public class CateAdapter extends RecyclerView.Adapter<CateAdapter.CateViewHolder
     @Override
     public void onBindViewHolder(@NonNull CateViewHolder holder, int position) {
         monAn monAn1 = monAns.get(position);
-        holder.imgFood.setImageResource(monAn1.getAnhMA());
+//        holder.imgFood.setImageResource(monAn1.getAnhMA());
         holder.txtFood.setText(monAn1.getTenMA().toString().trim());
         holder.txtPrice.setText(monAn1.getGiaTien().toString().trim()+"$");
         holder.cardViewPlus.setOnClickListener(new View.OnClickListener() {

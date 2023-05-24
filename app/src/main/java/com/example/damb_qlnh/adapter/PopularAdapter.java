@@ -38,7 +38,7 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularV
     public void onBindViewHolder(@NonNull PopularViewHolder holder, int position) {
         monAn monAn = monAns.get(position);
         holder.txtCategories.setText(monAn.getTenMA().toString().trim());
-        holder.imgCategories.setImageResource(monAn.getAnhMA());
+//        holder.imgCategories.setImageResource(monAn.getAnhMA());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

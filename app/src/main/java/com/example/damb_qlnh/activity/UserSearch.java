@@ -109,12 +109,12 @@ public class UserSearch extends AppCompatActivity {
     }
     private ArrayList<monAn> getListMon() {
         ArrayList<monAn> list = new ArrayList<>();
-        list.add(new monAn("1","Pizza", "Starter", "1", R.drawable.test));
-        list.add(new monAn("2","Pizza", "Starter", "1", R.drawable.test));
-        list.add(new monAn("3","Pizza", "Starter", "1", R.drawable.test));
-        list.add(new monAn("4","Pizza", "Starter", "1", R.drawable.test));
-        list.add(new monAn("5","Pizza", "Starter", "1", R.drawable.test));
-        list.add(new monAn("6","Pizzata", "Starter", "1", R.drawable.test));
+//        list.add(new monAn("1","Pizza", "Starter", "1", R.drawable.test));
+//        list.add(new monAn("2","Pizza", "Starter", "1", R.drawable.test));
+//        list.add(new monAn("3","Pizza", "Starter", "1", R.drawable.test));
+//        list.add(new monAn("4","Pizza", "Starter", "1", R.drawable.test));
+//        list.add(new monAn("5","Pizza", "Starter", "1", R.drawable.test));
+//        list.add(new monAn("6","Pizzata", "Starter", "1", R.drawable.test));
         return list;
     }
 }

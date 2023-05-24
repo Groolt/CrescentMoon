@@ -14,7 +14,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -29,7 +28,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity1 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeAdminActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
 
     private FirebaseAuth mAuth;
@@ -76,21 +75,21 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
         //QL ban
         CardView qlban = findViewById(R.id.item_qlBan);
         qlban.setOnClickListener(view -> {
-            Intent i = new Intent(MainActivity1.this, QLBanActivity.class);
+            Intent i = new Intent(HomeAdminActivity.this, QLBanActivity.class);
             startActivity(i);
         });
 
         //QL doanh thu
         CardView qlDoanhThu = findViewById(R.id.item_qldt);
         qlDoanhThu.setOnClickListener(view -> {
-            Intent i = new Intent(MainActivity1.this, QLDTActivity.class);
+            Intent i = new Intent(HomeAdminActivity.this, QLDTActivity.class);
             startActivity(i);
         });
 
         //QL hoa don
         CardView tcHD = findViewById(R.id.item_traCuuHD);
         tcHD.setOnClickListener(view -> {
-            Intent i = new Intent(MainActivity1.this, TraCuuHDActivity.class);
+            Intent i = new Intent(HomeAdminActivity.this, TraCuuHDActivity.class);
             startActivity(i);
         });
 
@@ -166,7 +165,7 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
                     @Override
                     public void onClick(View v) {
                         if(!confirmPass.getText().toString().trim().equals(newPass.getText().toString().trim())){
-                            Toast.makeText(MainActivity1.this, "Those passwords didn’t match. Try again.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(HomeAdminActivity.this, "Those passwords didn’t match. Try again.", Toast.LENGTH_SHORT).show();
                         }
                         else{
                             String newPassword = confirmPass.getText().toString().trim();
@@ -175,7 +174,7 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-                                                Toast.makeText(MainActivity1.this, "Successful update", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(HomeAdminActivity.this, "Successful update", Toast.LENGTH_SHORT).show();
                                                 dialog.dismiss();
                                                 return_home_item();
                                             }
@@ -203,7 +202,7 @@ public class MainActivity1 extends AppCompatActivity implements NavigationView.O
                 break;
             case R.id.nav_logout:
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(MainActivity1.this, MainActivity.class));
+                startActivity(new Intent(HomeAdminActivity.this, MainActivity.class));
                 finish();
                 break;
 

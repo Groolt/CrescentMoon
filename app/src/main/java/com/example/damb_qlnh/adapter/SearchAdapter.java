@@ -38,7 +38,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     @Override
     public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
         monAn monAn1 = monAns.get(position);
-        holder.imgFood.setImageResource(monAn1.getAnhMA());
+//        holder.imgFood.setImageResource(monAn1.getAnhMA());
         holder.txtFood.setText(monAn1.getTenMA().toString().trim());
         holder.txtPrice.setText(monAn1.getGiaTien().toString().trim()+"$");
         holder.cardViewPlus.setOnClickListener(new View.OnClickListener() {

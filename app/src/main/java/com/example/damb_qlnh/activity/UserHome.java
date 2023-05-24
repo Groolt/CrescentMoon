@@ -106,7 +106,7 @@ public class UserHome extends AppCompatActivity {
         categories.add(Categories.CATEGORIES3);
         categories.add(Categories.CATEGORIES4);
         categories.add(Categories.CATEGORIES5);
-        monAns.add(new monAn("1","Pizza", "Main Course", "1", R.drawable.test));
+//        monAns.add(new monAn("1","Pizza", "Main Course", "1", R.drawable.test));
     }
     @Override
     public void onBackPressed() {

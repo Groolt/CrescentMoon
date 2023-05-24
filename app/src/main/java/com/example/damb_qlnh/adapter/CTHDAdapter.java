@@ -35,7 +35,7 @@ public class CTHDAdapter extends RecyclerView.Adapter<CTHDAdapter.CTHDViewHolder
     @Override
     public void onBindViewHolder(@NonNull CTHDViewHolder holder, int position) {
         CTHD cthd = cthds.get(position);
-        holder.imgMon.setImageResource(cthd.getMonAn().getAnhMA());
+//        holder.imgMon.setImageResource(cthd.getMonAn().getAnhMA());
         holder.txtGia.setText(Integer.toString(Integer.parseInt(cthd.getMonAn().getGiaTien()) * cthd.getSoLuong()) + "$");
         holder.txttenMon.setText(cthd.getMonAn().getTenMA());
         holder.txtloaiMon.setText("Loại: " + cthd.getMonAn().getLoaiMA());

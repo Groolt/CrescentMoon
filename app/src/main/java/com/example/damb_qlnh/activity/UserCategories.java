@@ -119,9 +119,9 @@ public class UserCategories extends AppCompatActivity {
         relativeLayout = findViewById(R.id.gdcategories_rl);
         imageButton = findViewById(R.id.gdcategories_imgcart);
         monAns = new ArrayList<>();
-        monAns.add(new monAn("1","Pizza123", "Main Course", "1", R.drawable.test));
-        monAns.add(new monAn("2","Pizza4", "Main Course", "1", R.drawable.test));
-        monAns.add(new monAn("3","Pizza56", "Main Course", "1", R.drawable.test));
+//        monAns.add(new monAn("1","Pizza123", "Main Course", "1", R.drawable.test));
+//        monAns.add(new monAn("2","Pizza4", "Main Course", "1", R.drawable.test));
+//        monAns.add(new monAn("3","Pizza56", "Main Course", "1", R.drawable.test));
     }
     @Override
     public void onBackPressed() {

@@ -36,7 +36,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
         CTHD cthd = cthds.get(position);
-        holder.imgFood.setImageResource(cthd.getMonAn().getAnhMA());
+//        holder.imgFood.setImageResource(cthd.getMonAn().getAnhMA());
         holder.txtFood.setText(cthd.getMonAn().getTenMA().toString().trim());
         holder.txtPrice.setText(cthd.getMonAn().getGiaTien().toString().trim());
         holder.txtQuantity.setText(cthd.getSoLuong());

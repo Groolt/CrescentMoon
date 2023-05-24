@@ -39,12 +39,12 @@ public class CTBanActivity extends AppCompatActivity {
 
     private ArrayList<CTHD> getlistMon() {
         ArrayList<CTHD> l = new ArrayList<>();
-        l.add(new CTHD((new monAn("1","Pizza", "Main Course", "1", R.drawable.test)), 2,"1"));
-        l.add(new CTHD((new monAn("2","Pizza", "Main Course", "1", R.drawable.test)), 1,"1"));
-        l.add(new CTHD((new monAn("3","Pizza", "Main Course", "1", R.drawable.test)), 2,"1"));
-        l.add(new CTHD((new monAn("4","Pizza", "Main Course", "1", R.drawable.test)), 3,"1"));
-        l.add(new CTHD((new monAn("5","Pizza", "Main Course", "1", R.drawable.test)), 2,"1"));
-        l.add(new CTHD((new monAn("6","Pizzajj", "Main Course", "1", R.drawable.test)), 2,"1"));
+//        l.add(new CTHD((new monAn("1","Pizza", "Main Course", "1", R.drawable.test)), 2,"1"));
+//        l.add(new CTHD((new monAn("2","Pizza", "Main Course", "1", R.drawable.test)), 1,"1"));
+//        l.add(new CTHD((new monAn("3","Pizza", "Main Course", "1", R.drawable.test)), 2,"1"));
+//        l.add(new CTHD((new monAn("4","Pizza", "Main Course", "1", R.drawable.test)), 3,"1"));
+//        l.add(new CTHD((new monAn("5","Pizza", "Main Course", "1", R.drawable.test)), 2,"1"));
+//        l.add(new CTHD((new monAn("6","Pizzajj", "Main Course", "1", R.drawable.test)), 2,"1"));
         return l;
     }
     @Override

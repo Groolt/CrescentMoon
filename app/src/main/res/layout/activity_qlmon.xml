@@ -66,6 +66,7 @@
             app:queryHint="Nhập tên món ăn"/>
     </com.google.android.material.card.MaterialCardView>
     <ListView
+        android:listSelector="@android:color/transparent"
         android:layout_marginTop="12dp"
         android:id="@+id/lv"
         android:layout_width="match_parent"

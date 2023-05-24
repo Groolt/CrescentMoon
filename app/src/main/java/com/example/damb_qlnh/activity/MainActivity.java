@@ -1,11 +1,9 @@
 package com.example.damb_qlnh.activity;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -49,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    if(email.equals("binhnguyen9803@gmail.com")){
-                                        startActivity(new Intent(MainActivity.this, MainActivity1.class));
+                                    if(email.equals("binhnguyen9803@gmail.com") || email.equals("bahaodaoai@gmail.com")){
+                                        startActivity(new Intent(MainActivity.this, HomeAdminActivity.class));
                                     }
                                     else {
                                         startActivity(new Intent(MainActivity.this, UserHome.class));

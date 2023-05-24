@@ -23,6 +23,7 @@
             android:textAlignment="center"
             android:textColor="@color/textcolor_primary"/>
         <ImageView
+            android:id="@+id/img"
             android:layout_marginLeft="30dp"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -48,6 +49,7 @@
                 app:strokeWidth="1dp">
 
                 <TextView
+                    android:id="@+id/addBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="chọn ảnh"
@@ -70,7 +72,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="32dp"
-        android:id="@+id/dialog_old_pass"
+        android:id="@+id/tenMon"
         android:hint="--Trống--"
         android:background="@drawable/bg_edit_text"
         android:paddingLeft="16dp"
@@ -87,7 +89,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="32dp"
-        android:id="@+id/dialog_new_pass"
+        android:id="@+id/Loai"
         android:hint="--Trống--"
         android:background="@drawable/bg_edit_text"
         android:paddingLeft="16dp"
@@ -104,11 +106,12 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="32dp"
-        android:id="@+id/dialog_confirm_pass"
+        android:id="@+id/Gia"
         android:hint="--Trống--"
         android:background="@drawable/bg_edit_text"
         android:paddingLeft="16dp"
-        android:textSize="15dp"/>
+        android:textSize="15dp"
+        android:inputType="number"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
