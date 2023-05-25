@@ -21,15 +21,16 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.damb_qlnh.adapter.monAdapterQLmon;
 import com.example.damb_qlnh.R;
-import com.example.damb_qlnh.models.hoaDon;
 import com.example.damb_qlnh.models.monAn;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,28 +39,30 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Source;
+import com.google.firebase.firestore.core.OrderBy;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import kotlin.reflect.KFunction;
 
 public class QLMonActivity extends AppCompatActivity {
 
     ArrayList<monAn> monList;
     monAdapterQLmon adapter;
     ListView lv;
-    Dialog dialog;
+    public static Dialog dialog;
     FirebaseFirestore db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +96,17 @@ public class QLMonActivity extends AppCompatActivity {
                 return true;
             }
         });
+        View closeButton = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!searchView.isIconified())
+                    searchView.setIconified(true);
+                else
+                    searchView.setQuery("", false);
+                getListMon();
+            }
+        });
 
         // Them mon an
         ImageView addbtn = findViewById(R.id.addbtn);
@@ -109,6 +123,11 @@ public class QLMonActivity extends AppCompatActivity {
 
             ImageView img = dialog.findViewById(R.id.img);
             TextView addBtn = dialog.findViewById(R.id.addBtn);
+            Spinner spn = dialog.findViewById(R.id.Loai);
+            spn.setAdapter(new ArrayAdapter<>(
+                    QLMonActivity.this,
+                    R.layout.style_spinner_form1,
+                    Arrays.asList("Appetizers", "Main Courses", "Side Dishes", "Drinks", "Desserts")));
             img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -136,7 +155,6 @@ public class QLMonActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     EditText ten = dialog.findViewById(R.id.tenMon);
                     EditText gia = dialog.findViewById(R.id.Gia);
-                    EditText loai = dialog.findViewById(R.id.Loai);
 
                     String tmp = ten.getText().toString();
                     StringBuilder imgFileName = new StringBuilder();
@@ -164,7 +182,8 @@ public class QLMonActivity extends AppCompatActivity {
                                 data.put("img",downloadUri.toString());
                                 data.put("ten", ten.getText().toString());
                                 data.put("gia", Integer.parseInt(gia.getText().toString()));
-                                data.put("loai", loai.getText().toString());
+                                data.put("loai", spn.getSelectedItem().toString());
+                                data.put("is_deleted", false);
                                 db.collection("monAn").add(data);
                                 getListMon();
                                 Toast.makeText(QLMonActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
@@ -189,15 +208,14 @@ public class QLMonActivity extends AppCompatActivity {
                 filteredList.add(mon);
             }
         }
-        if (filteredList.isEmpty()) {
-            Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
-        } else {
-            adapter.setFilteredList(filteredList);
-        }
+        adapter.setFilteredList(filteredList);
     }
 
     private void getListMon() {
+        monList.clear();
         db.collection("monAn")
+                .whereEqualTo("is_deleted", false)
+                .orderBy("loai").orderBy("ten")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -225,9 +243,12 @@ public class QLMonActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
             Uri uri = data.getData();
-            ImageView imageView = dialog.findViewById(R.id.img);
-            imageView.setImageURI(uri);
+            if (dialog!= null && dialog.isShowing()) {
+                ImageView imageView = dialog.findViewById(R.id.img);
+                imageView.setImageURI(uri);
+            } else {
+                adapter.updateImg(uri);
+            }
         }
     }
-
 }

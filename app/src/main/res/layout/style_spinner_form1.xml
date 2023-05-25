@@ -4,7 +4,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:textColor="@color/textcolor_primary"
     android:textSize="15dp"
-    android:paddingLeft="12dp"
-    android:paddingTop="4dp"
+    android:paddingLeft="3dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="4dp"
     android:lineSpacingExtra="10dp">
 </TextView>

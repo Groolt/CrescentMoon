@@ -86,12 +86,11 @@
         android:paddingBottom="8dp"
         android:paddingLeft="10dp"
         android:textSize="16dp"/>
-    <EditText
+    <Spinner
         android:layout_width="match_parent"
         android:layout_height="32dp"
         android:id="@+id/Loai"
-        android:hint="--Trống--"
-        android:background="@drawable/bg_edit_text"
+        android:background="@drawable/style_spinner_form"
         android:paddingLeft="16dp"
         android:textSize="15dp"/>
     <TextView
@@ -147,9 +146,10 @@
             app:cardElevation="0dp"
             android:id="@+id/confirm_button">
             <TextView
+                android:id="@+id/tv"
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
-                android:text="Xác nhận"
+                android:text="Thêm"
                 android:textColor="@color/white"
                 android:textAlignment="center"
                 android:padding="4dp"
