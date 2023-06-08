@@ -15,26 +15,42 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.damb_qlnh.R;
 import com.example.damb_qlnh.models.monAn;
 import com.example.damb_qlnh.models.nhanVien;
+import com.example.damb_qlnh.models.vouCher;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class QLNVActivity extends AppCompatActivity {
-
+    ArrayList<nhanVien> listBV;
+    ArrayList<nhanVien> listPV;
+    ArrayList<nhanVien> listTN;
+    FirebaseFirestore db;
+    public static boolean isBackFromCTNV;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qlnv);
+        db = FirebaseFirestore.getInstance();
+        isBackFromCTNV = false;
 
         //setup action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -42,32 +58,11 @@ public class QLNVActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationIcon(R.drawable.round_arrow_back_24);
 
-        // add nhan vien bao ve
-        ArrayList<nhanVien> listBV = new ArrayList<>();
-        listBV.add(new nhanVien("Bảo vệ", 1, "Nguyễn Bá Hảo", "123","Nam", "0946871257", "068203002609"));
-        listBV.add(new nhanVien("Bảo vệ", 1, "Nguyễn Bá Hảo", "123","Nam", "0946871257", "068203002609"));
-
-        for(nhanVien nv : listBV){
-            addToView(nv, (ViewGroup) findViewById(R.id.layout_baove));
-        }
-
-        // add nhan vien phuc vu
-        ArrayList<nhanVien> listPV = new ArrayList<>();
-        listPV.add(new nhanVien("Phục vụ", 1, "Nguyễn Bá Hảo", "123","Nam", "0946871257", "068203002609"));
-        listPV.add(new nhanVien("Phục vụ", 1, "Nguyễn Bá Hảo", "123","Nam", "0946871257", "068203002609"));
-        for(nhanVien nv : listPV){
-            addToView(nv, (ViewGroup) findViewById(R.id.layout_phucvu));
-        }
-
-        // add nhan vien thu ngan
-        ArrayList<nhanVien> listTN = new ArrayList<>();
-        listTN.add(new nhanVien("Thu ngân", 1, "Nguyễn Bá Hảo", "123","Nam", "0946871257", "068203002609"));
-        listTN.add(new nhanVien("Thu ngân", 1, "Nguyễn Bá Hảo", "123","Nam", "0946871257", "068203002609"));
-        listTN.add(new nhanVien("Thu ngân", 1, "Nguyễn Bá Hảo", "123","Nam", "0946871257", "068203002609"));
-
-        for(nhanVien nv : listTN){
-            addToView(nv, (ViewGroup) findViewById(R.id.layout_thungan));
-        }
+        //get list
+        listBV = new ArrayList<>();
+        listTN = new ArrayList<>();
+        listPV = new ArrayList<>();
+        renderListNV();
 
         // them 1 nhan vien moi
         ImageView addBtn = findViewById(R.id.addbtn);
@@ -88,9 +83,6 @@ public class QLNVActivity extends AppCompatActivity {
                 Spinner spn2 = dialog.findViewById(R.id.vitri);
                 spn2.setAdapter(new ArrayAdapter<>(QLNVActivity.this, R.layout.style_spinner_form, Arrays.asList("Bảo vệ", "Thu ngân", "Phục vụ")));
 
-                Spinner spn3 = dialog.findViewById(R.id.loai);
-                spn3.setAdapter(new ArrayAdapter<>(QLNVActivity.this, R.layout.style_spinner_form, Arrays.asList("Part-time", "Full-time")));
-
                 CardView cancel = dialog.findViewById(R.id.cancel_button);
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -98,9 +90,68 @@ public class QLNVActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
+
+                EditText ten = dialog.findViewById(R.id.ten);
+                EditText sdt = dialog.findViewById(R.id.sdt);
+                EditText luong = dialog.findViewById(R.id.luong);
+                EditText cccd = dialog.findViewById(R.id.cccd);
+
+                CardView confirm = dialog.findViewById(R.id.add_button);
+                confirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Map<String, Object> data = new HashMap<>();
+                        data.put("CCCD", cccd.getText().toString().trim());
+                        data.put("Ten", ten.getText().toString().trim());
+                        data.put("GioiTinh", spn.getSelectedItem().toString().trim());
+                        data.put("ViTri", spn2.getSelectedItem().toString().trim());
+                        data.put("SDT", sdt.getText().toString().trim());
+                        data.put("Luong", Integer.parseInt(luong.getText().toString().trim()));
+                        data.put("is_deleted", false);
+                        db.collection("NhanVien").add(data);
+                        dialog.dismiss();
+                        recreate();
+                    }
+                });
+
                 dialog.show();
             }
         });
+    }
+
+    private void renderListNV() {
+        db.collection("NhanVien")
+                .whereEqualTo("is_deleted", false)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            nhanVien nv = new nhanVien(
+                                    document.getString("ViTri"),
+                                    document.getString("Ten"),
+                                    document.getId(),
+                                    document.getString("GioiTinh"),
+                                    document.getString("SDT"),
+                                    document.getString("CCCD"),
+                                    document.getDouble("Luong").intValue()
+                            );
+                            if (nv.getViTri().contains("Bảo vệ")) listBV.add(nv);
+                            else if (nv.getViTri().contains( "Thu ngân")) listTN.add(nv);
+                            else if (nv.getViTri().contains("Phục vụ")) listPV.add(nv);
+                        }
+                        for(nhanVien nv : listTN){
+                            addToView(nv, (ViewGroup) findViewById(R.id.layout_thungan));
+                        }
+                        for(nhanVien nv : listPV){
+                            addToView(nv, (ViewGroup) findViewById(R.id.layout_phucvu));
+                        }
+                        for(nhanVien nv : listBV){
+                            addToView(nv, (ViewGroup) findViewById(R.id.layout_baove));
+                        }
+                    } else {
+                        Toast.makeText(this, "Can't get data", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void addToView(nhanVien nv, ViewGroup viewGroup) {
@@ -117,7 +168,9 @@ public class QLNVActivity extends AppCompatActivity {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(QLNVActivity.this, CTNVActivity.class));
+                Intent intent = new Intent(QLNVActivity.this, CTNVActivity.class);
+                intent.putExtra("nhanVien", nv);
+                startActivity(intent);
             }
         });
         viewGroup.addView(view);
@@ -126,5 +179,11 @@ public class QLNVActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return super.onSupportNavigateUp();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isBackFromCTNV) recreate();
     }
 }

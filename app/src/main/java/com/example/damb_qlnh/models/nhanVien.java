@@ -1,32 +1,29 @@
 package com.example.damb_qlnh.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class nhanVien {
+public class nhanVien implements Serializable {
     private String viTri;
     private String tenNV;
     private String maNV;
     private String gioiTinh;
     private String sdt;
     private String cccd;
-    private int loaiNV;
+    private int luong;
 
-    public nhanVien(String viTri,  int loaiNV, String tenNV, String maNV, String gioiTinh, String sdt, String cccd) {
+    public nhanVien(String viTri, String tenNV, String maNV, String gioiTinh, String sdt, String cccd, int luong) {
         this.viTri = viTri;
         this.tenNV = tenNV;
         this.maNV = maNV;
         this.gioiTinh = gioiTinh;
         this.sdt = sdt;
         this.cccd = cccd;
-        this.loaiNV = loaiNV;
+        this.luong = luong;
     }
 
-    public int getLoaiNV() {
-        return loaiNV;
-    }
-
-    public void setLoaiNV(int loaiNV) {
-        this.loaiNV = loaiNV;
+    public int getLuong() {
+        return luong;
     }
 
     public String getViTri() {

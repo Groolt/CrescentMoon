@@ -68,60 +68,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginRight="12dp"/>
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#fad745"
-                    android:theme="@style/Theme.MaterialComponents.Light"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="0dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/addbtn"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/addbtn"
-                    app:strokeColor="@color/textcolor_primary"
-                    app:strokeWidth="1dp">
-
-                    <TextView
-                        android:id="@+id/parttime"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="12dp"
-                        android:paddingVertical="4dp"
-                        android:text="Part-time"
-                        android:textAlignment="center"
-                        android:textColor="#2f2e2a"
-                        android:textStyle="bold" />
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/materialCardView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#FFFFFF"
-                    android:theme="@style/Theme.MaterialComponents.Light"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="0dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/addbtn"
-                    app:layout_constraintEnd_toStartOf="@+id/cardView3"
-                    app:layout_constraintHorizontal_bias="0.8"
-                    app:layout_constraintStart_toEndOf="@+id/addbtn"
-                    app:layout_constraintTop_toTopOf="@+id/addbtn"
-                    app:strokeColor="@color/textcolor_primary"
-                    app:strokeWidth="1dp">
-
-                    <TextView
-                        android:id="@+id/fulltime"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="12dp"
-                        android:paddingVertical="4dp"
-                        android:text="Full-time"
-                        android:textAlignment="center"
-                        android:textColor="#2f2e2a"
-                        android:textStyle="bold" />
-                </com.google.android.material.card.MaterialCardView>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

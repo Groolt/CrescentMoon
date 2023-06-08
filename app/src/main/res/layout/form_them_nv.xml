@@ -28,6 +28,24 @@
         android:paddingTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="CCCD"
+        android:paddingBottom="8dp"
+        android:paddingLeft="10dp"
+        android:textSize="16dp"/>
+    <EditText
+        android:inputType="number"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:id="@+id/cccd"
+        android:hint="--Trống--"
+        android:background="@drawable/bg_edit_text"
+        android:paddingLeft="16dp"
+        android:textSize="15dp"/>
+    <TextView
+        android:textColor="@color/textcolor_primary"
+        android:paddingTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Giới tính"
         android:paddingBottom="8dp"
         android:paddingLeft="10dp"
@@ -47,6 +65,7 @@
         android:paddingLeft="10dp"
         android:textSize="16dp"/>
     <EditText
+        android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="32dp"
         android:id="@+id/sdt"
@@ -73,28 +92,15 @@
         android:paddingTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Loại"
-        android:paddingBottom="8dp"
-        android:paddingLeft="10dp"
-        android:textSize="16dp"/>
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:background="@drawable/style_spinner_form"
-        android:id="@+id/loai"/>
-    <TextView
-        android:textColor="@color/textcolor_primary"
-        android:paddingTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Ca làm"
+        android:text="Lương"
         android:paddingBottom="8dp"
         android:paddingLeft="10dp"
         android:textSize="16dp"/>
     <EditText
+        android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="32dp"
-        android:id="@+id/calam"
+        android:id="@+id/luong"
         android:hint="--Trống--"
         android:background="@drawable/bg_edit_text"
         android:paddingLeft="16dp"
