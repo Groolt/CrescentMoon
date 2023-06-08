@@ -7,9 +7,9 @@ public class monAn {
     private String tenMA;
     private String loaiMA;
     private String giaTien;
-    private int anhMA;
+    private String anhMA;
 
-    public monAn(String maMA, String tenMA, String loaiMA, String giaTien, int anhMA) {
+    public monAn(String maMA, String tenMA, String loaiMA, String giaTien, String anhMA) {
         this.maMA = maMA;
         this.tenMA = tenMA;
         this.loaiMA = loaiMA;
@@ -17,11 +17,11 @@ public class monAn {
         this.anhMA = anhMA;
     }
 
-    public int getAnhMA() {
+    public String getAnhMA() {
         return anhMA;
     }
 
-    public void setAnhMA(int anhMA) {
+    public void setAnhMA(String anhMA) {
         this.anhMA = anhMA;
     }
 

@@ -120,7 +120,8 @@
                     <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-
+                        android:background="@drawable/edit_text_background"
+                        android:padding="6dp"
                         android:id="@+id/gdord_txtname"
                         android:text="Binh Nguyen"
                         android:textSize="14dp"
@@ -150,10 +151,12 @@
                     <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-
                         android:id="@+id/gdord_txtphone"
-                        android:text="0963618637"
+                        android:inputType="phone"
+                        android:background="@drawable/edit_text_background"
+                        android:padding="6dp"
                         android:textSize="14dp"
+                        android:text="0963618637"
                         android:gravity="end"/>
                 </LinearLayout>
 
@@ -183,6 +186,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="7"
                         android:paddingBottom="5dp"
+
                         android:layout_marginLeft="15dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/gdord_spinner"
@@ -212,9 +216,11 @@
                     <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-
+                        android:background="@drawable/edit_text_background"
+                        android:padding="6dp"
                         android:id="@+id/gdord_txtnum"
                         android:text="8"
+                        android:inputType="number"
                         android:textSize="14dp"
                         android:gravity="end"/>
                 </LinearLayout>
@@ -242,7 +248,8 @@
                     <EditText
                         android:id="@+id/gdord_txtnote"
                         android:layout_width="fill_parent"
-
+                        android:background="@drawable/edit_text_background"
+                        android:padding="6dp"
                         android:layout_height="wrap_content"
                         android:gravity="end"
                         android:textSize="14dp" />
@@ -271,9 +278,10 @@
                     <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-
+                        android:background="@drawable/edit_text_background"
+                        android:padding="6dp"
                         android:id="@+id/gdord_txtdmy"
-                        android:text="15/04/2023"
+                        android:drawableEnd="@drawable/baseline_edit_calendar_24"
                         android:textSize="14dp"
                         android:gravity="end"/>
                 </LinearLayout>

@@ -42,7 +42,7 @@ public class QLMonActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.round_arrow_back_24);
 
         //list mon an
-        monList = getListMon();
+//        monList = getListMon();
         adapter = new monAdapterQLmon(this, R.layout.mon, monList);
         ListView lv = findViewById(R.id.lv);
         lv.setAdapter(adapter);
@@ -95,16 +95,10 @@ public class QLMonActivity extends AppCompatActivity {
         }
     }
 
-    private ArrayList<monAn> getListMon() {
-        ArrayList<monAn> list = new ArrayList<>();
-        list.add(new monAn("1","Pizza", "Starter", "1", R.drawable.test));
-        list.add(new monAn("2","Pizza", "Starter", "1", R.drawable.test));
-        list.add(new monAn("3","Pizza", "Starter", "1", R.drawable.test));
-        list.add(new monAn("4","Pizza", "Starter", "1", R.drawable.test));
-        list.add(new monAn("5","Pizza", "Starter", "1", R.drawable.test));
-        list.add(new monAn("6","Pizzata", "Starter", "1", R.drawable.test));
-        return list;
-    }
+//    private ArrayList<monAn> getListMon() {
+//        ArrayList<monAn> list = new ArrayList<>();
+//           return list;
+//    }
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return super.onSupportNavigateUp();

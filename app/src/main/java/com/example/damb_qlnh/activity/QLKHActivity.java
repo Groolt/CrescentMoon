@@ -33,16 +33,16 @@ public class QLKHActivity extends AppCompatActivity {
 
     private List<khachHang> getlistKH() {
         List<khachHang> l = new ArrayList<>();
-        l.add( new khachHang("123", "Nguyễn Bá Hảo", "Nam", "0963618637", "Diamond", "30/04/1975", 1));
-        l.add( new khachHang("123", "Nguyễn Bá Hảo", "Nam", "0963618637", "Diamond", "30/04/1975", 1));
-        l.add( new khachHang("123", "Nguyễn Bá Hảo", "Nam", "0963618637", "Diamond", "30/04/1975", 1));
-        l.add( new khachHang("123", "Nguyễn Bá Hảo", "Nam", "0963618637", "Diamond", "30/04/1975", 1));
-        l.add( new khachHang("123", "Nguyễn Bá Hảo", "Nam", "0963618637", "Diamond", "30/04/1975", 1));
-        l.add( new khachHang("123", "Nguyễn Bá Hảo", "Nam", "0963618637", "Diamond", "30/04/1975", 1));
-        l.add( new khachHang("123", "Nguyễn Bá Hảo", "Nam", "0963618637", "Diamond", "30/04/1975", 1));
-        l.add( new khachHang("123", "Nguyễn Bá Hảo", "Nam", "0963618637", "Diamond", "30/04/1975", 1));
-        l.add( new khachHang("123", "Nguyễn Bá Hảo", "Nam", "0963618637", "Diamond", "30/04/1975", 1));
-        l.add( new khachHang("123", "Hảo Hảo 100", "Nữ", "0963618637", "Diamond", "30/04/1975", 1));
+//        l.add( new khachHang("123", "Nguyễn Bá Hảo", "Nam", "0963618637", "Diamond", "30/04/1975", 1));
+//        l.add( new khachHang("123", "Nguyễn Bá Hảo", "Nam", "0963618637", "Diamond", "30/04/1975", 1));
+//        l.add( new khachHang("123", "Nguyễn Bá Hảo", "Nam", "0963618637", "Diamond", "30/04/1975", 1));
+//        l.add( new khachHang("123", "Nguyễn Bá Hảo", "Nam", "0963618637", "Diamond", "30/04/1975", 1));
+//        l.add( new khachHang("123", "Nguyễn Bá Hảo", "Nam", "0963618637", "Diamond", "30/04/1975", 1));
+//        l.add( new khachHang("123", "Nguyễn Bá Hảo", "Nam", "0963618637", "Diamond", "30/04/1975", 1));
+//        l.add( new khachHang("123", "Nguyễn Bá Hảo", "Nam", "0963618637", "Diamond", "30/04/1975", 1));
+//        l.add( new khachHang("123", "Nguyễn Bá Hảo", "Nam", "0963618637", "Diamond", "30/04/1975", 1));
+//        l.add( new khachHang("123", "Nguyễn Bá Hảo", "Nam", "0963618637", "Diamond", "30/04/1975", 1));
+//        l.add( new khachHang("123", "Hảo Hảo 100", "Nữ", "0963618637", "Diamond", "30/04/1975", 1));
         return l;
     }
 

@@ -26,7 +26,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Hi Binh Nguyen"
                     android:id="@+id/gdhome_txtname"
                     android:layout_margin="3dp"
                     android:textColor="@color/black"
@@ -49,10 +48,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
+                        android:layout_marginTop="3dp"
                         android:textColor="@color/black"
                         android:text="ID: "/>
                     <EditText
-                        android:layout_width="wrap_content"
+                        android:layout_width="55dp"
                         android:textColor="@color/black"
                         android:layout_height="wrap_content"
                         android:id="@+id/gdhome_txtid"/>
@@ -65,7 +65,6 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="30dp"
                 android:id="@+id/gdhome_imgUser"
-                android:src="@drawable/img_5"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 />

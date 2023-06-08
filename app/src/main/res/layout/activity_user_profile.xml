@@ -85,6 +85,8 @@
                         android:focusable="false"
                         android:id="@+id/gdpro_txtrank"
                         android:textStyle="bold"
+                        android:background="@drawable/edit_text_background"
+                        android:padding="6dp"
                         android:textColor="@color/black"
                         android:text="Diamond"
                         android:textSize="20dp"
@@ -112,12 +114,14 @@
                     <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_background"
 
                         android:id="@+id/gdpro_txtgender"
                         android:text="Male"
                         android:textColor="@color/black"
                         android:enabled="false"
                         android:focusable="false"
+                        android:padding="6dp"
                         android:textStyle="bold"
                         android:textSize="20dp"
                         android:gravity="end"/>
@@ -151,6 +155,8 @@
                         android:text="0963618637"
                         android:textSize="20dp"
                         android:textColor="@color/black"
+                        android:background="@drawable/edit_text_background"
+                        android:padding="6dp"
                         android:textStyle="bold"
                         android:enabled="false"
                         android:focusable="false"
@@ -185,6 +191,8 @@
                         android:textStyle="bold"
                         android:textColor="@color/black"
                         android:enabled="false"
+                        android:background="@drawable/edit_text_background"
+                        android:padding="6dp"
                         android:focusable="false"
                         android:textSize="20dp"
                         android:gravity="end"/>

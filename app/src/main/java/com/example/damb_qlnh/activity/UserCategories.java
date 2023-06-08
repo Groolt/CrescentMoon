@@ -21,6 +21,8 @@ import com.example.damb_qlnh.adapter.CateAdapter;
 import com.example.damb_qlnh.models.monAn;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 
@@ -33,6 +35,8 @@ public class UserCategories extends AppCompatActivity {
     private SearchView searchView;
     private CateAdapter cateAdapter;
     private ArrayList<monAn> monAns;
+    private FirebaseFirestore db;
+    private String loaiMA;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +45,10 @@ public class UserCategories extends AppCompatActivity {
         Init();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(UserCategories.this, 2, GridLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(gridLayoutManager);
-        btnBack.setText(getIntent().getStringExtra("loaiMA"));
+        btnBack.setText(loaiMA);
         cateAdapter = new CateAdapter(this, monAns);
         recyclerView.setAdapter(cateAdapter);
+        getListMon();
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,14 +123,37 @@ public class UserCategories extends AppCompatActivity {
         searchView = findViewById(R.id.gdcategories_searchview);
         relativeLayout = findViewById(R.id.gdcategories_rl);
         imageButton = findViewById(R.id.gdcategories_imgcart);
+        db = FirebaseFirestore.getInstance();
+        loaiMA = getIntent().getStringExtra("loaiMA");
         monAns = new ArrayList<>();
-        monAns.add(new monAn("1","Pizza123", "Main Course", "1", R.drawable.test));
-        monAns.add(new monAn("2","Pizza4", "Main Course", "1", R.drawable.test));
-        monAns.add(new monAn("3","Pizza56", "Main Course", "1", R.drawable.test));
     }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(UserCategories.this, UserHome.class));
+    }
+    private void getListMon() {
+        monAns.clear();
+        db.collection("monAn")
+                .whereEqualTo("is_deleted", false)
+                .whereEqualTo("loai", loaiMA)
+                .orderBy("ten")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            monAns.add(new monAn(
+                                    document.getId(),
+                                    document.getString("ten"),
+                                    document.getString("loai"),
+                                    String.valueOf(document.getDouble("gia").intValue()),
+                                    document.getString("img")));
+                        }
+                        Toast.makeText(this, String.valueOf(monAns.size()), Toast.LENGTH_SHORT).show();
+                        cateAdapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(this, "Can't get data", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

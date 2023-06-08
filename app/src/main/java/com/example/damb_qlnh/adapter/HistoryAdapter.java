@@ -67,12 +67,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         txtGia.setText(hoaDon1.getTongTien_S().toString().trim() +"$");
         RecyclerView recyclerView = dialog.findViewById(R.id.rcv);
         ArrayList<CTHD> l = new ArrayList<>();
-        l.add(new CTHD((new monAn("1","Pizza", "Main Course", "1", R.drawable.test)), 2,"1"));
-        l.add(new CTHD((new monAn("2","Pizza", "Main Course", "1", R.drawable.test)), 1,"1"));
-        l.add(new CTHD((new monAn("3","Pizza", "Main Course", "1", R.drawable.test)), 2,"1"));
-        l.add(new CTHD((new monAn("4","Pizza", "Main Course", "1", R.drawable.test)), 3,"1"));
-        l.add(new CTHD((new monAn("5","Pizza", "Main Course", "1", R.drawable.test)), 2,"1"));
-        l.add(new CTHD((new monAn("6","Pizzajj", "Main Course", "1", R.drawable.test)), 2,"1")); // getCTHD from db
         CTHDAdapter cthdAdapter = new CTHDAdapter(context, l);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);

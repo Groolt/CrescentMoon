@@ -1,16 +1,24 @@
 package com.example.damb_qlnh.activity;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -22,15 +30,27 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.damb_qlnh.R;
 import com.example.damb_qlnh.models.khachHang;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -38,18 +58,24 @@ public class UserProfile extends AppCompatActivity {
     private TextView txtName;
     private EditText txtPhone, txtGender, txtRank, txtBirthday;
     private Button btnBack;
+    final Calendar myCalendar= Calendar.getInstance();
     private ImageButton imageButton;
     private CircleImageView circleImageView;
     private CardView cardViewEdit, cardViewLogout;
     private BottomNavigationView bottomNavigationView;
     private FirebaseAuth mAuth;
+    FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
+    DocumentReference documentRef = firestore.collection("khachHang").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+    private khachHang khachHang1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         init();
-        khachHang khachHang1 = new khachHang("1","1","1","1","1","1", 1); // lay tu database
-        setData(khachHang1);
+        setData();
         cardViewLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +100,7 @@ public class UserProfile extends AppCompatActivity {
         cardViewEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog(khachHang1);
+                showDialog();
             }
         });
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -101,7 +127,7 @@ public class UserProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ImagePicker.with(UserProfile.this)
-                        .crop()//Crop image(Optional), Check Customization for more option
+                        .cropSquare()//Crop image(Optional), Check Customization for more option
                         .compress(1024)			//Final image size will be less than 1 MB(Optional)
                         .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
                         .start();
@@ -112,10 +138,23 @@ public class UserProfile extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Uri uri = data.getData();
-        circleImageView.setImageURI(uri);
+        if (resultCode == RESULT_OK && data != null){
+            Uri uri = data.getData();
+            circleImageView.setImageURI(uri);
+            StorageReference imagesRef = storageRef.child("khachHang/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+".jpg");
+            Drawable drawable = circleImageView.getDrawable();
+            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] imageData = baos.toByteArray();
+            UploadTask uploadTask = imagesRef.putBytes(imageData);
+            uploadTask.addOnSuccessListener(taskSnapshot ->
+                    imagesRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
+                        khachHang1.setImg(downloadUri.toString());
+                        documentRef.set(khachHang1);
+                    }));
+        }
     }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -135,6 +174,7 @@ public class UserProfile extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.action_profile);
         circleImageView = findViewById(R.id.gdpro_imgprofile);
         mAuth = FirebaseAuth.getInstance();
+        khachHang1 = (khachHang) getIntent().getSerializableExtra("khachHang");
     }
     public void changePassword(){
         Dialog dialog = new Dialog(this);
@@ -180,15 +220,15 @@ public class UserProfile extends AppCompatActivity {
         });
         dialog.show();
     }
-    public void setData(khachHang khachHang1){
+    public void setData(){
         txtName.setText(khachHang1.getTenKH().toString().trim());
         txtRank.setText(khachHang1.getXepHang().toString().trim());
         txtPhone.setText(khachHang1.getSDT().toString().trim());
         txtBirthday.setText(khachHang1.getDob().toString().trim());
         txtGender.setText(khachHang1.getGioiTinh().toString().trim());
-        //set anh kh, neu kh co thi de mac dinh
+        Glide.with(UserProfile.this).load(khachHang1.getImg()).into(circleImageView);
     }
-    public void showDialog(khachHang khachHang1){
+    public void showDialog(){
         Dialog dialog = new Dialog(this, android.R.style.Theme_Material_Light_Dialog_Alert);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.custom_dialog_profile);
@@ -203,6 +243,18 @@ public class UserProfile extends AppCompatActivity {
         txtBirthdayS = dialog.findViewById(R.id.custome_profile_txtbd);
         rdNam = dialog.findViewById(R.id.custome_profile_nam);
         rdNu = dialog.findViewById(R.id.custom_profile_nu);
+        DatePickerDialog.OnDateSetListener date = (view1, year, month, day) -> {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH,month);
+            myCalendar.set(Calendar.DAY_OF_MONTH,day);
+            txtBirthdayS.setText(new SimpleDateFormat("dd/MM/yyyy").format(myCalendar.getTime()));
+        };
+        txtBirthdayS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(UserProfile.this, date, myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
         btnOkay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -213,7 +265,8 @@ public class UserProfile extends AppCompatActivity {
                 khachHang1.setTenKH(txtNameS.getText().toString().trim());
                 khachHang1.setSDT(txtPhoneS.getText().toString().trim());
                 khachHang1.setDob(txtBirthdayS.getText().toString().trim());
-                setData(khachHang1);
+                setData();
+                documentRef.set(khachHang1);
                 //Capnhatdata len db
                 dialog.dismiss();
             }

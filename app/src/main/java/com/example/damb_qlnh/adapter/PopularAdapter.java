@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.damb_qlnh.R;
 import com.example.damb_qlnh.activity.UserCategories;
 import com.example.damb_qlnh.models.monAn;
@@ -38,7 +39,8 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularV
     public void onBindViewHolder(@NonNull PopularViewHolder holder, int position) {
         monAn monAn = monAns.get(position);
         holder.txtCategories.setText(monAn.getTenMA().toString().trim());
-        holder.imgCategories.setImageResource(monAn.getAnhMA());
+        Glide.with(context).load(monAn.getAnhMA()).into(holder.imgCategories);
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

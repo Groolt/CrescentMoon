@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.damb_qlnh.R;
 import com.example.damb_qlnh.models.CTHD;
 import com.example.damb_qlnh.models.monAn;
@@ -38,9 +39,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     @Override
     public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
         monAn monAn1 = monAns.get(position);
-        holder.imgFood.setImageResource(monAn1.getAnhMA());
+        Glide.with(context).load(monAn1.getAnhMA()).into(holder.imgFood);
         holder.txtFood.setText(monAn1.getTenMA().toString().trim());
-        holder.txtPrice.setText(monAn1.getGiaTien().toString().trim()+"$");
+        holder.txtPrice.setText(formatMoney(monAn1.getGiaTien())+" đ");
         holder.cardViewPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,13 +61,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         holder.cardViewAdd.setOnClickListener(new View.OnClickListener() {//tao cthd up len firebase tinh trang la chua dat
             @Override
             public void onClick(View v) {
-//                CTHD cthd = new CTHD(monAn1, Integer.parseInt(holder.txtQuantity.getText().toString().trim()));
-//                SharedPreferences prefs = context.getSharedPreferences("dba", Context.MODE_PRIVATE);
-//                SharedPreferences.Editor editor = prefs.edit();
-//                Gson gson = new Gson();
-//                String json = gson.toJson(cthd);
-//                editor.putString("CTHD", json);
-//                editor.commit();
+                if(Integer.parseInt(String.valueOf(holder.txtQuantity.getText())) > 0)
+                {
+                    CTHD cthd = new CTHD(monAn1, Integer.parseInt(holder.txtQuantity.getText().toString().trim()), "HD01");
+                    CateAdapter.addCTHDS(cthd);
+                }
             }
         });
 
@@ -78,6 +77,28 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     @Override
     public int getItemCount() {
         return monAns == null ? 0 : monAns.size();
+    }
+    public String formatMoney(String input){
+        StringBuilder result = new StringBuilder();
+        int length = input.length();
+        int dotCount = length / 3;
+
+        int remainingDigits = length % 3;
+        if (remainingDigits != 0) {
+            result.append(input, 0, remainingDigits);
+            if (dotCount > 0) {
+                result.append(".");
+            }
+        }
+
+        for (int i = 0; i < dotCount; i++) {
+            int startIndex = remainingDigits + i * 3;
+            result.append(input.substring(startIndex, startIndex + 3));
+            if (i < dotCount - 1) {
+                result.append(".");
+            }
+        }
+        return result.toString();
     }
 
     public class SearchViewHolder extends RecyclerView.ViewHolder{

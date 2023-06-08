@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.damb_qlnh.R;
 import com.example.damb_qlnh.adapter.CartAdapter;
+import com.example.damb_qlnh.adapter.CateAdapter;
 import com.example.damb_qlnh.models.CTHD;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -44,10 +45,6 @@ public class UserCart extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         CartAdapter cartAdapter = new CartAdapter(UserCart.this, cthds);
         recyclerView.setAdapter(cartAdapter);
-//        Gson gson = new Gson();
-//        SharedPreferences prefs = getSharedPreferences("dba", Context.MODE_PRIVATE);
-//        String json = prefs.getString("CTHD", "");
-//        CTHD cthd = gson.fromJson(json, CTHD.class);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,7 +137,7 @@ public class UserCart extends AppCompatActivity {
         cardViewPayment = findViewById(R.id.gdcart_btnpayment);
         bottomNavigationView = findViewById(R.id.bottom_nav);
         imageButton = findViewById(R.id.gdcart_imgcart);
-        cthds = new ArrayList<>(); // lay tat ca cthd tren firesbase tinh trang la chua dat xuong
+        cthds = CateAdapter.spSelected();
     }
     @Override
     public void onBackPressed() {

@@ -54,22 +54,22 @@ public class QLDTActivity extends AppCompatActivity {
 
         //DS ban chay(lay cac mon an ban nhieu nhat trong bang cthd + sl)
         ArrayList<monAn> dsMonBanChay = new ArrayList<>();
-        dsMonBanChay.add(new monAn("1","Pizza", "Pudding", "1", R.drawable.test));
-        dsMonBanChay.add(new monAn("2","Pizza", "Pudding", "1", R.drawable.test));
-        dsMonBanChay.add(new monAn("3","Pizza", "Pudding", "1", R.drawable.test));
-        dsMonBanChay.add(new monAn("4","Pizza", "Pudding", "1", R.drawable.test));
-        mLinearLayoutBanChay = (ViewGroup) findViewById(R.id.linear_banchay);
+//        dsMonBanChay.add(new monAn("1","Pizza", "Pudding", "1", R.drawable.test));
+//        dsMonBanChay.add(new monAn("2","Pizza", "Pudding", "1", R.drawable.test));
+//        dsMonBanChay.add(new monAn("3","Pizza", "Pudding", "1", R.drawable.test));
+//        dsMonBanChay.add(new monAn("4","Pizza", "Pudding", "1", R.drawable.test));
+//        mLinearLayoutBanChay = (ViewGroup) findViewById(R.id.linear_banchay);
         for (monAn mon : dsMonBanChay){
             addToView(mon, mLinearLayoutBanChay);
         }
 
         //DS ban it
         ArrayList<monAn> dsMonBanit = new ArrayList<>();
-        dsMonBanit.add(new monAn("1","Pizza", "Pudding", "1", R.drawable.test));
-        dsMonBanit.add(new monAn("2","Pizza", "Pudding", "1", R.drawable.test));
-        dsMonBanit.add(new monAn("3","Pizza", "Pudding", "1", R.drawable.test));
-        dsMonBanit.add(new monAn("4","Pizza", "Pudding", "1", R.drawable.test));
-        mLinearLayoutBanIt = findViewById(R.id.linear_banit);
+//        dsMonBanit.add(new monAn("1","Pizza", "Pudding", "1", R.drawable.test));
+//        dsMonBanit.add(new monAn("2","Pizza", "Pudding", "1", R.drawable.test));
+//        dsMonBanit.add(new monAn("3","Pizza", "Pudding", "1", R.drawable.test));
+//        dsMonBanit.add(new monAn("4","Pizza", "Pudding", "1", R.drawable.test));
+//        mLinearLayoutBanIt = findViewById(R.id.linear_banit);
         for (monAn mon : dsMonBanit){
             addToView(mon, mLinearLayoutBanIt);
         }

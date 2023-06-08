@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,12 +26,14 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class UserOrder extends AppCompatActivity {
     private Button btnBack;
     private EditText txtName, txtPhone, txtDate, txtNote, txtNum;
     private Spinner spinner;
+    final Calendar myCalendar= Calendar.getInstance();
     String timeChoice;
     private BottomNavigationView bottomNavigationView;
     private CardView cardViewSend;
@@ -39,7 +42,7 @@ public class UserOrder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_order);
         init();
-        setData(new khachHang("1", "1", "1", "1", "1", "1", 1));
+        setData(new khachHang("1", "1", "1", "1", "1", "1", ""));
         ArrayList<String> opening = new ArrayList<>();
         opening.add("9:00 - 15:00");
         opening.add("19:00 -- 23:00");
@@ -57,6 +60,18 @@ public class UserOrder extends AppCompatActivity {
        ArrayAdapter<String> adapter = new ArrayAdapter<>(UserOrder.this, android.R.layout.simple_spinner_dropdown_item, opening);
        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
        spinner.setAdapter(adapter);
+       DatePickerDialog.OnDateSetListener date = (view1, year, month, day) -> {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH,month);
+            myCalendar.set(Calendar.DAY_OF_MONTH,day);
+            txtDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(myCalendar.getTime()));
+        };
+       txtDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(UserOrder.this, date, myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
        btnBack.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {

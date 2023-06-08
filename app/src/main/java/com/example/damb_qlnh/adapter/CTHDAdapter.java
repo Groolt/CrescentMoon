@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.damb_qlnh.R;
 import com.example.damb_qlnh.models.CTHD;
 import com.example.damb_qlnh.models.monAn;
@@ -35,7 +36,7 @@ public class CTHDAdapter extends RecyclerView.Adapter<CTHDAdapter.CTHDViewHolder
     @Override
     public void onBindViewHolder(@NonNull CTHDViewHolder holder, int position) {
         CTHD cthd = cthds.get(position);
-        holder.imgMon.setImageResource(cthd.getMonAn().getAnhMA());
+        Glide.with(context).load(cthd.getMonAn().getAnhMA()).into(holder.imgMon);
         holder.txtGia.setText(Integer.toString(Integer.parseInt(cthd.getMonAn().getGiaTien()) * cthd.getSoLuong()) + "$");
         holder.txttenMon.setText(cthd.getMonAn().getTenMA());
         holder.txtloaiMon.setText("Loại: " + cthd.getMonAn().getLoaiMA());
