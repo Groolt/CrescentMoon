@@ -8,10 +8,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.example.damb_qlnh.R;
 import com.example.damb_qlnh.models.CTHD;
 import com.example.damb_qlnh.models.monAn;
@@ -58,16 +60,22 @@ public class monAdapterCTBan extends BaseAdapter {
         TextView sl = convertView.findViewById(R.id.editable);
         ImageView anh = convertView.findViewById(R.id.anhmon);
         TextView gia = convertView.findViewById(R.id.gia);
-        ImageView close = convertView.findViewById(R.id.huymon);
 
 
         if (cthd != null){
             tenMon.setText(cthd.getMonAn().getTenMA());
-            tenMon.setPadding(dptopx(16), 0, 0, 0);
             sl.setText("SL: " + Integer.toString(cthd.getSoLuong()));
-            anh.setBackgroundResource(R.drawable.mon);
-            gia.setText(String.valueOf(cthd.getMonAn().getGiaTien())+"$");
-            close.setVisibility(View.INVISIBLE);
+            Glide.with(context).load(cthd.getMonAn().getAnhMA()).into(anh);
+            String numString = String.valueOf(Integer.parseInt(cthd.getMonAn().getGiaTien()) * cthd.getSoLuong());
+            String str = "";
+            for (int i = 0; i < numString.length() ; i++){
+                if((numString.length() - i - 1) % 3 == 0 && i < numString.length()-1){
+                    str += Character.toString(numString.charAt(i)) + ".";
+                }else{
+                    str += Character.toString(numString.charAt(i));
+                }
+            }
+            gia.setText(str + " vnđ");
         }
         return convertView;
     }

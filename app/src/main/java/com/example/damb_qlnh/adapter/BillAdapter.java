@@ -69,10 +69,22 @@ public class BillAdapter extends BaseAdapter {
             String strDate = bill.getThoiGian();
             ct.setText("ID: #" + bill.getMaHD() + "\n" + strDate);
 
-            total.setText(Html.fromHtml("Total:  <b>" +  String.valueOf(bill.getTongTien_S()) + "$</b>"));
-
+            //total.setText(Html.fromHtml("Total:  <b>" +  String.valueOf(bill.getTongTien_S()) + "vnđ</b>"));
+            String numString = String.valueOf(bill.getTongTien_S());
+            String str = "";
+            for (int i = 0; i < numString.length() ; i++){
+                if((numString.length() - i - 1) % 3 == 0 && i < numString.length()-1){
+                    str += Character.toString(numString.charAt(i)) + ".";
+                }else{
+                    str += Character.toString(numString.charAt(i));
+                }
+            }
+            total.setText( str+ " vnđ");
             detail.setOnClickListener(view -> {
                 Intent i = new Intent(context, CTHDActivity.class);
+                i.putExtra("maHD", bill.getMaHD());
+                i.putExtra("maKH", bill.getMaKH());
+                i.putExtra("ngayTT", bill.getThoiGian());
                 context.startActivity(i);
             });
         }

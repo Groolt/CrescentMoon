@@ -28,6 +28,14 @@ public class hoaDon {
         this.tongTien_S = tongTien_S;
         this.cthds = cthds;
     }
+    public hoaDon(String maHD, String thoiGian, String maKH, String maBan, String tongTien_T, String tongTien_S) {
+        this.maHD = maHD;
+        this.maKH = maKH;
+        this.maBan = maBan;
+        this.thoiGian = thoiGian;
+        this.tongTien_T = tongTien_T;
+        this.tongTien_S = tongTien_S;
+    }
     public hoaDon(String maKH){
         tongTien_T = "0";
         tongTien_S = "0";

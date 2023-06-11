@@ -157,6 +157,7 @@ public class QLVoucherActivity extends AppCompatActivity {
                                     .after(formatDay.parse(ketthuc.getText().toString())))
                             {
                                 Toast.makeText(QLVoucherActivity.this, "Ngày bắt đầu phải < ngày kết thúc", Toast.LENGTH_SHORT).show();
+                                return;
                             }
 
                         } catch (ParseException e) {

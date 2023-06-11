@@ -63,10 +63,10 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="3dp"
-                android:text="#HD01\n152020\nHiếu\n22/02/2003"
                 android:textAlignment="textEnd"
                 android:textColor="@color/textcolor_primary"
                 android:textSize="16dp"
@@ -93,6 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <ListView
+                    android:listSelector="@android:color/transparent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="16dp"
@@ -110,7 +111,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="50$"
             android:textColor="#E57A22"
             android:textSize="18dp"
             android:textStyle="bold"
