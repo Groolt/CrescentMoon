@@ -14,6 +14,9 @@ public class CTHD implements Serializable {
         tinhTrang = 0;
         this.maHD = maHD;
     }
+    public CTHD(){
+
+    }
 
     public com.example.damb_qlnh.models.monAn getMonAn() {
         return monAn;

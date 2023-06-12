@@ -10,9 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +29,9 @@ import com.bumptech.glide.Glide;
 import com.example.damb_qlnh.R;
 import com.example.damb_qlnh.adapter.CategoriesAdapter;
 import com.example.damb_qlnh.adapter.PopularAdapter;
+import com.example.damb_qlnh.models.CTHD;
 import com.example.damb_qlnh.models.Categories;
+import com.example.damb_qlnh.models.hoaDon;
 import com.example.damb_qlnh.models.khachHang;
 import com.example.damb_qlnh.models.monAn;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,6 +40,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.AggregateQuerySnapshot;
+import com.google.firebase.firestore.AggregateSource;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -42,6 +50,11 @@ import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -58,12 +71,14 @@ public class UserHome extends AppCompatActivity {
     private com.example.damb_qlnh.models.khachHang khachHang;
     private FirebaseFirestore db;
     ProgressDialog progressDialog;
+    SharedPreferences.Editor editor;
+    SharedPreferences prefs;
+    private PopularAdapter popularAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home);
         init();
-        getUser();
         LinearLayoutManager layoutManager = new LinearLayoutManager(UserHome.this, RecyclerView.HORIZONTAL, false);
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(UserHome.this, RecyclerView.HORIZONTAL, false);
         rcvCategories.setLayoutManager(layoutManager);
@@ -84,8 +99,9 @@ public class UserHome extends AppCompatActivity {
         });
         CategoriesAdapter categoriesAdapter = new CategoriesAdapter(this, categories);
         rcvCategories.setAdapter(categoriesAdapter);
-        PopularAdapter popularAdapter = new PopularAdapter(this, monAns);
+        popularAdapter = new PopularAdapter(this, monAns);
         rcvPopular.setAdapter((popularAdapter));
+        getCTHD();
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -111,7 +127,28 @@ public class UserHome extends AppCompatActivity {
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(txtID.getText().toString().isEmpty()){
+                    Toast.makeText(UserHome.this, "Vui lòng chọn mã bàn trước khi thực hiện các thao tác khác", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 startActivity(new Intent(UserHome.this, UserSearch.class));
+            }
+        });
+        txtID.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                editor.putString("maBan", s.toString());
+                editor.commit();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
     }
@@ -134,6 +171,10 @@ public class UserHome extends AppCompatActivity {
         categories.add(Categories.CATEGORIES5);
         db = FirebaseFirestore.getInstance();
         khachHang = new khachHang();
+        getUser();
+        prefs = getSharedPreferences("dba", Context.MODE_PRIVATE);
+        txtID.setText(prefs.getString("maBan", ""));
+        editor = prefs.edit();
     }
     @Override
     public void onBackPressed() {
@@ -175,6 +216,10 @@ public class UserHome extends AppCompatActivity {
                                 khachHang.setDob(document.get("dob").toString());
                                 khachHang.setImg(document.get("img").toString());
                                 txtName.setText("Hi " + khachHang.getTenKH().toString().trim());
+                                SharedPreferences prefs = getSharedPreferences("dba", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.putString("maKH", khachHang.getMaKH());
+                                editor.commit();
                                 Glide.with(UserHome.this).load(khachHang.getImg()).into(circleImageView);
                             } else {
                                 Log.d(TAG, "No such document");
@@ -182,6 +227,48 @@ public class UserHome extends AppCompatActivity {
                         } else {
                             Log.d(TAG, "get failed with ", task.getException());
                         }
+                    }
+                });
+        progressDialog.dismiss();
+    }
+    public void getCTHD(){
+        progressDialog.setTitle("Loading...");
+        progressDialog.show();
+        monAns.clear();
+        db.collection("CTHD")
+                .get() .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        HashMap<monAn, Integer> data = new HashMap<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            CTHD cthd = document.toObject(CTHD.class);
+                            int n = 0;
+                            if(data.containsKey(cthd.getMonAn()))
+                            {
+                                n = data.get(cthd.getMonAn()).intValue();
+                            }
+                            data.put(cthd.getMonAn(), n + cthd.getSoLuong());
+                        }
+                        List<Map.Entry<monAn, Integer>> entryList = new ArrayList<>(data.entrySet());
+                        Collections.sort(entryList, new Comparator<Map.Entry<monAn, Integer>>() {
+                            @Override
+                            public int compare(Map.Entry<monAn, Integer> entry1, Map.Entry<monAn, Integer> entry2) {
+                                return entry2.getValue().compareTo(entry1.getValue());
+                            }
+                        });
+                        int cnt = 0;
+                        for (Map.Entry<monAn, Integer> entry : entryList) {
+                            if (cnt == 6){
+                                break;
+                            }
+                            if(!monAns.contains(entry.getKey())){
+                                cnt++;
+                                monAns.add(entry.getKey());
+                                Log.e("1", entry.getValue().toString());
+                            }
+                        }
+                        popularAdapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(UserHome.this, "Can't get data", Toast.LENGTH_SHORT).show();
                     }
                 });
         progressDialog.dismiss();

@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
@@ -22,13 +24,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.installations.Utils;
 import com.google.zxing.common.StringUtils;
 
 public class MainActivity extends AppCompatActivity {
-    private EditText txtUsername, txtPassword;
+    private TextInputEditText txtUsername, txtPassword;
     private FirebaseAuth mAuth;
     private CardView cardViewSignin;
     private TextView btnsignup;
@@ -50,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
         cardViewSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(txtUsername.getText().toString().trim().isEmpty()){
+                    return;
+                }
                 String email, password;
                 email = txtUsername.getText().toString().trim();
                 password = txtPassword.getText().toString().trim();
@@ -65,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
                                         startActivity(new Intent(MainActivity.this, MainActivity1.class));
                                     }
                                     else {
+                                        SharedPreferences prefs = getSharedPreferences("dba", Context.MODE_PRIVATE);
+                                        prefs.edit().remove("maBan").commit();
+                                        prefs.edit().remove("maHD").commit();
                                         startActivity(new Intent(MainActivity.this, UserHome.class));
                                     }
                                 }
@@ -94,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 progressDialog.dismiss();
-                                Toast.makeText(MainActivity.this, "An error occurred. Try again.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Account don't exists.", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .addOnSuccessListener(new OnSuccessListener<Void>() {

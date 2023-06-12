@@ -1,6 +1,9 @@
 package com.example.damb_qlnh.adapter;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.damb_qlnh.R;
+import com.example.damb_qlnh.activity.UserHome;
 import com.example.damb_qlnh.models.CTHD;
 import com.example.damb_qlnh.models.monAn;
 
@@ -21,11 +25,13 @@ import java.util.ArrayList;
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder> {
     private Context context;
     private ArrayList<monAn> monAns;
-    private ArrayList<CTHD> cthds;
+    private String maHD;
 
     public SearchAdapter(Context context, ArrayList<monAn> monAns) {
         this.context = context;
         this.monAns = monAns;
+        SharedPreferences prefs = context.getSharedPreferences("dba", MODE_PRIVATE);
+        maHD = prefs.getString("maHD", "");
     }
 
 
@@ -63,7 +69,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
             public void onClick(View v) {
                 if(Integer.parseInt(String.valueOf(holder.txtQuantity.getText())) > 0)
                 {
-                    CTHD cthd = new CTHD(monAn1, Integer.parseInt(holder.txtQuantity.getText().toString().trim()), "HD01");
+                    CTHD cthd = new CTHD(monAn1, Integer.parseInt(holder.txtQuantity.getText().toString().trim()), maHD);
                     CateAdapter.addCTHDS(cthd);
                 }
             }

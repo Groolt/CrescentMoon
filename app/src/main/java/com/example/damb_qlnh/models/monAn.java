@@ -16,6 +16,9 @@ public class monAn {
         this.giaTien = giaTien;
         this.anhMA = anhMA;
     }
+    public monAn(){
+
+    }
 
     public String getAnhMA() {
         return anhMA;
@@ -55,5 +58,13 @@ public class monAn {
 
     public void setGiaTien(String giaTien) {
         this.giaTien = giaTien;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        monAn other = (monAn) obj;
+        return maMA.equals(other.getMaMA());
     }
 }

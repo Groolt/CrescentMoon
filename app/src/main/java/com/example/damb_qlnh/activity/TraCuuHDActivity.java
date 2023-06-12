@@ -72,9 +72,9 @@ public class TraCuuHDActivity extends AppCompatActivity {
     private ArrayList<hoaDon> getListHD() {
         ArrayList<hoaDon> list = new ArrayList<>();
         ArrayList<CTHD> cthds = new ArrayList<>();
-        list.add(new hoaDon("HD01", "30/4/1975", "KH1", "NV1", "MB1", "", "100", "100", cthds));
-        list.add(new hoaDon("HD02", "30/4/1975", "KH1", "NV1", "MB1", "", "100", "100", cthds));
-        list.add(new hoaDon("HD03", "30/4/1975", "KH1", "NV1", "MB1", "", "100", "100", cthds));
+//        list.add(new hoaDon("HD01", "30/4/1975", "KH1", "NV1", "MB1", "", "100", "100", cthds));
+//        list.add(new hoaDon("HD02", "30/4/1975", "KH1", "NV1", "MB1", "", "100", "100", cthds));
+//        list.add(new hoaDon("HD03", "30/4/1975", "KH1", "NV1", "MB1", "", "100", "100", cthds));
         return list;
     }
 

@@ -37,12 +37,33 @@ public class CTHDAdapter extends RecyclerView.Adapter<CTHDAdapter.CTHDViewHolder
     public void onBindViewHolder(@NonNull CTHDViewHolder holder, int position) {
         CTHD cthd = cthds.get(position);
         Glide.with(context).load(cthd.getMonAn().getAnhMA()).into(holder.imgMon);
-        holder.txtGia.setText(Integer.toString(Integer.parseInt(cthd.getMonAn().getGiaTien()) * cthd.getSoLuong()) + "$");
+        holder.txtGia.setText(formatMoney(Integer.toString(Integer.parseInt(cthd.getMonAn().getGiaTien()) * cthd.getSoLuong())) + " đ");
         holder.txttenMon.setText(cthd.getMonAn().getTenMA());
         holder.txtloaiMon.setText("Loại: " + cthd.getMonAn().getLoaiMA());
         holder.txtsoLuong.setText("SL: " + cthd.getSoLuong());
     }
+    public String formatMoney(String input){
+        StringBuilder result = new StringBuilder();
+        int length = input.length();
+        int dotCount = length / 3;
 
+        int remainingDigits = length % 3;
+        if (remainingDigits != 0) {
+            result.append(input, 0, remainingDigits);
+            if (dotCount > 0) {
+                result.append(".");
+            }
+        }
+
+        for (int i = 0; i < dotCount; i++) {
+            int startIndex = remainingDigits + i * 3;
+            result.append(input.substring(startIndex, startIndex + 3));
+            if (i < dotCount - 1) {
+                result.append(".");
+            }
+        }
+        return result.toString();
+    }
     @Override
     public int getItemCount() {
         return cthds == null ? 0 : cthds.size();

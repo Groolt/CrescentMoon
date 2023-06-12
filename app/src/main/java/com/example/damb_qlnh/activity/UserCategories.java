@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -37,6 +38,7 @@ public class UserCategories extends AppCompatActivity {
     private ArrayList<monAn> monAns;
     private FirebaseFirestore db;
     private String loaiMA;
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +128,7 @@ public class UserCategories extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         loaiMA = getIntent().getStringExtra("loaiMA");
         monAns = new ArrayList<>();
+        progressDialog = new ProgressDialog(UserCategories.this);
     }
     @Override
     public void onBackPressed() {
@@ -134,6 +137,8 @@ public class UserCategories extends AppCompatActivity {
     }
     private void getListMon() {
         monAns.clear();
+        progressDialog.setTitle("Loading...");
+        progressDialog.show();
         db.collection("monAn")
                 .whereEqualTo("is_deleted", false)
                 .whereEqualTo("loai", loaiMA)
@@ -155,5 +160,6 @@ public class UserCategories extends AppCompatActivity {
                         Toast.makeText(this, "Can't get data", Toast.LENGTH_SHORT).show();
                     }
                 });
+        progressDialog.dismiss();
     }
 }

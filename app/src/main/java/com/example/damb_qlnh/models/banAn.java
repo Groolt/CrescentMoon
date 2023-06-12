@@ -4,7 +4,6 @@ public class banAn {
     private String maBan;
     private int tinhTrang;
     private int loaiBan;
-
     public banAn(String maBan, int tinhTrang, int loaiBan) {
         this.maBan = maBan;
         this.tinhTrang = tinhTrang;

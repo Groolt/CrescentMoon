@@ -26,6 +26,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.AggregateQuerySnapshot;
+import com.google.firebase.firestore.AggregateSource;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -44,6 +46,7 @@ public class Dangky extends AppCompatActivity {
     private CardView cardViewSignup;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private String maKH ="#KH";
     final Calendar myCalendar= Calendar.getInstance();
     ProgressDialog progressDialog;
     @Override
@@ -102,7 +105,7 @@ public class Dangky extends AppCompatActivity {
                                             imagesRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
                                                 khachHang khachHang = new khachHang();
                                                 khachHang.setTenKH(tmp);
-                                                khachHang.setMaKH(id);
+                                                khachHang.setMaKH(maKH);
                                                 khachHang.setImg(downloadUri.toString());
                                                 khachHang.setGioiTinh("Nam");
                                                 khachHang.setSDT("8888-888-888");
@@ -133,5 +136,26 @@ public class Dangky extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         progressDialog = new ProgressDialog(Dangky.this);
+        getMaKH();
+    }
+    public void getMaKH(){
+        db.collection("khachHang").count()
+                .get(AggregateSource.SERVER).addOnCompleteListener(new OnCompleteListener<AggregateQuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<AggregateQuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    // Count fetched successfully
+                    AggregateQuerySnapshot snapshot = task.getResult();
+                    if (snapshot.getCount() < 10) {
+                        maKH += "000";
+                    } else if (snapshot.getCount() < 100) {
+                        maKH += "00";
+                    } else if (snapshot.getCount() < 1000) {
+                        maKH += "0";
+                    }
+                    maKH += String.valueOf(snapshot.getCount() + 1);
+                }
+            }
+        });
     }
 }

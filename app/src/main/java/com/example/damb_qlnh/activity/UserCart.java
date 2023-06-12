@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -23,10 +25,26 @@ import com.example.damb_qlnh.R;
 import com.example.damb_qlnh.adapter.CartAdapter;
 import com.example.damb_qlnh.adapter.CateAdapter;
 import com.example.damb_qlnh.models.CTHD;
+import com.example.damb_qlnh.models.hoaDon;
+import com.example.damb_qlnh.models.monAn;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.AggregateQuerySnapshot;
+import com.google.firebase.firestore.AggregateSource;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserCart extends AppCompatActivity {
     private Button btnBack;
@@ -35,6 +53,14 @@ public class UserCart extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private ArrayList<CTHD> cthds;
     private ImageButton imageButton;
+    private FirebaseFirestore db;
+    ProgressDialog progressDialog;
+    private String maHD;
+    private String maKH;
+    private String maBan;
+    private CartAdapter cartAdapter;
+    private int totalMoney = 0;
+    final Calendar myCalendar= Calendar.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +69,7 @@ public class UserCart extends AppCompatActivity {
         init();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        CartAdapter cartAdapter = new CartAdapter(UserCart.this, cthds);
+        cartAdapter = new CartAdapter(UserCart.this, cthds);
         recyclerView.setAdapter(cartAdapter);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +80,7 @@ public class UserCart extends AppCompatActivity {
         cardViewOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //lay tat ca cthd tu firebase tinh trang la chua dat, sau do tao goiMon(cthd, maBan), set tinh trang goi mon cua cthd la da goi mon
+                InsertCTHDHoaDon();
             }
         });
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +131,6 @@ public class UserCart extends AppCompatActivity {
         TextView txtTax = dialog.findViewById(R.id.diapay_txttax);
         TextView txtServiceFee = dialog.findViewById(R.id.diapay_txtserfee);
         TextView txtuseVoucer = dialog.findViewById(R.id.diapay_txtvoucher);
-        //lay tat ca cthd xuong -> setdata
         btnVoucher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,6 +151,8 @@ public class UserCart extends AppCompatActivity {
                 //gui yeu cau thanh toan, up tong hoa don len firebase
                 prefs.edit().remove("GTVC").commit();
                 dialog.dismiss();
+                // set lai tinh trang ban`, cap nhat lai hoa don
+                // them voucher da su dung vao danh sach voucher
             }
         });
         dialog.show();
@@ -138,10 +165,78 @@ public class UserCart extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_nav);
         imageButton = findViewById(R.id.gdcart_imgcart);
         cthds = CateAdapter.spSelected();
+        progressDialog = new ProgressDialog(UserCart.this);
+        SharedPreferences prefs = getSharedPreferences("dba", MODE_PRIVATE);
+        maKH = prefs.getString("maKH", "#KH");
+        maBan = prefs.getString("maBan", "");
+        db = FirebaseFirestore.getInstance();
+        maHD = prefs.getString("maHD", "#HD");
     }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(UserCart.this, UserHome.class));
+    }
+    public void InsertCTHDHoaDon() {
+        db.collection("HoaDon")
+                .whereEqualTo("maKH", maKH)
+                .whereEqualTo("tinhTrang", 0)
+                .count()
+                .get(AggregateSource.SERVER).addOnCompleteListener(new OnCompleteListener<AggregateQuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AggregateQuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            // Count fetched successfully
+                            AggregateQuerySnapshot snapshot = task.getResult();
+                            for (CTHD cthd : cthds){
+                                cthd.setMaHD(maHD);
+                                totalMoney += cthd.getSoLuong() * Integer.parseInt(cthd.getMonAn().getGiaTien());
+                                db.collection("CTHD").add(cthd);
+                            }
+                            if (snapshot.getCount() == 0) {
+                                InsertHD();
+                            }
+                            cthds.clear();
+                            cartAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+    }
+    public void InsertHD(){
+        db.collection("HoaDon")
+                .whereEqualTo("tinhTrang", 1)
+                .count()
+                .get(AggregateSource.SERVER).addOnCompleteListener(new OnCompleteListener<AggregateQuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AggregateQuerySnapshot> task1) {
+                        if (task1.isSuccessful()) {
+                            // Count fetched successfully
+                            AggregateQuerySnapshot snapshot1 = task1.getResult();
+                            if (snapshot1.getCount() < 10) {
+                                maHD += "000";
+                            } else if (snapshot1.getCount() < 100) {
+                                maHD += "00";
+                            } else if (snapshot1.getCount() < 1000) {
+                                maHD += "0";
+                            }
+                            maHD += String.valueOf(snapshot1.getCount() + 1);
+                            SharedPreferences prefs = getSharedPreferences("dba", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putString("maHD", maHD);
+                            editor.commit();
+                            Map<String, Object> data = new HashMap<>();
+                            data.put("maBan", maBan);
+                            data.put("maHD", maHD);
+                            data.put("maKH", maKH);
+                            data.put("maVoucher", null);
+                            data.put("thoiGian", new SimpleDateFormat("dd/MM/yyyy").format(myCalendar.getTime()));
+                            data.put("tongTien_S", totalMoney);
+                            data.put("tongTien_T", totalMoney);
+                            data.put("tinhTrang", 0);
+                            db.collection("HoaDon").add(data);
+                        }
+                    }
+                });
+
     }
 }

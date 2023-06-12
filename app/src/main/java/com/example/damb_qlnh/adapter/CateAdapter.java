@@ -1,7 +1,10 @@
 package com.example.damb_qlnh.adapter;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +29,7 @@ public class CateAdapter extends RecyclerView.Adapter<CateAdapter.CateViewHolder
     private Context context;
 
     private ArrayList<monAn> monAns;
+    private String maHD;
     private static ArrayList<CTHD> cthds = new ArrayList<>();
     public static void addCTHDS(CTHD cthd){
         cthds.add(cthd);
@@ -37,6 +41,8 @@ public class CateAdapter extends RecyclerView.Adapter<CateAdapter.CateViewHolder
     public CateAdapter(Context context, ArrayList<monAn> monAns) {
         this.context = context;
         this.monAns = monAns;
+        SharedPreferences prefs = context.getSharedPreferences("dba", MODE_PRIVATE);
+        maHD = prefs.getString("maHD", "");
     }
 
     @NonNull
@@ -94,7 +100,7 @@ public class CateAdapter extends RecyclerView.Adapter<CateAdapter.CateViewHolder
             public void onClick(View v) {
                 if(Integer.parseInt(String.valueOf(holder.txtQuantity.getText())) > 0)
                 {
-                    CTHD cthd = new CTHD(monAn1, Integer.parseInt(holder.txtQuantity.getText().toString().trim()), "HD01");
+                    CTHD cthd = new CTHD(monAn1, Integer.parseInt(holder.txtQuantity.getText().toString().trim()), maHD);
                     addCTHDS(cthd);
                 }
             }
