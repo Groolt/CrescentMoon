@@ -24,7 +24,9 @@ import android.widget.Toast;
 import com.example.damb_qlnh.R;
 import com.example.damb_qlnh.adapter.CartAdapter;
 import com.example.damb_qlnh.adapter.CateAdapter;
+import com.example.damb_qlnh.adapter.uservoucherAdapter;
 import com.example.damb_qlnh.models.CTHD;
+import com.example.damb_qlnh.models.banAn;
 import com.example.damb_qlnh.models.hoaDon;
 import com.example.damb_qlnh.models.monAn;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -57,9 +59,12 @@ public class UserCart extends AppCompatActivity {
     ProgressDialog progressDialog;
     private String maHD;
     private String maKH;
-    private String maBan;
+    private com.example.damb_qlnh.models.banAn banAn;
     private CartAdapter cartAdapter;
-    private int totalMoney = 0;
+    private static int totalMoney = 0;
+    public static int getTotalMoney(){
+        return totalMoney;
+    }
     final Calendar myCalendar= Calendar.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +97,14 @@ public class UserCart extends AppCompatActivity {
         cardViewPayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog();
+                if(totalMoney != 0)
+                {
+                    showDialog();
+                }
+                else{
+                    Toast.makeText(UserCart.this, "Vui lòng gọi món trước khi thanh toán", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -131,30 +143,36 @@ public class UserCart extends AppCompatActivity {
         TextView txtTax = dialog.findViewById(R.id.diapay_txttax);
         TextView txtServiceFee = dialog.findViewById(R.id.diapay_txtserfee);
         TextView txtuseVoucer = dialog.findViewById(R.id.diapay_txtvoucher);
-        btnVoucher.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int GTVC = prefs.getInt("GTVC", -1);
-                if(GTVC == -1){
+            Double tax = totalMoney*0.1;
+            txtTax.setText(formatMoney(String.valueOf(tax.intValue())));
+            txtServiceFee.setText(formatMoney("50000"));
+            Double money = totalMoney + tax + 50000;
+            txtTotal_T.setText(formatMoney(String.valueOf(totalMoney)));
+            txtTotal_S.setText(formatMoney(String.valueOf(money.intValue())));
+            if(uservoucherAdapter.getVouCher().getGiaTri() != -1){
+                btnVoucher.setVisibility(View.GONE);
+                txtuseVoucer.setVisibility(View.VISIBLE);
+                txtuseVoucer.setText("-" + uservoucherAdapter.getVouCher().getGiaTri() + "%");
+                int newMoney = money.intValue() * (100 - uservoucherAdapter.getVouCher().getGiaTri())/100;
+                txtTotal_S.setText(formatMoney(String.valueOf(newMoney)));
+            }
+            btnVoucher.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     startActivity(new Intent(UserCart.this, UserVoucher.class));
+                    }
+            });
+            btnCheckout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //gui yeu cau thanh toan, up tong hoa don len firebase
+                    prefs.edit().remove("GTVC").commit();
+                    dialog.dismiss();
+                    // set lai tinh trang ban`, cap nhat lai hoa don
+                    // them voucher da su dung vao danh sach voucher
+                    // cap nhat thong tin khach hang
                 }
-                else{
-                    btnVoucher.setVisibility(View.GONE);
-                    txtuseVoucer.setVisibility(View.VISIBLE);
-                    txtuseVoucer.setText("-" + Integer.toString(GTVC) + "%");
-                }
-            }
-        });
-        btnCheckout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //gui yeu cau thanh toan, up tong hoa don len firebase
-                prefs.edit().remove("GTVC").commit();
-                dialog.dismiss();
-                // set lai tinh trang ban`, cap nhat lai hoa don
-                // them voucher da su dung vao danh sach voucher
-            }
-        });
+            });
         dialog.show();
     }
     public void init(){
@@ -168,9 +186,31 @@ public class UserCart extends AppCompatActivity {
         progressDialog = new ProgressDialog(UserCart.this);
         SharedPreferences prefs = getSharedPreferences("dba", MODE_PRIVATE);
         maKH = prefs.getString("maKH", "#KH");
-        maBan = prefs.getString("maBan", "");
+        banAn = UserHome.getBanAn();
         db = FirebaseFirestore.getInstance();
         maHD = prefs.getString("maHD", "#HD");
+    }
+    public String formatMoney(String input){
+        StringBuilder result = new StringBuilder();
+        int length = input.length();
+        int dotCount = length / 3;
+
+        int remainingDigits = length % 3;
+        if (remainingDigits != 0) {
+            result.append(input, 0, remainingDigits);
+            if (dotCount > 0) {
+                result.append(".");
+            }
+        }
+
+        for (int i = 0; i < dotCount; i++) {
+            int startIndex = remainingDigits + i * 3;
+            result.append(input.substring(startIndex, startIndex + 3));
+            if (i < dotCount - 1) {
+                result.append(".");
+            }
+        }
+        return result.toString();
     }
     @Override
     public void onBackPressed() {
@@ -188,14 +228,16 @@ public class UserCart extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Count fetched successfully
                             AggregateQuerySnapshot snapshot = task.getResult();
+                            if (snapshot.getCount() == 0) {
+                                InsertHD();
+                            }
                             for (CTHD cthd : cthds){
                                 cthd.setMaHD(maHD);
                                 totalMoney += cthd.getSoLuong() * Integer.parseInt(cthd.getMonAn().getGiaTien());
                                 db.collection("CTHD").add(cthd);
                             }
-                            if (snapshot.getCount() == 0) {
-                                InsertHD();
-                            }
+                            db.collection("phong").document(banAn.getPhong()).update("tinhTrang", 1);
+                            db.collection("banAn").document(banAn.getId()).update("tinhTrang", 2);
                             cthds.clear();
                             cartAdapter.notifyDataSetChanged();
                         }
@@ -203,40 +245,15 @@ public class UserCart extends AppCompatActivity {
                 });
     }
     public void InsertHD(){
-        db.collection("HoaDon")
-                .whereEqualTo("tinhTrang", 1)
-                .count()
-                .get(AggregateSource.SERVER).addOnCompleteListener(new OnCompleteListener<AggregateQuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AggregateQuerySnapshot> task1) {
-                        if (task1.isSuccessful()) {
-                            // Count fetched successfully
-                            AggregateQuerySnapshot snapshot1 = task1.getResult();
-                            if (snapshot1.getCount() < 10) {
-                                maHD += "000";
-                            } else if (snapshot1.getCount() < 100) {
-                                maHD += "00";
-                            } else if (snapshot1.getCount() < 1000) {
-                                maHD += "0";
-                            }
-                            maHD += String.valueOf(snapshot1.getCount() + 1);
-                            SharedPreferences prefs = getSharedPreferences("dba", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = prefs.edit();
-                            editor.putString("maHD", maHD);
-                            editor.commit();
-                            Map<String, Object> data = new HashMap<>();
-                            data.put("maBan", maBan);
-                            data.put("maHD", maHD);
-                            data.put("maKH", maKH);
-                            data.put("maVoucher", null);
-                            data.put("thoiGian", new SimpleDateFormat("dd/MM/yyyy").format(myCalendar.getTime()));
-                            data.put("tongTien_S", totalMoney);
-                            data.put("tongTien_T", totalMoney);
-                            data.put("tinhTrang", 0);
-                            db.collection("HoaDon").add(data);
-                        }
-                    }
-                });
-
+        Map<String, Object> data = new HashMap<>();
+        data.put("maBan", banAn.getMaBan());
+        data.put("maHD", maHD);
+        data.put("maKH", maKH);
+        data.put("maVoucher", null);
+        data.put("thoiGian", new SimpleDateFormat("dd/MM/yyyy").format(myCalendar.getTime()));
+        data.put("tongTien_S", totalMoney);
+        data.put("tongTien_T", totalMoney);
+        data.put("tinhTrang", 0);
+        db.collection("HoaDon").add(data);
     }
 }

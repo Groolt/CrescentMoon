@@ -91,14 +91,14 @@ public class Fragment_QLban_TatCa extends Fragment {
 
     private ArrayList<banAn> getListBan(){
         ArrayList<banAn> bans = new ArrayList<>();
-        bans.add(new banAn("113.1", 0, 2));
-        bans.add(new banAn("113.2", 1,2));
-        bans.add(new banAn("113.3", 2,4));
-        bans.add(new banAn("113.4", 0,4));
-        bans.add(new banAn("113.5", 1,6));
-        bans.add(new banAn("113.6", 2,6));
-        bans.add(new banAn("113.7", 0,8));
-        bans.add(new banAn("113.8", 1,8));
+//        bans.add(new banAn("113.1", 0, 2));
+//        bans.add(new banAn("113.2", 1,2));
+//        bans.add(new banAn("113.3", 2,4));
+//        bans.add(new banAn("113.4", 0,4));
+//        bans.add(new banAn("113.5", 1,6));
+//        bans.add(new banAn("113.6", 2,6));
+//        bans.add(new banAn("113.7", 0,8));
+//        bans.add(new banAn("113.8", 1,8));
         return bans;
     }
     private ArrayList<Phong> getListPhong() {

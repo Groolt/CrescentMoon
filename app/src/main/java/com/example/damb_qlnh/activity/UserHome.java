@@ -31,6 +31,7 @@ import com.example.damb_qlnh.adapter.CategoriesAdapter;
 import com.example.damb_qlnh.adapter.PopularAdapter;
 import com.example.damb_qlnh.models.CTHD;
 import com.example.damb_qlnh.models.Categories;
+import com.example.damb_qlnh.models.banAn;
 import com.example.damb_qlnh.models.hoaDon;
 import com.example.damb_qlnh.models.khachHang;
 import com.example.damb_qlnh.models.monAn;
@@ -45,6 +46,7 @@ import com.google.firebase.firestore.AggregateSource;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.auth.User;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
@@ -68,7 +70,14 @@ public class UserHome extends AppCompatActivity {
     private RecyclerView rcvCategories, rcvPopular;
     private ArrayList<Categories> categories;
     private ArrayList<monAn> monAns;
-    private com.example.damb_qlnh.models.khachHang khachHang;
+    private static khachHang khachHang;
+    public static khachHang getKhachHang(){
+        return khachHang;
+    }
+    private static com.example.damb_qlnh.models.banAn banAn;
+    public static banAn getBanAn(){
+        return banAn;
+    }
     private FirebaseFirestore db;
     ProgressDialog progressDialog;
     SharedPreferences.Editor editor;
@@ -87,7 +96,6 @@ public class UserHome extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent2 = new Intent(UserHome.this, UserProfile.class);
-                intent2.putExtra("khachHang", khachHang);
                 startActivity(intent2);
             }
         });
@@ -142,13 +150,24 @@ public class UserHome extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                editor.putString("maBan", s.toString());
-                editor.commit();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                db.collection("banAn").whereEqualTo("maBan", txtID.getText().toString().trim())
+                        .get()
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    banAn.setMaBan(document.get("maBan").toString());
+                                    banAn.setPhong(document.get("phong").toString());
+                                    banAn.setTang(document.getLong("tang").intValue());
+                                    banAn.setId(document.getId());
+                                }
+                            } else {
+                                Toast.makeText(UserHome.this, "Can't get data", Toast.LENGTH_SHORT).show();
+                            }
+                        });
             }
         });
     }
@@ -172,9 +191,10 @@ public class UserHome extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         khachHang = new khachHang();
         getUser();
-        prefs = getSharedPreferences("dba", Context.MODE_PRIVATE);
-        txtID.setText(prefs.getString("maBan", ""));
-        editor = prefs.edit();
+        if(banAn == null){
+            banAn = new banAn("", -1, -1, "", -1, "");
+        }
+        txtID.setText(banAn.getMaBan());
     }
     @Override
     public void onBackPressed() {

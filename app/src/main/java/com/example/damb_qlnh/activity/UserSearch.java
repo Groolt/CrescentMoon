@@ -127,9 +127,7 @@ public class UserSearch extends AppCompatActivity {
                                     document.getString("loai"),
                                     String.valueOf(document.getDouble("gia").intValue()),
                                     document.getString("img")));
-                        }
-                        Toast.makeText(this, String.valueOf(monAns.size()), Toast.LENGTH_SHORT).show();
-                        searchAdapter.notifyDataSetChanged();
+                        }searchAdapter.notifyDataSetChanged();
                     } else {
                         Toast.makeText(this, "Can't get data", Toast.LENGTH_SHORT).show();
                     }

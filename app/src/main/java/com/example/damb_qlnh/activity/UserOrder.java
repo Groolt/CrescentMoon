@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -19,10 +20,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.damb_qlnh.R;
+import com.example.damb_qlnh.models.CTHD;
 import com.example.damb_qlnh.models.datBan;
+import com.example.damb_qlnh.models.hoaDon;
 import com.example.damb_qlnh.models.khachHang;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,12 +43,15 @@ public class UserOrder extends AppCompatActivity {
     String timeChoice;
     private BottomNavigationView bottomNavigationView;
     private CardView cardViewSend;
+    private ProgressDialog progressDialog;
+    private datBan datBan;
+    private ArrayList<String> maBan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_order);
         init();
-        setData(new khachHang("1", "1", "1", "1", "1", "1", ""));
+        setData(UserHome.getKhachHang());
         ArrayList<String> opening = new ArrayList<>();
         opening.add("9:00 - 15:00");
         opening.add("19:00 -- 23:00");
@@ -82,9 +91,25 @@ public class UserOrder extends AppCompatActivity {
            @Override
            public void onClick(View v) {
                //gui thong bao nha hang
-                datBan datBan = new datBan(txtName.getText().toString().trim(), txtPhone.getText().toString().trim(), txtDate.getText().toString().trim(),
-                        txtNum.getText().toString().trim(), timeChoice, txtNote.getText().toString().trim(), "");
-                showDialog();
+               datBan = new datBan(txtName.getText().toString().trim(), txtPhone.getText().toString().trim(), txtDate.getText().toString().trim(),
+                        Integer.parseInt(txtNum.getText().toString().trim()), timeChoice, txtNote.getText().toString().trim(), "");
+               progressDialog.setTitle("Loading...");
+               progressDialog.show();
+               FirebaseFirestore db = FirebaseFirestore.getInstance();
+               db.collection("datBan").whereEqualTo("date", datBan.getDate())
+                       .whereEqualTo("time", datBan.getTime())
+                       .get() .addOnCompleteListener(task -> {
+                           if (task.isSuccessful()) {
+                               for (QueryDocumentSnapshot document : task.getResult()) {
+                                   maBan.add(document.get("maBan").toString());
+                               }
+                               datBan();
+                           }
+                           else {
+                               Toast.makeText(UserOrder.this, "Can't get data", Toast.LENGTH_SHORT).show();
+                           }
+                       });
+               progressDialog.dismiss();
            }
        });
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -131,7 +156,10 @@ public class UserOrder extends AppCompatActivity {
         spinner = findViewById(R.id.gdord_spinner);
         cardViewSend = findViewById(R.id.gdord_btnsend);
         bottomNavigationView = findViewById(R.id.bottom_nav);
+        maBan = new ArrayList<>();
+        maBan.add("test");
         bottomNavigationView.setSelectedItemId(R.id.action_order);
+        progressDialog = new ProgressDialog(UserOrder.this);
     }
     public void setData(khachHang khachHang){
         txtName.setText(khachHang.getTenKH().toString().trim());
@@ -140,10 +168,38 @@ public class UserOrder extends AppCompatActivity {
         Date date = new Date();
         txtDate.setText(format.format(date));
         txtNum.setText("0");
+        txtNote.setText("");
     }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(UserOrder.this, UserHome.class));
+    }
+
+    public void datBan(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("banAn").whereGreaterThanOrEqualTo("loaiBan", datBan.getNum())
+                .orderBy("loaiBan")
+                .orderBy("maBan")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            if(document.exists()){
+                                if (!maBan.contains(document.get("maBan")))
+                                {
+                                    datBan.setMaBan(document.get("maBan").toString());
+                                    db.collection("datBan").add(datBan);
+                                    break;
+                                }
+                            }
+                        }
+                        showDialog();
+                        setData(UserHome.getKhachHang());
+                    }
+                    else {
+                        Toast.makeText(UserOrder.this, "Can't get data", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

@@ -99,8 +99,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="13dp"
-
+                android:layout_marginLeft="13dp"
+                android:layout_marginBottom="13dp"
+                android:layout_marginRight="13dp"
+                android:layout_marginTop="30dp"
                 android:id="@+id/gdord_ln2"
                 android:orientation="vertical"
 
@@ -305,7 +307,7 @@
                 android:id="@+id/gdord_btnsend"
                 app:cardCornerRadius="15dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="70dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:backgroundTint="@color/yellow"
@@ -339,7 +341,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="13dp"
                 android:textColor="@color/black"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="13dp"
                 android:layout_marginBottom="13dp"
                 android:layout_centerHorizontal="true"

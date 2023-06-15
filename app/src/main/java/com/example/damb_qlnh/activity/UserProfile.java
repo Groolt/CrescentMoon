@@ -174,7 +174,7 @@ public class UserProfile extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.action_profile);
         circleImageView = findViewById(R.id.gdpro_imgprofile);
         mAuth = FirebaseAuth.getInstance();
-        khachHang1 = (khachHang) getIntent().getSerializableExtra("khachHang");
+        khachHang1 = UserHome.getKhachHang();
     }
     public void changePassword(){
         Dialog dialog = new Dialog(this);

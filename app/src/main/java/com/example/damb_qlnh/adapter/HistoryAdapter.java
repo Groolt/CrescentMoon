@@ -119,6 +119,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                 .get() .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
+                                CTHD cthd = document.toObject(CTHD.class);
+                                if(l.contains(cthd)){
+                                    int index = l.indexOf(cthd);
+                                    cthd.setSoLuong(l.get(index).getSoLuong() + cthd.getSoLuong());
+                                    l.remove(index);
+                                }
                                 l.add(document.toObject(CTHD.class));
                             }
                         cthdAdapter.notifyDataSetChanged();

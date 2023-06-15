@@ -32,6 +32,11 @@ public class CateAdapter extends RecyclerView.Adapter<CateAdapter.CateViewHolder
     private String maHD;
     private static ArrayList<CTHD> cthds = new ArrayList<>();
     public static void addCTHDS(CTHD cthd){
+        if(cthds.contains(cthd)){
+            int index = cthds.indexOf(cthd);
+            cthd.setSoLuong(cthds.get(index).getSoLuong() + cthd.getSoLuong());
+            cthds.remove(index);
+        }
         cthds.add(cthd);
     }
     public static ArrayList<CTHD> spSelected(){

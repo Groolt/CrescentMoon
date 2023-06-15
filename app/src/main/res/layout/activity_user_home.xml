@@ -52,7 +52,8 @@
                         android:textColor="@color/black"
                         android:text="ID: "/>
                     <EditText
-                        android:layout_width="55dp"
+                        android:layout_width="48dp"
+
                         android:textColor="@color/black"
                         android:layout_height="wrap_content"
                         android:id="@+id/gdhome_txtid"/>

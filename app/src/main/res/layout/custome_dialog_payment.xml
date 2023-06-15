@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
 
             android:id="@+id/diapay_txtsub"
-            android:text="140$"
+            android:text="140"
             android:textSize="23sp"
             android:gravity="end"/>
     </LinearLayout>
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
 
             android:id="@+id/diapay_txttax"
-            android:text="14$"
+            android:text="14"
             android:textSize="23sp"
             android:gravity="end"/>
     </LinearLayout>
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
 
             android:id="@+id/diapay_txtserfee"
-            android:text="20$"
+            android:text="20"
             android:textSize="23sp"
             android:gravity="end"/>
     </LinearLayout>
@@ -118,7 +118,7 @@
                 android:layout_height="wrap_content"
 
                 android:id="@+id/diapay_txttotal"
-                android:text="174$"
+                android:text="174"
                 android:textSize="23sp"
                 android:gravity="end"/>
         </LinearLayout>

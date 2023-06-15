@@ -24,6 +24,7 @@ public class VoucherAdapter extends BaseAdapter {
         this.context = context;
         this.list = list;
         this.layout = layout;
+
     }
 
     @Override

@@ -28,8 +28,15 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.AggregateQuerySnapshot;
+import com.google.firebase.firestore.AggregateSource;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.installations.Utils;
 import com.google.zxing.common.StringUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private TextInputEditText txtUsername, txtPassword;
@@ -38,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView btnsignup;
     private LinearLayout linearLayout;
     ProgressDialog progressDialog;
+    private String maHD = "#HD";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,9 +80,6 @@ public class MainActivity extends AppCompatActivity {
                                         startActivity(new Intent(MainActivity.this, MainActivity1.class));
                                     }
                                     else {
-                                        SharedPreferences prefs = getSharedPreferences("dba", Context.MODE_PRIVATE);
-                                        prefs.edit().remove("maBan").commit();
-                                        prefs.edit().remove("maHD").commit();
                                         startActivity(new Intent(MainActivity.this, UserHome.class));
                                     }
                                 }
@@ -125,11 +130,40 @@ public class MainActivity extends AppCompatActivity {
         linearLayout = findViewById(R.id.lnlayforgot);
         mAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(MainActivity.this);
+        getMaHD();
     }
     @Override
     public void onBackPressed() {
         moveTaskToBack(true);
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(1);
+    }
+    public void getMaHD(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("HoaDon")
+                .whereEqualTo("tinhTrang", 1)
+                .count()
+                .get(AggregateSource.SERVER).addOnCompleteListener(new OnCompleteListener<AggregateQuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AggregateQuerySnapshot> task1) {
+                        if (task1.isSuccessful()) {
+                            // Count fetched successfully
+                            AggregateQuerySnapshot snapshot1 = task1.getResult();
+                            if (snapshot1.getCount() < 10) {
+                                maHD += "000";
+                            } else if (snapshot1.getCount() < 100) {
+                                maHD += "00";
+                            } else if (snapshot1.getCount() < 1000) {
+                                maHD += "0";
+                            }
+                            maHD += String.valueOf(snapshot1.getCount() + 1);
+                            SharedPreferences prefs = getSharedPreferences("dba", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putString("maHD", maHD);
+                            editor.commit();
+                        }
+                    }
+                });
+
     }
 }

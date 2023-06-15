@@ -5,11 +5,11 @@ public class datBan {
     private String name;
     private String phone;
     private String date;
-    private String num;
+    private int num;
     private String time;
     private String note;
 
-    public datBan(String name, String phone, String date, String num, String time, String note, String maBan) {
+    public datBan(String name, String phone, String date, int num, String time, String note, String maBan) {
         this.maBan = maBan;
         this.name = name;
         this.phone = phone;
@@ -48,11 +48,11 @@ public class datBan {
         this.date = date;
     }
 
-    public String getNum() {
+    public int getNum() {
         return num;
     }
 
-    public void setNum(String num) {
+    public void setNum(int num) {
         this.num = num;
     }
 
