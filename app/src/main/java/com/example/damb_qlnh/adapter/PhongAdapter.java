@@ -45,7 +45,7 @@ public class PhongAdapter extends ArrayAdapter<Phong> {
         Phong phong = this.getItem(position);
         if (phong != null) {
             tenphong.setText(phong.getTenPhong());
-            if (phong.getTinhTrang() == 1) {
+            if (phong.getTinhTrang() == 0) {
                 red.setVisibility(View.INVISIBLE);
             }
         }

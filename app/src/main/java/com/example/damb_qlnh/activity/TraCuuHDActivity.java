@@ -109,6 +109,7 @@ public class TraCuuHDActivity extends AppCompatActivity {
     private void getListHD() {
         billList.clear();
         db.collection("HoaDon")
+                .whereEqualTo("tinhTrang", 1)
                 .orderBy("maHD")
                 .get()
                 .addOnCompleteListener(task -> {

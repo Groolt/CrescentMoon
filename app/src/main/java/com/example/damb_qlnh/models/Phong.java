@@ -16,4 +16,8 @@ public class Phong {
     public int getTinhTrang() {
         return tinhTrang;
     }
+
+    public void setTinhTrang(int tinhTrang) {
+        this.tinhTrang = tinhTrang;
+    }
 }

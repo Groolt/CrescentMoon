@@ -14,6 +14,9 @@ public class CTHD implements Serializable {
         tinhTrang = 0;
         this.maHD = maHD;
     }
+    public CTHD(){
+
+    }
 
     public com.example.damb_qlnh.models.monAn getMonAn() {
         return monAn;
@@ -45,5 +48,10 @@ public class CTHD implements Serializable {
 
     public int getTinhTrang() {
         return tinhTrang;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        CTHD other = (CTHD) obj;
+        return monAn.getMaMA().equals(other.getMonAn().getMaMA());
     }
 }

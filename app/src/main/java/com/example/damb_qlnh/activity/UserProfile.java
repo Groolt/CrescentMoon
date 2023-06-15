@@ -48,8 +48,8 @@ public class UserProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         init();
-        khachHang khachHang1 = new khachHang("1","1","1","1","1","1", 1); // lay tu database
-        setData(khachHang1);
+//        khachHang khachHang1 = new khachHang("1","1","1","1","1","1", 1); // lay tu database
+//        setData(khachHang1);
         cardViewLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +74,7 @@ public class UserProfile extends AppCompatActivity {
         cardViewEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog(khachHang1);
+//                showDialog(khachHang1);
             }
         });
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {

@@ -7,9 +7,9 @@ public class khachHang {
     private String dob;
     private String SDT;
     private String xepHang;
-    private int img;
+    private String img;
 
-    public khachHang(String maKH, String tenKH, String gioiTinh, String SDT, String xepHang, String dob, int img) {
+    public khachHang(String maKH, String tenKH, String gioiTinh, String SDT, String xepHang, String dob, String img) {
         this.maKH = maKH;
         this.tenKH = tenKH;
         this.gioiTinh = gioiTinh;
@@ -19,11 +19,11 @@ public class khachHang {
         this.img = img;
     }
 
-    public int getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(int img) {
+    public void setImg(String img) {
         this.img = img;
     }
 

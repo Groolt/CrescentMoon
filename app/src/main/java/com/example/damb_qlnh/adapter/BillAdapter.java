@@ -67,7 +67,7 @@ public class BillAdapter extends BaseAdapter {
 
         if (bill != null){
             String strDate = bill.getThoiGian();
-            ct.setText("ID: #" + bill.getMaHD() + "\n" + strDate);
+            ct.setText("ID: " + bill.getMaHD() + "\n" + strDate);
 
             //total.setText(Html.fromHtml("Total:  <b>" +  String.valueOf(bill.getTongTien_S()) + "vnđ</b>"));
             String numString = String.valueOf(bill.getTongTien_S());

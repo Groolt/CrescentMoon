@@ -61,7 +61,7 @@ public class CTHDActivity extends AppCompatActivity {
                             tenKH = document.getString("tenKH");
                             break;
                         }
-                        info.setText("#"+getIntent().getExtras().getString("maHD")+"\n"
+                        info.setText(getIntent().getExtras().getString("maHD")+"\n"
                                 +getIntent().getExtras().getString("maKH")+"\n"
                                 +tenKH+"\n"
                                 +getIntent().getExtras().getString("ngayTT"));
@@ -73,26 +73,22 @@ public class CTHDActivity extends AppCompatActivity {
 
     private void getList() {
         total = 0;
-        ArrayList<CTHD> l = new ArrayList<>();
         db.collection("CTHD")
                 .whereEqualTo("maHD", getIntent().getExtras().getString("maHD"))
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
+                            CTHD cthd = document.toObject(CTHD.class);
                             Map<String, Object> map = (Map<String, Object>) document.getData().get("monAn");
-                            CTHD cthd = new CTHD(
-                                    new monAn(
-                                            (String) map.get("maMA"),
-                                            (String) map.get("tenMA"),
-                                            (String) map.get("loaiMA"),
-                                            (String) map.get("giaTien"),
-                                            (String) map.get("anhMA")),
-                                    document.getDouble("soLuong").intValue(),
-                                    getIntent().getExtras().getString("maHD")
-                            );
+                            if(listCTHD.contains(cthd)){
+                                int index = listCTHD.indexOf(cthd);
+                                cthd.setSoLuong(listCTHD.get(index).getSoLuong() + cthd.getSoLuong());
+                                listCTHD.remove(index);
+                            }
+                            listCTHD.add(document.toObject(CTHD.class));
+
                             total += cthd.getSoLuong()*Integer.parseInt(cthd.getMonAn().getGiaTien());
-                            listCTHD.add(cthd);
                         }
                         String numString = String.valueOf(total);
                         String str = "";

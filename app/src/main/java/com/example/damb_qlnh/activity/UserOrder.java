@@ -39,7 +39,7 @@ public class UserOrder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_order);
         init();
-        setData(new khachHang("1", "1", "1", "1", "1", "1", 1));
+//        setData(new khachHang("1", "1", "1", "1", "1", "1", 1));
         ArrayList<String> opening = new ArrayList<>();
         opening.add("9:00 - 15:00");
         opening.add("19:00 -- 23:00");

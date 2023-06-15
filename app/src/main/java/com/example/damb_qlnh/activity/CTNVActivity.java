@@ -39,7 +39,7 @@ public class CTNVActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ctnv);
         db = FirebaseFirestore.getInstance();
-        QLNVActivity.isBackFromCTNV = true;
+
         //show info
         Intent intent = getIntent();
         nhanVien nhanVien = (nhanVien) intent.getSerializableExtra("nhanVien");
@@ -150,6 +150,7 @@ public class CTNVActivity extends AppCompatActivity {
                                     cccd.setText(cccdDialog.getText().toString().trim());
                                     ten.setText(tenDialog.getText().toString().trim());
                                     viTri.setText(spn2.getSelectedItem().toString().trim());
+                                    QLNVActivity.isBackFromCTNV = true;
                                     Toast.makeText(CTNVActivity.this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Toast.makeText(CTNVActivity.this, "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
@@ -175,6 +176,7 @@ public class CTNVActivity extends AppCompatActivity {
 
                     documentRef.update("is_deleted", true)
                             .addOnSuccessListener(aVoid -> {
+                                QLNVActivity.isBackFromCTNV = true;
                                 onBackPressed();
                             })
                             .addOnFailureListener(e -> {

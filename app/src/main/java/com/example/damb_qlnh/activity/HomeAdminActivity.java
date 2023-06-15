@@ -144,7 +144,6 @@ public class HomeAdminActivity extends AppCompatActivity implements NavigationVi
         switch (item.getItemId()) {
             case R.id.nav_home:
                 setColorSelectedItem(item, Color.rgb(2,128,127));
-                Toast.makeText(this, "home!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_password:
                 setColorSelectedItem(item, Color.rgb(2,128,127));
@@ -194,11 +193,20 @@ public class HomeAdminActivity extends AppCompatActivity implements NavigationVi
                 break;
             case R.id.nav_info:
                 setColorSelectedItem(item, Color.rgb(2,128,127));
-                Toast.makeText(this, "info!", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.nav_report:
                 setColorSelectedItem(item, Color.rgb(2,128,127));
-                Toast.makeText(this, "report!", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("message/rfc822");
+                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"dev@crescentmoon.com"});
+                i.putExtra(Intent.EXTRA_SUBJECT, "Báo lỗi");
+                i.putExtra(Intent.EXTRA_TEXT   , "Ứng dụng bị lỗi: ");
+                try {
+                    startActivity(Intent.createChooser(i, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(HomeAdminActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.nav_logout:
                 FirebaseAuth.getInstance().signOut();
@@ -224,5 +232,11 @@ public class HomeAdminActivity extends AppCompatActivity implements NavigationVi
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        return_home_item();
     }
 }
