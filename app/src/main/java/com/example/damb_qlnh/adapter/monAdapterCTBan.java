@@ -17,6 +17,13 @@ import com.bumptech.glide.Glide;
 import com.example.damb_qlnh.R;
 import com.example.damb_qlnh.models.CTHD;
 import com.example.damb_qlnh.models.monAn;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import org.w3c.dom.Document;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +32,16 @@ public class monAdapterCTBan extends BaseAdapter {
     private Activity context;
     private int layout;
     private List<CTHD> cthds;
+    private String maHD;
 
     public monAdapterCTBan(@NonNull Context context, int resource, @NonNull ArrayList<CTHD> objects) {
         this.context = (Activity) context;
         this.layout = resource;
         this.cthds = objects;
+    }
+
+    public void setMaHD (String maHD) {
+        this.maHD = maHD;
     }
 
     @Override
@@ -60,7 +72,7 @@ public class monAdapterCTBan extends BaseAdapter {
         TextView sl = convertView.findViewById(R.id.editable);
         ImageView anh = convertView.findViewById(R.id.anhmon);
         TextView gia = convertView.findViewById(R.id.gia);
-
+        ImageView check = convertView.findViewById(R.id.check);
 
         if (cthd != null){
             tenMon.setText(cthd.getMonAn().getTenMA());
@@ -76,11 +88,32 @@ public class monAdapterCTBan extends BaseAdapter {
                 }
             }
             gia.setText(str + " vnđ");
+            if (check != null){
+                if (cthd.getTinhTrang() == 1) check.setVisibility(View.GONE);
+                check.setOnClickListener(view -> {
+                    FirebaseFirestore db;
+                    db = FirebaseFirestore.getInstance();
+                    db.collection("CTHD")
+                            .whereEqualTo("maHD", maHD)
+                            .whereEqualTo("monAn.maMA", cthd.getMonAn().getMaMA())
+                            .get()
+                            .addOnCompleteListener(task -> {
+                                for (QueryDocumentSnapshot document : task.getResult()){
+                                    db.collection("CTHD").document(document.getId()).update("tinhTrang", 1);
+                                }
+                            });
+                });
+            }
         }
         return convertView;
     }
     int dptopx(int dp){
         float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dp * scale + 0.5f);
+    }
+
+    public void setList(ArrayList<CTHD> listCTHD) {
+        this.cthds = listCTHD;
+        notifyDataSetChanged();
     }
 }

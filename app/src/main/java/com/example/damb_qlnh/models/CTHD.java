@@ -52,6 +52,6 @@ public class CTHD implements Serializable {
     @Override
     public boolean equals(Object obj) {
         CTHD other = (CTHD) obj;
-        return monAn.getMaMA().equals(other.getMonAn().getMaMA());
+        return this.monAn.getMaMA().equals(other.getMonAn().getMaMA()) && this.tinhTrang == other.getTinhTrang();
     }
 }

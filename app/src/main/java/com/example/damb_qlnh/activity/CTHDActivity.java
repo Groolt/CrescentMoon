@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -81,14 +82,14 @@ public class CTHDActivity extends AppCompatActivity {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             CTHD cthd = document.toObject(CTHD.class);
                             Map<String, Object> map = (Map<String, Object>) document.getData().get("monAn");
+                            total += cthd.getSoLuong()*Integer.parseInt(cthd.getMonAn().getGiaTien());
                             if(listCTHD.contains(cthd)){
                                 int index = listCTHD.indexOf(cthd);
                                 cthd.setSoLuong(listCTHD.get(index).getSoLuong() + cthd.getSoLuong());
                                 listCTHD.remove(index);
                             }
-                            listCTHD.add(document.toObject(CTHD.class));
+                            listCTHD.add(cthd);
 
-                            total += cthd.getSoLuong()*Integer.parseInt(cthd.getMonAn().getGiaTien());
                         }
                         String numString = String.valueOf(total);
                         String str = "";
