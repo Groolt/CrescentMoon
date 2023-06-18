@@ -115,7 +115,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         progressDialog.show();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("CTHD").whereEqualTo("maHD", hoaDon1.getMaHD())
-                .whereEqualTo("tinhTrang", 0)
                 .get() .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {

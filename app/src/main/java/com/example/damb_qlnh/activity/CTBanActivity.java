@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -189,6 +190,17 @@ public class CTBanActivity extends AppCompatActivity {
                                 }
                                 listCTHD2.add(cthd);
                             }
+                        }
+                        if (listCTHD1.isEmpty()) {
+                            db.collection("banAn")
+                                    .whereEqualTo("maBan", maBan)
+                                    .whereEqualTo("tinhTrang", 2)
+                                    .get()
+                                    .addOnCompleteListener(task1 -> {
+                                        for (QueryDocumentSnapshot document1 : task1.getResult()){
+                                            db.collection("banAn").document(document1.getId()).update("tinhTrang", 1);
+                                        }
+                                    });
                         }
                         String numString = String.valueOf(total);
                         String str = "";

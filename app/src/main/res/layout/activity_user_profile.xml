@@ -10,7 +10,7 @@
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/baseline_close_24"
+        android:drawableLeft="@drawable/round_arrow_back_ios_24"
         android:text=" Profile"
         android:textColor="#FF9800"
         android:textStyle="bold"
@@ -24,271 +24,295 @@
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:src="@drawable/baseline_key_24" />
+        android:src="@drawable/baseline_key_24_2" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_back_profile"
         android:layout_above="@id/bottom_nav"
         >
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="250px"
-                android:layout_height="250px"
-                android:scaleType="centerCrop"
-
-                android:id="@+id/gdpro_imgprofile"
-                android:src="@drawable/img_5"
-
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="10dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:id="@+id/gdpro_txtnameclient"
-                android:text="Binh Nguyen"
-                android:textStyle="bold"
-                android:textSize="30dp"
-
-                android:layout_below="@id/gdpro_imgprofile"
-                android:layout_centerHorizontal="true"
-                />
-            <LinearLayout
+            android:layout_height="match_parent">
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent">
 
-                android:id="@+id/gdpro_ln1"
-                android:orientation="vertical"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="250px"
+                    android:layout_height="250px"
+                    android:scaleType="centerCrop"
 
-                android:layout_below="@id/gdpro_txtnameclient"
-                >
+                    android:id="@+id/gdpro_imgprofile"
+                    android:src="@drawable/img_5"
+
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:id="@+id/gdpro_txtnameclient"
+                    android:text="Binh Nguyen"
+                    android:textStyle="bold"
+                    android:textSize="30dp"
+
+                    android:layout_below="@id/gdpro_imgprofile"
+                    android:layout_centerHorizontal="true"
+                    />
+                <LinearLayout
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/gdpro_ln1"
+                    android:orientation="vertical"
+                    android:layout_below="@id/gdpro_txtnameclient"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:text="Rank:       "
+                            android:textSize="18dp"/>
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:enabled="false"
+                            android:focusable="false"
+                            android:id="@+id/gdpro_txtrank"
+                            android:textStyle="bold"
+                            android:padding="4dp"
+                            android:textColor="@color/black"
+                            android:text="Diamond"
+                            android:textSize="18dp"
+                            android:gravity="end"/>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#f5d57b"
+                        app:layout_constraintRight_toLeftOf="parent"
+                        android:layout_marginHorizontal="16dp"/>
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
+                    android:id="@+id/gdpro_ln2"
+                    android:orientation="vertical"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_below="@id/gdpro_ln1"
+                    android:layout_marginTop="20dp"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:text="Rank:       "
-                        android:textSize="20dp"/>
-                    <EditText
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:focusable="false"
-                        android:id="@+id/gdpro_txtrank"
-                        android:textStyle="bold"
-                        android:background="@drawable/edit_text_background1"
-                        android:padding="4dp"
-                        android:textColor="@color/black"
-                        android:text="Diamond"
-                        android:textSize="20dp"
-                        android:gravity="end"/>
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:text="Gender:   "
+                            android:textSize="18dp"/>
+
+                        <TextView
+                            android:id="@+id/gdpro_txtgender"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:enabled="false"
+                            android:focusable="false"
+                            android:gravity="end"
+                            android:padding="6dp"
+                            android:text="Male"
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#f5d57b"
+                        app:layout_constraintRight_toLeftOf="parent"/>
+
                 </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/gdpro_ln2"
-                android:orientation="vertical"
-                android:layout_margin="10dp"
-                android:layout_below="@id/gdpro_ln1"
-                >
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
+                    android:id="@+id/gdpro_ln3"
+                    android:orientation="vertical"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_below="@id/gdpro_ln2"
+                    android:layout_margin="20dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:text="Gender:   "
-                        android:textSize="20dp"/>
-                    <EditText
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/edit_text_background1"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:text="Phone:    "
+                            android:textSize="18dp"/>
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
 
-                        android:id="@+id/gdpro_txtgender"
-                        android:text="Male"
-                        android:textColor="@color/black"
-                        android:enabled="false"
-                        android:focusable="false"
-                        android:padding="6dp"
-                        android:textStyle="bold"
-                        android:textSize="20dp"
-                        android:gravity="end"/>
+                            android:id="@+id/gdpro_txtphone"
+                            android:text="0963618637"
+                            android:textSize="18dp"
+                            android:textColor="@color/black"
+                            android:padding="6dp"
+                            android:textStyle="bold"
+                            android:enabled="false"
+                            android:focusable="false"
+                            android:gravity="end"/>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#f5d57b"
+                        app:layout_constraintRight_toLeftOf="parent"/>
+
                 </LinearLayout>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/gdpro_ln3"
-                android:orientation="vertical"
-                android:layout_margin="10dp"
-
-                android:layout_below="@id/gdpro_ln2"
-                >
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
+                    android:id="@+id/gdpro_ln4"
+                    android:orientation="vertical"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_below="@id/gdpro_ln3"
+                    android:layout_marginTop="4dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:text="Phone:    "
-                        android:textSize="20dp"/>
-                    <EditText
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:text="Birthday: "
+                            android:textSize="18dp"/>
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/gdpro_txtdob"
+                            android:text="09/08/2003"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:enabled="false"
+                            android:padding="6dp"
+                            android:focusable="false"
+                            android:textSize="18dp"
+                            android:gravity="end"/>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#f5d57b"
+                        app:layout_constraintRight_toLeftOf="parent"/>
 
-                        android:id="@+id/gdpro_txtphone"
-                        android:text="0963618637"
-                        android:textSize="20dp"
-                        android:textColor="@color/black"
-                        android:background="@drawable/edit_text_background1"
-                        android:padding="6dp"
-                        android:textStyle="bold"
-                        android:enabled="false"
-                        android:focusable="false"
-                        android:gravity="end"/>
+
                 </LinearLayout>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/gdpro_ln4"
-                android:orientation="vertical"
-                android:layout_margin="10dp"
-                android:layout_below="@id/gdpro_ln3"
-                >
-                <LinearLayout
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/gdpro_ln4"
+                    app:cardCornerRadius="20dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/gdpro_btnedit"
+                    android:backgroundTint="@color/yellow"
+                    >
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="EDIT PROFILE"
+                            android:textColor="@color/black"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:id="@+id/gdpro_btnlog"
+                    app:cardCornerRadius="20dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_below="@id/gdpro_btnedit"
+                    android:backgroundTint="@color/yellow"
+                    >
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="LOG OUT"
+                            android:textColor="@color/black"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:paddingTop="5dp"
+                    android:id="@+id/gdpro_imginf"
+                    android:src="@drawable/img_7"
+                    android:layout_below="@id/gdpro_btnlog"
+                    />
+
+                <EditText
+                    android:id="@+id/gdpro_txtabout"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:text="Birthday: "
-                        android:textSize="20dp"/>
-                    <EditText
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/gdpro_imginf"
+                    android:layout_alignBottom="@+id/gdpro_imginf"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="-1dp"
+                    android:layout_toEndOf="@id/gdpro_imginf"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:text="About us"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
 
-                        android:id="@+id/gdpro_txtdob"
-                        android:text="09/08/2003"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:enabled="false"
-                        android:background="@drawable/edit_text_background1"
-                        android:padding="6dp"
-                        android:focusable="false"
-                        android:textSize="20dp"
-                        android:gravity="end"/>
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/gdpro_txtinf"
+                    android:layout_width="260dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="90dp"
+                    android:gravity="center"
+                    android:text="Đường Hàn Thuyên, khu phố 6 P, Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam"
+                    android:textColor="@color/black"
+                    android:layout_alignTop="@+id/gdpro_txtabout"/>
+            </RelativeLayout>
+        </LinearLayout>
 
-
-            </LinearLayout>
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@id/gdpro_ln4"
-                app:cardCornerRadius="20dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:id="@+id/gdpro_btnedit"
-                android:backgroundTint="@color/yellow"
-                >
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="EDIT PROFILE"
-                        android:textColor="@color/black"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:id="@+id/gdpro_btnlog"
-                app:cardCornerRadius="20dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_below="@id/gdpro_btnedit"
-                android:backgroundTint="@color/yellow"
-                >
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="LOG OUT"
-                        android:textColor="@color/black"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-
-            </androidx.cardview.widget.CardView>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-
-                android:paddingTop="5dp"
-                android:id="@+id/gdpro_imginf"
-                android:src="@drawable/img_7"
-
-                android:layout_below="@id/gdpro_btnlog"
-                />
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-
-                android:id="@+id/gdpro_txtabout"
-                android:text="About us"
-                android:enabled="false"
-                android:focusable="false"
-                android:textColor="@color/black"
-                android:layout_toEndOf="@id/gdpro_imginf"
-                android:layout_below="@id/gdpro_btnlog"/>
-            <TextView
-                android:layout_width="260dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:id="@+id/gdpro_txtinf"
-                android:text="Đường Hàn Thuyên, khu phố 6 P, Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam"
-                android:textColor="@color/black"
-                android:layout_below="@id/gdpro_imginf"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"/>
-        </RelativeLayout>
     </ScrollView>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -95,7 +95,7 @@ public class UserOrder extends AppCompatActivity {
            public void onClick(View v) {
                //gui thong bao nha hang
                datBan = new datBan(txtName.getText().toString().trim(), txtPhone.getText().toString().trim(), txtDate.getText().toString().trim(),
-                        Integer.parseInt(txtNum.getText().toString().trim()), timeChoice, txtNote.getText().toString().trim(),
+                        txtNum.getText().toString().trim(), timeChoice, txtNote.getText().toString().trim(),
                        "", UserHome.getKhachHang().getId(), UserHome.getKhachHang().getImg());
                progressDialog.setTitle("Loading...");
                progressDialog.show();

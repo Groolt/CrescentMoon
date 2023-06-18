@@ -17,6 +17,15 @@ public class hoaDon {
     private String tongTien_S;
     private ArrayList<CTHD> cthds;
     private int tinhTrang;
+    public hoaDon(String maHD, String thoiGian, String maKH, String maBan, String maVoucher, String tongTien_T, String tongTien_S) {
+        this.maHD = maHD;
+        this.maKH = maKH;
+        this.maBan = maBan;
+        this.maVoucher = maVoucher;
+        this.thoiGian = thoiGian;
+        this.tongTien_T = tongTien_T;
+        this.tongTien_S = tongTien_S;
+    }
 
     public hoaDon(String maHD, String thoiGian, String maKH, String maNV, String maBan, String maVoucher, String tongTien_T, String tongTien_S, ArrayList<CTHD> cthds) {
         this.maHD = maHD;

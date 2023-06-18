@@ -59,7 +59,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserProfile extends AppCompatActivity {
     private TextView txtName;
-    private EditText txtPhone, txtGender, txtRank, txtBirthday;
+    private TextView txtPhone, txtGender, txtRank, txtBirthday;
     private Button btnBack;
     final Calendar myCalendar= Calendar.getInstance();
     private ImageButton imageButton;

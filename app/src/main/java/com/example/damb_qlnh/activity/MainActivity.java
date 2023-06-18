@@ -81,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    if(email.equals("binhnguyen9803@gmail.com")){
-                                        startActivity(new Intent(MainActivity.this, MainActivity1.class));
+                                    if(email.equals("bahaodaoai1@gmail.com")){
+                                        startActivity(new Intent(MainActivity.this, HomeAdminActivity.class));
                                     }
                                     else {
                                         getMaHD();
@@ -96,6 +96,12 @@ public class MainActivity extends AppCompatActivity {
                                     txtUsername.requestFocus();
                                     return;
                                 }
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.e("hh", e.toString());
                             }
                         });
             }
@@ -155,11 +161,11 @@ public class MainActivity extends AppCompatActivity {
                         if (task1.isSuccessful()) {
                             // Count fetched successfully
                             AggregateQuerySnapshot snapshot1 = task1.getResult();
-                            if (snapshot1.getCount() < 10) {
+                            if (snapshot1.getCount() < 9) {
                                 maHD += "000";
-                            } else if (snapshot1.getCount() < 100) {
+                            } else if (snapshot1.getCount() < 99) {
                                 maHD += "00";
-                            } else if (snapshot1.getCount() < 1000) {
+                            } else if (snapshot1.getCount() < 999) {
                                 maHD += "0";
                             }
                             maHD += String.valueOf(snapshot1.getCount() + 1);

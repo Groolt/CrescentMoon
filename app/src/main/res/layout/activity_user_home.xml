@@ -20,14 +20,13 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/gdhome_ln1"
-                android:layout_marginTop="26dp"
                 android:layout_marginLeft="16dp"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/gdhome_txtname"
-                    android:layout_margin="3dp"
+                    android:layout_margin="6dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     />
@@ -121,6 +120,7 @@
                     android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginTop="8dp"
                     android:id="@+id/gdhome_rcv1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -136,18 +136,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Popular"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginLeft="10dp"
                     android:textStyle="bold"
                     android:textSize="25dp"
                     android:textColor="@color/colorChecked"
                     />
                 <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/gdhome_rcv2"
                     android:layout_marginLeft="10dp"
-                    />
+                    android:layout_marginBottom="8dp"/>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

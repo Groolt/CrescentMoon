@@ -218,6 +218,10 @@ public class UserHome extends AppCompatActivity {
                                 khachHang.setId(document.getId());
                                 txtName.setText("Hi " + khachHang.getTenKH().toString().trim());
                                 Glide.with(UserHome.this).load(khachHang.getImg()).into(circleImageView);
+                                SharedPreferences prefs = getSharedPreferences("dba", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.putString("maKH", document.get("maKH").toString());
+                                editor.commit();
                             } else {
                                 Log.d(TAG, "No such document");
                             }
