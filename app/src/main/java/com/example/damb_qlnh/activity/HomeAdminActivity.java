@@ -286,10 +286,6 @@ public class HomeAdminActivity extends AppCompatActivity implements NavigationVi
                 });
                 dialog.show();
                 break;
-            case R.id.nav_info:
-                setColorSelectedItem(item, Color.rgb(2,128,127));
-
-                break;
             case R.id.nav_report:
                 setColorSelectedItem(item, Color.rgb(2,128,127));
                 Intent i = new Intent(Intent.ACTION_SEND);

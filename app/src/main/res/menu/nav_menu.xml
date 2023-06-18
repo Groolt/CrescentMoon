@@ -14,10 +14,6 @@
             android:icon="@drawable/nav_password"
             android:title="Đổi mật khẩu"/>
         <item
-            android:id="@+id/nav_info"
-            android:icon="@drawable/nav_info"
-            android:title="Thông tin tài khoản"/>
-        <item
             android:id="@+id/nav_report"
             android:icon="@drawable/nav_report"
             android:title="Báo lỗi kỹ thuật"/>
