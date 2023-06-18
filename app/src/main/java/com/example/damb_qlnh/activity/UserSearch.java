@@ -1,5 +1,6 @@
 package com.example.damb_qlnh.activity;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -20,6 +21,10 @@ import com.example.damb_qlnh.adapter.SearchAdapter;
 import com.example.damb_qlnh.models.monAn;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.util.ArrayList;
 
@@ -31,6 +36,7 @@ public class UserSearch extends AppCompatActivity {
     private SearchView searchView;
     private ArrayList<monAn> monAns;
     private SearchAdapter searchAdapter;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +47,14 @@ public class UserSearch extends AppCompatActivity {
         recyclerView = findViewById(R.id.gdsearch_rcv);
         searchView = findViewById(R.id.gdsearch_searchview);
         relativeLayout = findViewById(R.id.gdsearch_rl);
-        monAns = new ArrayList<>();
-        monAns = getListMon(); // lay tu db
+        db = FirebaseFirestore.getInstance();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(UserSearch.this, 2, GridLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(gridLayoutManager);
+        monAns = new ArrayList<>();
         searchAdapter = new SearchAdapter(this, monAns);
         recyclerView.setAdapter(searchAdapter);
+
+        getListMon(); // lay tu db
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -64,7 +72,7 @@ public class UserSearch extends AppCompatActivity {
                         startActivity(new Intent(UserSearch.this, UserProfile.class));
                         break;
                     case R.id.action_QR:
-                        Toast.makeText(UserSearch.this, "QR",Toast.LENGTH_SHORT).show();
+                        scanCode();
                         break;
                 }
                 return true;
@@ -107,14 +115,40 @@ public class UserSearch extends AppCompatActivity {
             searchAdapter.setFilteredList(filteredList);
         }
     }
-    private ArrayList<monAn> getListMon() {
-        ArrayList<monAn> list = new ArrayList<>();
-//        list.add(new monAn("1","Pizza", "Starter", "1", R.drawable.test));
-//        list.add(new monAn("2","Pizza", "Starter", "1", R.drawable.test));
-//        list.add(new monAn("3","Pizza", "Starter", "1", R.drawable.test));
-//        list.add(new monAn("4","Pizza", "Starter", "1", R.drawable.test));
-//        list.add(new monAn("5","Pizza", "Starter", "1", R.drawable.test));
-//        list.add(new monAn("6","Pizzata", "Starter", "1", R.drawable.test));
-        return list;
+    private void scanCode()
+    {
+        ScanOptions options = new ScanOptions();
+        options.setPrompt("Volume up to flash on");
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(true);
+        options.setCaptureActivity(CaptureAct.class);
+        barLaucher.launch(options);
+    }
+    private ActivityResultLauncher<ScanOptions> barLaucher = registerForActivityResult(new ScanContract(), result->
+    {
+        if(result.getContents() !=null) {
+            UserHome.setmaBan(result.getContents().toString().trim());
+        }
+    });
+    private void getListMon() {
+        monAns.clear();
+        db.collection("monAn")
+                .whereEqualTo("is_deleted", false)
+                .orderBy("loai").orderBy("ten")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            monAns.add(new monAn(
+                                    document.getId(),
+                                    document.getString("ten"),
+                                    document.getString("loai"),
+                                    String.valueOf(document.getDouble("gia").intValue()),
+                                    document.getString("img")));
+                        }searchAdapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(this, "Can't get data", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

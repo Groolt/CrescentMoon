@@ -15,7 +15,7 @@
             android:src="@drawable/img"
 
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/gddn_txtusername"
+            app:layout_constraintBottom_toTopOf="@id/lay1"
             />
         <TextView
             android:layout_width="match_parent"
@@ -29,38 +29,51 @@
             android:textStyle="bold"
 
             app:layout_constraintTop_toBottomOf="@id/logo"
-            app:layout_constraintBottom_toTopOf="@id/gddn_txtusername"
+            app:layout_constraintBottom_toTopOf="@id/lay1"
             />
-        <EditText
-            android:layout_width="0dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-
-            android:id="@+id/gddn_txtusername"
-            android:hint="Username"
-            android:drawableLeft="@drawable/img_1"
-
+            android:id="@+id/lay1"
+            app:startIconDrawable="@drawable/img_1"
             app:layout_constraintTop_toBottomOf="@id/gddn_txtsignin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/gddn_txtpass"
-            />
-        <EditText
-            android:layout_width="0dp"
+            app:layout_constraintBottom_toTopOf="@id/lay2"
+        ><com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Username"
+            android:padding="13dp"
+            android:textColorHint="@color/yellow"
+            android:background="@drawable/edit_text_background"
+            android:id="@+id/gddn_txtusername"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
 
-            android:id="@+id/gddn_txtpass"
-            android:hint="Password"
-            android:drawableLeft="@drawable/img_2"
-            android:inputType="textPassword"
-            app:layout_constraintTop_toBottomOf="@id/gddn_txtusername"
+            android:id="@+id/lay2"
+            app:startIconDrawable="@drawable/img_2"
+                app:endIconMode="password_toggle"
+            app:layout_constraintTop_toBottomOf="@id/lay1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/gddn_btnsignin"
-            />
+            ><com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/gddn_txtpass"
+            android:inputType="textPassword"
+            android:hint="Password"
+            android:padding="13dp"
+            android:background="@drawable/edit_text_background"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -94,13 +107,34 @@
             android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:id="@+id/gddn_txtforgotpass"
-                app:layout_constraintTop_toBottomOf="@id/gddn_txtpass"
+                app:layout_constraintTop_toBottomOf="@id/lnlayforgot"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginRight="16dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                         android:textSize="14dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/lnlayforgot"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="17dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lay2"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Forgot Password?"
+                    android:textColor="@color/yellow"
+                   ></TextView>
+                <View
+                    android:layout_width="114dp"
+                    android:layout_height="1dp"
+                        android:background="@color/yellow"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -130,7 +164,8 @@
             android:layout_height="wrap_content"
 
             android:id="@+id/gddn_txt4"
-
+            android:clickable="false"
+            android:focusable="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/lnlay1"
             app:layout_constraintBottom_toTopOf="@id/im2"
@@ -141,7 +176,8 @@
             android:layout_height="wrap_content"
 
             android:id="@+id/gddn_txt5"
-
+            android:clickable="false"
+            android:focusable="false"
 
             app:layout_constraintStart_toEndOf ="@+id/gddn_txt6"
             app:layout_constraintEnd_toEndOf="parent"

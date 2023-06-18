@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.damb_qlnh.R;
 import com.example.damb_qlnh.models.CTHD;
 
@@ -36,10 +37,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
         CTHD cthd = cthds.get(position);
-//        holder.imgFood.setImageResource(cthd.getMonAn().getAnhMA());
+        Glide.with(context).load(cthd.getMonAn().getAnhMA()).into(holder.imgFood);
         holder.txtFood.setText(cthd.getMonAn().getTenMA().toString().trim());
-        holder.txtPrice.setText(cthd.getMonAn().getGiaTien().toString().trim());
-        holder.txtQuantity.setText(cthd.getSoLuong());
+        holder.txtPrice.setText(formatMoney(cthd.getMonAn().getGiaTien().toString().trim()));
+        holder.txtQuantity.setText(String.valueOf(cthd.getSoLuong()));
         holder.cardViewPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +68,28 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                  notifyDataSetChanged();
             }
         });
+    }
+    public String formatMoney(String input){
+        StringBuilder result = new StringBuilder();
+        int length = input.length();
+        int dotCount = length / 3;
+
+        int remainingDigits = length % 3;
+        if (remainingDigits != 0) {
+            result.append(input, 0, remainingDigits);
+            if (dotCount > 0) {
+                result.append(".");
+            }
+        }
+
+        for (int i = 0; i < dotCount; i++) {
+            int startIndex = remainingDigits + i * 3;
+            result.append(input.substring(startIndex, startIndex + 3));
+            if (i < dotCount - 1) {
+                result.append(".");
+            }
+        }
+        return result.toString();
     }
     @Override
     public int getItemCount() {

@@ -23,7 +23,13 @@ import java.util.ArrayList;
 public class uservoucherAdapter extends RecyclerView.Adapter<uservoucherAdapter.uservoucherViewHolder> {
     private ArrayList<vouCher> vouChers;
     private Context context;
-
+    private static vouCher vouCher1 = new vouCher(null, null, null, 0, -1);
+    public static vouCher getVouCher(){
+        return vouCher1;
+    }
+    public static void setVouCher(){
+        vouCher1.setGiaTri(-1);
+    }
     public uservoucherAdapter(ArrayList<vouCher> vouChers, Context context) {
         this.vouChers = vouChers;
         this.context = context;
@@ -47,10 +53,7 @@ public class uservoucherAdapter extends RecyclerView.Adapter<uservoucherAdapter.
         holder.imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences prefs = context.getSharedPreferences("dba", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putInt("GTVC", vouCher.getGiaTri());
-                editor.commit();
+                vouCher1 = vouCher;
                 context.startActivity(new Intent(context, UserCart.class));
             }
         });

@@ -93,7 +93,7 @@
                 <EditText
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-
+                    android:inputType="phone"
                     android:id="@+id/custome_profile_txtPhone"
                     android:textSize="14dp"
                     />
@@ -114,6 +114,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/custome_profile_txtbd"
                     android:textSize="14dp"
+                    android:drawableEnd="@drawable/baseline_edit_calendar_24"
                     />
             </LinearLayout>
 

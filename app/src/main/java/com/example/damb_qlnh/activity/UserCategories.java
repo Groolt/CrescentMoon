@@ -1,10 +1,12 @@
 package com.example.damb_qlnh.activity;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -21,6 +23,10 @@ import com.example.damb_qlnh.adapter.CateAdapter;
 import com.example.damb_qlnh.models.monAn;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.util.ArrayList;
 
@@ -33,6 +39,9 @@ public class UserCategories extends AppCompatActivity {
     private SearchView searchView;
     private CateAdapter cateAdapter;
     private ArrayList<monAn> monAns;
+    private FirebaseFirestore db;
+    private String loaiMA;
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +50,10 @@ public class UserCategories extends AppCompatActivity {
         Init();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(UserCategories.this, 2, GridLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(gridLayoutManager);
-        btnBack.setText(getIntent().getStringExtra("loaiMA"));
+        btnBack.setText(loaiMA);
         cateAdapter = new CateAdapter(this, monAns);
         recyclerView.setAdapter(cateAdapter);
+        getListMon();
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,7 +98,7 @@ public class UserCategories extends AppCompatActivity {
                         startActivity(new Intent(UserCategories.this, UserProfile.class));
                         break;
                     case R.id.action_QR:
-                        Toast.makeText(UserCategories.this, "QR",Toast.LENGTH_SHORT).show();
+                        scanCode();
                         break;
                 }
                 return true;
@@ -118,14 +128,55 @@ public class UserCategories extends AppCompatActivity {
         searchView = findViewById(R.id.gdcategories_searchview);
         relativeLayout = findViewById(R.id.gdcategories_rl);
         imageButton = findViewById(R.id.gdcategories_imgcart);
+        db = FirebaseFirestore.getInstance();
+        loaiMA = getIntent().getStringExtra("loaiMA");
         monAns = new ArrayList<>();
-//        monAns.add(new monAn("1","Pizza123", "Main Course", "1", R.drawable.test));
-//        monAns.add(new monAn("2","Pizza4", "Main Course", "1", R.drawable.test));
-//        monAns.add(new monAn("3","Pizza56", "Main Course", "1", R.drawable.test));
+        progressDialog = new ProgressDialog(UserCategories.this);
     }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(UserCategories.this, UserHome.class));
+    }
+    private void scanCode()
+    {
+        ScanOptions options = new ScanOptions();
+        options.setPrompt("Volume up to flash on");
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(true);
+        options.setCaptureActivity(CaptureAct.class);
+        barLaucher.launch(options);
+    }
+    private ActivityResultLauncher<ScanOptions> barLaucher = registerForActivityResult(new ScanContract(), result->
+    {
+        if(result.getContents() !=null) {
+            UserHome.setmaBan(result.getContents().toString().trim());
+        }
+    });
+    private void getListMon() {
+        monAns.clear();
+        progressDialog.setTitle("Loading...");
+        progressDialog.show();
+        db.collection("monAn")
+                .whereEqualTo("is_deleted", false)
+                .whereEqualTo("loai", loaiMA)
+                .orderBy("ten")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            monAns.add(new monAn(
+                                    document.getId(),
+                                    document.getString("ten"),
+                                    document.getString("loai"),
+                                    String.valueOf(document.getDouble("gia").intValue()),
+                                    document.getString("img")));
+                        }
+                        cateAdapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(this, "Can't get data", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        progressDialog.dismiss();
     }
 }

@@ -1,7 +1,10 @@
 package com.example.damb_qlnh.adapter;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,23 +15,39 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.damb_qlnh.R;
 import com.example.damb_qlnh.models.CTHD;
 import com.example.damb_qlnh.models.monAn;
 import com.google.gson.Gson;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 
 public class CateAdapter extends RecyclerView.Adapter<CateAdapter.CateViewHolder>{
     private Context context;
-    private final String MY_ACTION = "com.groolt.ACTION";
-    private final String MY_CTHD = "com.groolt.CTHD";
+
     private ArrayList<monAn> monAns;
-    private ArrayList<CTHD> cthds;
+    private String maHD;
+    private static ArrayList<CTHD> cthds = new ArrayList<>();
+    public static void addCTHDS(CTHD cthd){
+        if(cthds.contains(cthd)){
+            int index = cthds.indexOf(cthd);
+            cthd.setSoLuong(cthds.get(index).getSoLuong() + cthd.getSoLuong());
+            cthds.remove(index);
+        }
+        cthds.add(cthd);
+    }
+    public static ArrayList<CTHD> spSelected(){
+        return cthds;
+    }
 
     public CateAdapter(Context context, ArrayList<monAn> monAns) {
         this.context = context;
         this.monAns = monAns;
+        SharedPreferences prefs = context.getSharedPreferences("dba", MODE_PRIVATE);
+        maHD = prefs.getString("maHD", "");
     }
 
     @NonNull
@@ -37,13 +56,34 @@ public class CateAdapter extends RecyclerView.Adapter<CateAdapter.CateViewHolder
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_cate_rcv, parent, false);
         return new CateViewHolder(view);
     }
+    public String formatMoney(String input){
+        StringBuilder result = new StringBuilder();
+        int length = input.length();
+        int dotCount = length / 3;
 
+        int remainingDigits = length % 3;
+        if (remainingDigits != 0) {
+            result.append(input, 0, remainingDigits);
+            if (dotCount > 0) {
+                result.append(".");
+            }
+        }
+
+        for (int i = 0; i < dotCount; i++) {
+            int startIndex = remainingDigits + i * 3;
+            result.append(input.substring(startIndex, startIndex + 3));
+            if (i < dotCount - 1) {
+                result.append(".");
+            }
+        }
+        return result.toString();
+    }
     @Override
     public void onBindViewHolder(@NonNull CateViewHolder holder, int position) {
         monAn monAn1 = monAns.get(position);
-//        holder.imgFood.setImageResource(monAn1.getAnhMA());
+        Glide.with(context).load(monAn1.getAnhMA()).into(holder.imgFood);
         holder.txtFood.setText(monAn1.getTenMA().toString().trim());
-        holder.txtPrice.setText(monAn1.getGiaTien().toString().trim()+"$");
+        holder.txtPrice.setText(formatMoney(monAn1.getGiaTien().toString().trim())+" đ");
         holder.cardViewPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,12 +103,11 @@ public class CateAdapter extends RecyclerView.Adapter<CateAdapter.CateViewHolder
         holder.cardViewAdd.setOnClickListener(new View.OnClickListener() {//tao cthd up len firebase tinh trang la chua dat
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MY_ACTION);
-                CTHD cthd = new CTHD(monAn1, Integer.parseInt(holder.txtQuantity.getText().toString().trim()), "HD01");
-                Gson gson = new Gson();
-                String json = gson.toJson(cthd);
-                intent.putExtra(MY_CTHD, json);
-                context.sendBroadcast(intent);
+                if(Integer.parseInt(String.valueOf(holder.txtQuantity.getText())) > 0)
+                {
+                    CTHD cthd = new CTHD(monAn1, Integer.parseInt(holder.txtQuantity.getText().toString().trim()), maHD);
+                    addCTHDS(cthd);
+                }
             }
         });
     }

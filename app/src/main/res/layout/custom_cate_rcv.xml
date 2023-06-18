@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="170dp"
             android:layout_centerHorizontal="true"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:src="@drawable/img_14" />
 
         <TextView
@@ -116,10 +116,10 @@
         app:cardCornerRadius="8dp"
         android:layout_alignParentBottom="true"
         android:backgroundTint="@color/yellow"
-        android:layout_marginTop="10dp"
         >
         <RelativeLayout
             android:layout_width="match_parent"
+            android:padding="2dp"
             android:layout_height="match_parent">
             <TextView
                 android:layout_width="wrap_content"

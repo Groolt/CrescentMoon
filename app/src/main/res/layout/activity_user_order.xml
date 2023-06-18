@@ -44,7 +44,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    android:textColor="@color/black"
                     android:id="@+id/gdord_txtContact"
                     android:text="Contact"
                     android:textSize="18dp"
@@ -67,7 +67,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
+                        android:textColor="@color/black"
                         android:id="@+id/gdord_txtphoneadmin"
                         android:text="0963618637 (Mr. Binh)"
                         android:textStyle="bold"
@@ -89,7 +89,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
+                        android:textColor="@color/black"
                         android:id="@+id/gdord_txtmailadmin"
                         android:text="binhnguyen9803@gmail.com"
                         android:textStyle="bold"
@@ -99,8 +99,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="13dp"
-
+                android:layout_marginLeft="13dp"
+                android:layout_marginBottom="13dp"
+                android:layout_marginRight="13dp"
+                android:layout_marginTop="30dp"
                 android:id="@+id/gdord_ln2"
                 android:orientation="vertical"
 
@@ -120,7 +122,10 @@
                     <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-
+                        android:background="@drawable/edit_text_background1"
+                        android:padding="6dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
                         android:id="@+id/gdord_txtname"
                         android:text="Binh Nguyen"
                         android:textSize="14dp"
@@ -150,10 +155,14 @@
                     <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-
                         android:id="@+id/gdord_txtphone"
-                        android:text="0963618637"
+                        android:inputType="phone"
+                        android:background="@drawable/edit_text_background1"
+                        android:padding="6dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
                         android:textSize="14dp"
+                        android:text="0963618637"
                         android:gravity="end"/>
                 </LinearLayout>
 
@@ -183,6 +192,8 @@
                         android:layout_width="0dp"
                         android:layout_weight="7"
                         android:paddingBottom="5dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
                         android:layout_marginLeft="15dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/gdord_spinner"
@@ -212,9 +223,13 @@
                     <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-
+                        android:background="@drawable/edit_text_background1"
+                        android:padding="6dp"
                         android:id="@+id/gdord_txtnum"
                         android:text="8"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:inputType="number"
                         android:textSize="14dp"
                         android:gravity="end"/>
                 </LinearLayout>
@@ -242,9 +257,12 @@
                     <EditText
                         android:id="@+id/gdord_txtnote"
                         android:layout_width="fill_parent"
-
+                        android:background="@drawable/edit_text_background1"
+                        android:padding="6dp"
                         android:layout_height="wrap_content"
                         android:gravity="end"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
                         android:textSize="14dp" />
                 </LinearLayout>
             </LinearLayout>
@@ -271,9 +289,12 @@
                     <EditText
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-
+                        android:background="@drawable/edit_text_background1"
+                        android:padding="6dp"
                         android:id="@+id/gdord_txtdmy"
-                        android:text="15/04/2023"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:drawableEnd="@drawable/baseline_edit_calendar_24"
                         android:textSize="14dp"
                         android:gravity="end"/>
                 </LinearLayout>
@@ -286,7 +307,7 @@
                 android:id="@+id/gdord_btnsend"
                 app:cardCornerRadius="15dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="70dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:backgroundTint="@color/yellow"
@@ -319,8 +340,8 @@
 
                 android:layout_height="wrap_content"
                 android:layout_marginStart="13dp"
-
-                android:layout_marginTop="13dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="13dp"
                 android:layout_marginBottom="13dp"
                 android:layout_centerHorizontal="true"
