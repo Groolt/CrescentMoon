@@ -1,6 +1,9 @@
 package com.example.damb_qlnh.models;
 
-public class khachHang {
+import java.io.Serializable;
+
+public class khachHang implements Serializable {
+    private String id;
     private String maKH;
     private String tenKH;
     private String gioiTinh;
@@ -8,6 +11,14 @@ public class khachHang {
     private String SDT;
     private String xepHang;
     private String img;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public khachHang(String maKH, String tenKH, String gioiTinh, String SDT, String xepHang, String dob, String img) {
         this.maKH = maKH;
@@ -17,6 +28,9 @@ public class khachHang {
         this.xepHang = xepHang;
         this.dob = dob;
         this.img = img;
+    }
+
+    public khachHang() {
     }
 
     public String getImg() {

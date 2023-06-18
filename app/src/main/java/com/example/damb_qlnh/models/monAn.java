@@ -2,6 +2,8 @@ package com.example.damb_qlnh.models;
 
 import com.example.damb_qlnh.R;
 
+import java.util.Objects;
+
 public class monAn {
     private String maMA;
     private String tenMA;
@@ -66,5 +68,9 @@ public class monAn {
         }
         monAn other = (monAn) obj;
         return maMA.equals(other.getMaMA());
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(maMA);
     }
 }

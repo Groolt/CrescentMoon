@@ -154,7 +154,6 @@
                             android:id="@+id/doanhthu"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="31tr"
                             android:textColor="@color/textcolor_primary"
                             android:textSize="23dp"
                             android:textStyle="bold"
@@ -207,7 +206,6 @@
                             android:id="@+id/sodon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="78"
                             android:textColor="@color/textcolor_primary"
                             android:textSize="23dp"
                             android:textStyle="bold"
@@ -247,12 +245,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
             <TextView
+                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:paddingHorizontal="8dp"
                 android:paddingBottom="4dp"
-                android:text="Doanh thu trung bình"
+                android:text="Thống kê tổng hợp"
                 android:textColor="@color/textcolor_primary"
                 android:textSize="18dp"
                 android:textStyle="bold"
@@ -269,18 +268,18 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv2"
                 android:background="@drawable/style_spinner"/>
+
             <TextView
-                app:layout_constraintBottom_toBottomOf="@+id/spn"
-                app:layout_constraintStart_toEndOf="@+id/spn"
+                android:layout_marginTop="16dp"
+                android:text="Doanh thu TB: 23.45tr"
+                android:id="@+id/dthutb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/dthutb"
-                android:layout_marginLeft="60dp"
-                android:text="27tr"
                 android:textColor="@color/textcolor_primary"
-                android:textSize="23dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
-                />
+                app:layout_constraintStart_toStartOf="@+id/spn"
+                app:layout_constraintTop_toBottomOf="@+id/spn" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -297,34 +296,33 @@
                 android:id="@+id/hnt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Hôm nay tăng"
+                android:layout_marginTop="16dp"
+                android:text="Hôm nay:"
                 android:textColor="@color/textcolor_primary"
-                android:textSize="23dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/spn"
-                app:layout_constraintTop_toBottomOf="@+id/spn"/>
+                app:layout_constraintStart_toStartOf="@+id/dthutb"
+                app:layout_constraintTop_toBottomOf="@+id/dthutb"/>
 
             <TextView
-                android:id="@+id/tbtang"
+                android:id="@+id/rate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:layout_marginLeft="8dp"
+                android:drawableEnd="@drawable/round_arrow_drop_up_24"
                 android:text="14.81%"
                 android:textColor="#14B55D"
-                android:textSize="23dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/hnt"
                 app:layout_constraintStart_toEndOf="@+id/hnt"
-                app:layout_constraintTop_toBottomOf="@+id/spn"
-                android:drawableEnd="@drawable/round_arrow_drop_up_24"/>
-
+                />
             <TextView
                 android:layout_marginTop="20dp"
                 android:id="@+id/tv3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="24dp"
                 android:background="@drawable/bg_bottomborder"
                 android:paddingHorizontal="8dp"
                 android:paddingBottom="4dp"
@@ -349,7 +347,7 @@
                 android:id="@+id/tv4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="24dp"
                 android:background="@drawable/bg_bottomborder"
                 android:paddingHorizontal="8dp"
                 android:paddingBottom="4dp"

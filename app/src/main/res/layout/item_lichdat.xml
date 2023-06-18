@@ -70,10 +70,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <ImageView
-                        android:id="@+id/imageView4"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/avatar"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
                         android:layout_marginEnd="16dp"
                         android:src="@drawable/white_circle_24"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -81,27 +81,16 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.2" />
 
-                    <ImageView
-                        android:id="@+id/imageView5"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@drawable/baseline_person_24"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-                        app:layout_constraintEnd_toEndOf="@+id/imageView4"
-                        app:layout_constraintStart_toStartOf="@+id/imageView4"
-                        app:layout_constraintTop_toTopOf="@+id/imageView4"
-                        app:layout_constraintVertical_bias="0.2" />
-
                     <TextView
                         android:id="@+id/ten"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Bá Hảo"
+                        android:layout_marginBottom="4dp"
+                        android:textStyle="bold"
                         android:textColor="@color/textcolor_primary"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/imageView4"
-                        app:layout_constraintStart_toStartOf="@+id/imageView4"
-                        android:layout_marginBottom="4dp"/>
+                        app:layout_constraintEnd_toEndOf="@+id/avatar"
+                        app:layout_constraintStart_toStartOf="@+id/avatar" />
 
                     <TextView
                         android:id="@+id/giodat"

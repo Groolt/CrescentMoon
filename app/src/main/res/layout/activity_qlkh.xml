@@ -69,58 +69,8 @@
                 android:id="@+id/tv1"
                 android:background="@drawable/bg_top3"/>
 
-            <com.google.android.material.card.MaterialCardView
-                android:theme="@style/Theme.MaterialComponents.Light"
-                android:id="@+id/cardView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#fad745"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/textcolor_primary">
-
-                <TextView
-                    android:id="@+id/chinhieu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="4dp"
-                    android:text="Chi nhiều"
-                    android:textAlignment="center"
-                    android:textColor="#2f2e2a"
-                    android:textStyle="bold" />
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:theme="@style/Theme.MaterialComponents.Light"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#FFFFFF"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp"
-                app:layout_constraintEnd_toStartOf="@+id/cardView3"
-                app:layout_constraintStart_toEndOf="@+id/tv1"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.8"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/textcolor_primary">
-
-                <TextView
-                    android:id="@+id/datnhieu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="4dp"
-                    android:text="Đặt nhiều"
-                    android:textAlignment="center"
-                    android:textColor="#2f2e2a"
-                    android:textStyle="bold" />
-            </com.google.android.material.card.MaterialCardView>
-
             <ImageView
+                android:visibility="gone"
                 android:id="@+id/imageView6"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -132,9 +82,9 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv1" />
 
             <TextView
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bá Hảo Nguyễn"
                 android:textColor="@color/textcolor_primary"
                 android:textSize="16dp"
                 android:textStyle="bold"
@@ -145,16 +95,17 @@
                 android:layout_marginLeft="35dp"/>
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/mota"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@+id/tentop1"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tentop1"
                 android:text="30.000.000 vnđ"
                 android:textColor="@color/textcolor_primary"
-                android:layout_marginLeft="10dp"/>
+                app:layout_constraintBaseline_toBaselineOf="@+id/tentop1"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <ImageView
+                android:visibility="gone"
                 android:id="@+id/imgtop2"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -166,6 +117,7 @@
                 android:layout_marginTop="12dp"/>
 
             <TextView
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Bá Hảo Nguyễn"
@@ -179,16 +131,17 @@
                 android:layout_marginLeft="35dp"/>
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/mota2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@+id/tentop2"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tentop2"
                 android:text="30.000.000 vnđ"
                 android:textColor="@color/textcolor_primary"
-                android:layout_marginLeft="10dp"/>
+                app:layout_constraintBaseline_toBaselineOf="@+id/tentop2"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <ImageView
+                android:visibility="gone"
                 android:id="@+id/imgtop3"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -200,9 +153,10 @@
                 android:layout_marginTop="12dp"/>
 
             <TextView
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bá Hảo Nguyễn"
+                android:text="Hảo Nguyễn"
                 android:textColor="@color/textcolor_primary"
                 android:textSize="16dp"
                 android:textStyle="bold"
@@ -213,14 +167,14 @@
                 android:layout_marginLeft="35dp"/>
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/mota3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@+id/tentop3"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tentop3"
                 android:text="đã đặt 122 đơn"
                 android:textColor="@color/textcolor_primary"
-                android:layout_marginLeft="10dp"/>
+                app:layout_constraintBaseline_toBaselineOf="@+id/tentop3"
+                app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

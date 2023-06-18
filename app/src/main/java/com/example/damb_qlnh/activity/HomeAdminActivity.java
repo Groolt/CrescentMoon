@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -14,30 +15,50 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.damb_qlnh.R;
+import com.example.damb_qlnh.models.hoaDon;
+import com.example.damb_qlnh.models.monAn;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.Map;
 
 public class HomeAdminActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
-
     private FirebaseAuth mAuth;
+    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
+        //
+        setDATA();
+
+
+
+
         //set up navigation
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -125,6 +146,80 @@ public class HomeAdminActivity extends AppCompatActivity implements NavigationVi
             startActivity(new Intent(this, QLVoucherActivity.class));
         });
     }
+
+    private void setDATA() {
+        Thread thread1 = new Thread(() -> {
+            CircularProgressIndicator soban = findViewById(R.id.progress);
+            TextView tv_so_ban = findViewById(R.id.tv_so_ban);
+            TextView tv_so_khach = findViewById(R.id.tv_so_khach);
+
+            ConstraintLayout layoutsb = findViewById(R.id.layoutsb);
+            layoutsb.setOnClickListener(view -> startActivity(new Intent(this, QLBanActivity.class)));
+
+            CardView layoutsb2 = findViewById(R.id.layoutsb2);
+            layoutsb2.setOnClickListener(view -> startActivity(new Intent(this, QLBanActivity.class)));
+
+            CardView layoutdon = findViewById(R.id.layoutdon);
+            layoutdon.setOnClickListener(view -> startActivity(new Intent(this, TraCuuHDActivity.class)));
+
+            db.collection("banAn")
+                    .whereNotEqualTo("tinhTrang", 0)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        int slot = 0;
+                        int sb = 0;
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                sb++;
+                                slot+=document.getDouble("loaiBan").intValue();
+                            }
+                            soban.setProgress(sb);
+                            tv_so_ban.setText(String.valueOf(sb));
+                            tv_so_khach.setText(String.valueOf(slot));
+                        } else {
+                            Toast.makeText(this, "Can't get data", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+        });
+
+        Thread thread2 = new Thread(()->{
+            TextView tv_so_don = findViewById(R.id.tv_so_don);
+            TextView tv_tong_doanh_thu = findViewById(R.id.tv_tong_doanh_thu);
+
+            db.collection("HoaDon")
+                    .whereEqualTo("thoiGian", new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime()))
+                    .whereEqualTo("tinhTrang", 1)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        int sdon = 0;
+                        double doanhthu = 0;
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                sdon++;
+                                doanhthu+=document.getDouble("tongTien_S");
+                            }
+                            String numString = String.valueOf((int) doanhthu);
+                            String str = "";
+                            for (int i = 0; i < numString.length() ; i++){
+                                if((numString.length() - i - 1) % 3 == 0 && i < numString.length()-1){
+                                    str += Character.toString(numString.charAt(i)) + ".";
+                                }else{
+                                    str += Character.toString(numString.charAt(i));
+                                }
+                            }
+                            tv_so_don.setText(String.valueOf(sdon));
+                            tv_tong_doanh_thu.setText("Tổng doanh thu: " + str + " vnđ");
+                        } else {
+                            Toast.makeText(this, "Can't get data", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        });
+
+        thread1.run();
+        thread2.run();
+    }
+
     private void setColorSelectedItem(MenuItem item, int rgb) {
         NavigationView navigationView = findViewById(R.id.nav_view);
 

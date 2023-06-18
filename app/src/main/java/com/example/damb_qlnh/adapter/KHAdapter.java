@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 
+import com.bumptech.glide.Glide;
 import com.example.damb_qlnh.activity.CTKHActivity;
 import com.example.damb_qlnh.R;
 import com.example.damb_qlnh.models.khachHang;
@@ -45,11 +47,13 @@ public class KHAdapter extends BaseAdapter {
 
     private class ViewHolder {
         TextView tenKH;
+        ImageView avatar;
         CardView vungchon;
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        khachHang kh = list.get(i);
         ViewHolder viewHolder;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -57,6 +61,7 @@ public class KHAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             viewHolder.tenKH = view.findViewById(R.id.ten);
             viewHolder.vungchon = view.findViewById(R.id.vungchon);
+            viewHolder.avatar = view.findViewById(R.id.avatar);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
@@ -64,10 +69,13 @@ public class KHAdapter extends BaseAdapter {
         viewHolder.vungchon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(new Intent(context, CTKHActivity.class));
+                Intent i = new Intent(context, CTKHActivity.class);
+                i.putExtra("idKH", kh.getId());
+                context.startActivity(i);
             }
         });
-        viewHolder.tenKH.setText(list.get(i).getTenKH());
+        viewHolder.tenKH.setText(kh.getTenKH());
+        Glide.with(context).load(kh.getImg()).into(viewHolder.avatar);
         return view;
     }
 }
