@@ -42,6 +42,7 @@ import com.google.firebase.firestore.AggregateQuerySnapshot;
 import com.google.firebase.firestore.AggregateSource;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -255,6 +256,9 @@ public class UserCart extends AppCompatActivity {
                                 cthd.setMaHD(maHD);
                                 totalMoney += cthd.getSoLuong() * Integer.parseInt(cthd.getMonAn().getGiaTien());
                                 db.collection("CTHD").add(cthd);
+                                db.collection("HoaDon").document(prefs.getString("idHD", "")).update("tongTien_S", FieldValue.increment(totalMoney));
+                                db.collection("HoaDon").document(prefs.getString("idHD", "")).update("tongTien_T", FieldValue.increment(totalMoney));
+
                             }
                             db.collection("phong").document(banAn.getPhong()).update("tinhTrang", 1);
                             db.collection("banAn").document(banAn.getId()).update("tinhTrang", 2);

@@ -10,7 +10,7 @@
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/baseline_close_24"
+        android:drawableLeft="@drawable/round_arrow_back_ios_24"
         android:text=" Order"
         android:textColor="#FF9800"
         android:textStyle="bold"

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.damb_qlnh.R;
 import com.example.damb_qlnh.models.CTHD;
 import com.example.damb_qlnh.models.monAn;
@@ -28,17 +29,25 @@ public class CTHDAdapter extends RecyclerView.Adapter<CTHDAdapter.CTHDViewHolder
     @NonNull
     @Override
     public CTHDViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_detail_his_rcv, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mon_cthd, parent, false);
         return new CTHDViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CTHDViewHolder holder, int position) {
         CTHD cthd = cthds.get(position);
-//        holder.imgMon.setImageResource(cthd.getMonAn().getAnhMA());
-        holder.txtGia.setText(Integer.toString(Integer.parseInt(cthd.getMonAn().getGiaTien()) * cthd.getSoLuong()) + "$");
+        Glide.with(context).load(cthd.getMonAn().getAnhMA()).into(holder.imgMon);
+        String numString = String.valueOf(Integer.parseInt(cthd.getMonAn().getGiaTien()) * cthd.getSoLuong());
+        String str = "";
+        for (int i = 0; i < numString.length() ; i++){
+            if((numString.length() - i - 1) % 3 == 0 && i < numString.length()-1){
+                str += Character.toString(numString.charAt(i)) + ".";
+            }else{
+                str += Character.toString(numString.charAt(i));
+            }
+        }
+        holder.txtGia.setText(str + " vnđ");
         holder.txttenMon.setText(cthd.getMonAn().getTenMA());
-        holder.txtloaiMon.setText("Loại: " + cthd.getMonAn().getLoaiMA());
         holder.txtsoLuong.setText("SL: " + cthd.getSoLuong());
     }
 
@@ -48,15 +57,14 @@ public class CTHDAdapter extends RecyclerView.Adapter<CTHDAdapter.CTHDViewHolder
     }
 
     public class CTHDViewHolder extends RecyclerView.ViewHolder{
-        private TextView txttenMon, txtloaiMon, txtsoLuong, txtGia;
+        private TextView txttenMon, txtsoLuong, txtGia;
         private ImageView imgMon;
         public CTHDViewHolder(@NonNull View itemView) {
             super(itemView);
             txttenMon = itemView.findViewById(R.id.tenmon);
-            txtloaiMon = itemView.findViewById(R.id.editable);
             txtGia = itemView.findViewById(R.id.gia);
             imgMon = itemView.findViewById(R.id.anhmon);
-            txtsoLuong = itemView.findViewById(R.id.soluong);
+            txtsoLuong = itemView.findViewById(R.id.editable);
         }
     }
 }

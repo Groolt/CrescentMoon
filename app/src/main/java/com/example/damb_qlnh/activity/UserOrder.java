@@ -57,7 +57,7 @@ public class UserOrder extends AppCompatActivity {
         setData(UserHome.getKhachHang());
         ArrayList<String> opening = new ArrayList<>();
         opening.add("9:00 - 15:00");
-        opening.add("19:00 -- 23:00");
+        opening.add("19:00 - 23:00");
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
