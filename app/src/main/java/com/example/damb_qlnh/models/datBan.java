@@ -8,8 +8,9 @@ public class datBan {
     private int num;
     private String time;
     private String note;
-
-    public datBan(String name, String phone, String date, int num, String time, String note, String maBan) {
+    private String maKH;
+    private String avatar;
+    public datBan(String name, String phone, String date, int num, String time, String note, String maBan, String maKH, String avatar) {
         this.maBan = maBan;
         this.name = name;
         this.phone = phone;
@@ -17,11 +18,32 @@ public class datBan {
         this.num = num;
         this.time = time;
         this.note = note;
+        this.avatar = avatar;
+        this.maKH = maKH;
     }
     public datBan(String time, String maBan, String name){
         this.time = time;
         this.maBan = maBan;
         this.name = name;
+    }
+
+    public datBan() {
+    }
+
+    public String getMaKH() {
+        return maKH;
+    }
+
+    public void setMaKH(String maKH) {
+        this.maKH = maKH;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getName() {

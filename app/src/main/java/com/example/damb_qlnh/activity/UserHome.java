@@ -70,18 +70,22 @@ public class UserHome extends AppCompatActivity {
     private RecyclerView rcvCategories, rcvPopular;
     private ArrayList<Categories> categories;
     private ArrayList<monAn> monAns;
-    private static khachHang khachHang;
+    private static com.example.damb_qlnh.models.banAn banAn;
+    public static void setmaBan(String maBan){
+        banAn.setMaBan(maBan);
+    }
+    private static com.example.damb_qlnh.models.khachHang khachHang = new khachHang();;
     public static khachHang getKhachHang(){
         return khachHang;
     }
-    private static com.example.damb_qlnh.models.banAn banAn;
     public static banAn getBanAn(){
         return banAn;
     }
+    public static void setBanAn(){
+        banAn.setMaBan("");
+    }
     private FirebaseFirestore db;
     ProgressDialog progressDialog;
-    SharedPreferences.Editor editor;
-    SharedPreferences prefs;
     private PopularAdapter popularAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +126,6 @@ public class UserHome extends AppCompatActivity {
                         break;
                     case R.id.action_profile:
                         Intent intent1 = new Intent(UserHome.this, UserProfile.class);
-                        intent1.putExtra("khachHang", khachHang);
                         startActivity(intent1);
                         break;
                     case R.id.action_QR:
@@ -188,13 +191,42 @@ public class UserHome extends AppCompatActivity {
         categories.add(Categories.CATEGORIES3);
         categories.add(Categories.CATEGORIES4);
         categories.add(Categories.CATEGORIES5);
-        db = FirebaseFirestore.getInstance();
         khachHang = new khachHang();
         getUser();
+        db = FirebaseFirestore.getInstance();
         if(banAn == null){
             banAn = new banAn("", -1, -1, "", -1, "");
         }
         txtID.setText(banAn.getMaBan());
+    }
+    public void getUser(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("khachHang").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                khachHang.setTenKH(document.get("tenKH").toString());
+                                khachHang.setMaKH(document.get("maKH").toString());
+                                khachHang.setSDT(document.get("sdt").toString());
+                                khachHang.setXepHang(document.get("xepHang").toString());
+                                khachHang.setGioiTinh(document.get("gioiTinh").toString());
+                                khachHang.setDob(document.get("dob").toString());
+                                khachHang.setImg(document.get("img").toString());
+                                khachHang.setId(document.getId());
+                                txtName.setText("Hi " + khachHang.getTenKH().toString().trim());
+                                Glide.with(UserHome.this).load(khachHang.getImg()).into(circleImageView);
+                            } else {
+                                Log.d(TAG, "No such document");
+                            }
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
+        progressDialog.dismiss();
     }
     @Override
     public void onBackPressed() {
@@ -217,39 +249,6 @@ public class UserHome extends AppCompatActivity {
        });
        AlertDialog alertDialog = builder.create();
        alertDialog.show();
-    }
-    public void getUser(){
-        progressDialog.setTitle("Loading...");
-        progressDialog.show();
-        db.collection("khachHang").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                khachHang.setTenKH(document.get("tenKH").toString());
-                                khachHang.setMaKH(document.get("maKH").toString());
-                                khachHang.setSDT(document.get("sdt").toString());
-                                khachHang.setXepHang(document.get("xepHang").toString());
-                                khachHang.setGioiTinh(document.get("gioiTinh").toString());
-                                khachHang.setDob(document.get("dob").toString());
-                                khachHang.setImg(document.get("img").toString());
-                                txtName.setText("Hi " + khachHang.getTenKH().toString().trim());
-                                SharedPreferences prefs = getSharedPreferences("dba", Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = prefs.edit();
-                                editor.putString("maKH", khachHang.getMaKH());
-                                editor.commit();
-                                Glide.with(UserHome.this).load(khachHang.getImg()).into(circleImageView);
-                            } else {
-                                Log.d(TAG, "No such document");
-                            }
-                        } else {
-                            Log.d(TAG, "get failed with ", task.getException());
-                        }
-                    }
-                });
-        progressDialog.dismiss();
     }
     public void getCTHD(){
         progressDialog.setTitle("Loading...");
@@ -283,7 +282,6 @@ public class UserHome extends AppCompatActivity {
                             if(!monAns.contains(entry.getKey())){
                                 cnt++;
                                 monAns.add(entry.getKey());
-                                Log.e("1", entry.getValue().toString());
                             }
                         }
                         popularAdapter.notifyDataSetChanged();

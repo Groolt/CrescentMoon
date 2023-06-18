@@ -130,6 +130,6 @@
         android:text="Process to Checkout"
         android:textSize="15sp"
         android:textAllCaps="false"
-        android:backgroundTint="#000"
+        android:backgroundTint="#b0006d"
         android:textColor="#fff"/>
 </LinearLayout>

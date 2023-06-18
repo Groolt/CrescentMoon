@@ -1,5 +1,6 @@
 package com.example.damb_qlnh.activity;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -29,6 +30,8 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -92,7 +95,8 @@ public class UserOrder extends AppCompatActivity {
            public void onClick(View v) {
                //gui thong bao nha hang
                datBan = new datBan(txtName.getText().toString().trim(), txtPhone.getText().toString().trim(), txtDate.getText().toString().trim(),
-                        Integer.parseInt(txtNum.getText().toString().trim()), timeChoice, txtNote.getText().toString().trim(), "");
+                        Integer.parseInt(txtNum.getText().toString().trim()), timeChoice, txtNote.getText().toString().trim(),
+                       "", UserHome.getKhachHang().getId(), UserHome.getKhachHang().getImg());
                progressDialog.setTitle("Loading...");
                progressDialog.show();
                FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -126,7 +130,7 @@ public class UserOrder extends AppCompatActivity {
                         startActivity(new Intent(UserOrder.this, UserProfile.class));
                         break;
                     case R.id.action_QR:
-                        Toast.makeText(UserOrder.this, "QR",Toast.LENGTH_SHORT).show();
+                        scanCode();
                         break;
                 }
                 return true;
@@ -146,6 +150,21 @@ public class UserOrder extends AppCompatActivity {
         });
         dialog.show();
     }
+    private void scanCode()
+    {
+        ScanOptions options = new ScanOptions();
+        options.setPrompt("Volume up to flash on");
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(true);
+        options.setCaptureActivity(CaptureAct.class);
+        barLaucher.launch(options);
+    }
+    private ActivityResultLauncher<ScanOptions> barLaucher = registerForActivityResult(new ScanContract(), result->
+    {
+        if(result.getContents() !=null) {
+            UserHome.setmaBan(result.getContents().toString().trim());
+        }
+    });
     public void init(){
         btnBack = findViewById(R.id.btn_back_order);
         txtName = findViewById(R.id.gdord_txtname);

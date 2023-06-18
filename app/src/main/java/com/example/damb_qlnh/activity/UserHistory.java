@@ -2,6 +2,7 @@ package com.example.damb_qlnh.activity;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,6 +34,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.util.ArrayList;
 
@@ -77,18 +80,34 @@ public class UserHistory extends AppCompatActivity {
                         startActivity(new Intent(UserHistory.this, UserProfile.class));
                         break;
                     case R.id.action_QR:
-                        Toast.makeText(UserHistory.this, "QR",Toast.LENGTH_SHORT).show();
+                        scanCode();
                         break;
                 }
                 return true;
             }
         });
     }
+    private void scanCode()
+    {
+        ScanOptions options = new ScanOptions();
+        options.setPrompt("Volume up to flash on");
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(true);
+        options.setCaptureActivity(CaptureAct.class);
+        barLaucher.launch(options);
+    }
+    private ActivityResultLauncher<ScanOptions> barLaucher = registerForActivityResult(new ScanContract(), result->
+    {
+        if(result.getContents() !=null) {
+            UserHome.setmaBan(result.getContents().toString().trim());
+        }
+    });
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(UserHistory.this, UserHome.class));
     }
+
     public void getHoaDon(){
         progressDialog.setTitle("Loading...");
         progressDialog.show();

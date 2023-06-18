@@ -1,5 +1,6 @@
 package com.example.damb_qlnh.activity;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -24,6 +25,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.util.ArrayList;
 
@@ -95,7 +98,7 @@ public class UserCategories extends AppCompatActivity {
                         startActivity(new Intent(UserCategories.this, UserProfile.class));
                         break;
                     case R.id.action_QR:
-                        Toast.makeText(UserCategories.this, "QR",Toast.LENGTH_SHORT).show();
+                        scanCode();
                         break;
                 }
                 return true;
@@ -135,6 +138,21 @@ public class UserCategories extends AppCompatActivity {
         super.onBackPressed();
         startActivity(new Intent(UserCategories.this, UserHome.class));
     }
+    private void scanCode()
+    {
+        ScanOptions options = new ScanOptions();
+        options.setPrompt("Volume up to flash on");
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(true);
+        options.setCaptureActivity(CaptureAct.class);
+        barLaucher.launch(options);
+    }
+    private ActivityResultLauncher<ScanOptions> barLaucher = registerForActivityResult(new ScanContract(), result->
+    {
+        if(result.getContents() !=null) {
+            UserHome.setmaBan(result.getContents().toString().trim());
+        }
+    });
     private void getListMon() {
         monAns.clear();
         progressDialog.setTitle("Loading...");

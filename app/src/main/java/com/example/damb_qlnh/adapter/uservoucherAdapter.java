@@ -27,7 +27,9 @@ public class uservoucherAdapter extends RecyclerView.Adapter<uservoucherAdapter.
     public static vouCher getVouCher(){
         return vouCher1;
     }
-
+    public static void setVouCher(){
+        vouCher1.setGiaTri(-1);
+    }
     public uservoucherAdapter(ArrayList<vouCher> vouChers, Context context) {
         this.vouChers = vouChers;
         this.context = context;

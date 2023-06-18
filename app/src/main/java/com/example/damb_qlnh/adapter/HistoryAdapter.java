@@ -125,7 +125,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                                     cthd.setSoLuong(l.get(index).getSoLuong() + cthd.getSoLuong());
                                     l.remove(index);
                                 }
-                                l.add(document.toObject(CTHD.class));
+                                l.add(cthd);
                             }
                         cthdAdapter.notifyDataSetChanged();
                     } else {

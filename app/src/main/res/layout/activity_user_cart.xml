@@ -33,26 +33,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/gdcart_rcv"
         android:layout_below="@id/btn_back_cart"
-        android:layout_above="@id/gdcart_ln2"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_above="@id/gdcart_ln1"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:id="@+id/gdcart_ln2"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Subtotal(5): 30$"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:id="@+id/gdcart_txtSubtotal"
-            android:layout_gravity="end"
-            android:textSize="20dp"/>
-    </LinearLayout>
+        android:layout_above="@id/gdcart_ln1"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,5 +1,6 @@
 package com.example.damb_qlnh.activity;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,6 +23,8 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 import org.checkerframework.checker.units.qual.A;
 
@@ -73,7 +76,7 @@ public class UserVoucher extends AppCompatActivity {
                         startActivity(new Intent(UserVoucher.this, UserProfile.class));
                         break;
                     case R.id.action_QR:
-                        Toast.makeText(UserVoucher.this, "QR",Toast.LENGTH_SHORT).show();
+                        scanCode();
                         break;
                 }
                 return true;
@@ -89,17 +92,36 @@ public class UserVoucher extends AppCompatActivity {
         lused.clear();
         l.clear();
         db.collection("dsvouCher")
-                .whereEqualTo("maKH", FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .whereEqualTo("maKH", UserHome.getKhachHang().getId())
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             lused.add(document.getId());
                         }
+                        getVoucher();
                     } else {
                         Toast.makeText(this, "Can't get data", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+    }
+    private void scanCode()
+    {
+        ScanOptions options = new ScanOptions();
+        options.setPrompt("Volume up to flash on");
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(true);
+        options.setCaptureActivity(CaptureAct.class);
+        barLaucher.launch(options);
+    }
+    private ActivityResultLauncher<ScanOptions> barLaucher = registerForActivityResult(new ScanContract(), result->
+    {
+        if(result.getContents() !=null) {
+            UserHome.setmaBan(result.getContents().toString().trim());
+        }
+    });
+    public void getVoucher(){
         db.collection("Voucher")
                 .whereEqualTo("is_deleted", false)
                 .get()
@@ -108,7 +130,7 @@ public class UserVoucher extends AppCompatActivity {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             if (!lused.contains(document.getId())){
                                 l.add(new vouCher(document.getId(), document.getString("ngayBD"), document.getString("ngayKT"),
-                                         document.getLong("soLuong").intValue(), document.getLong("giaTri").intValue()));
+                                        document.getLong("soLuong").intValue(), document.getLong("giaTri").intValue()));
                             }
                         }
                         voucherAdapter.notifyDataSetChanged();

@@ -1,5 +1,7 @@
 package com.example.damb_qlnh.activity;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,14 +14,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.util.Util;
 import com.example.damb_qlnh.R;
+import com.example.damb_qlnh.models.khachHang;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,6 +35,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.AggregateQuerySnapshot;
 import com.google.firebase.firestore.AggregateSource;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.installations.Utils;
 import com.google.zxing.common.StringUtils;
@@ -75,13 +81,14 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    progressDialog.dismiss();
                                     if(email.equals("binhnguyen9803@gmail.com")){
                                         startActivity(new Intent(MainActivity.this, MainActivity1.class));
                                     }
                                     else {
+                                        getMaHD();
                                         startActivity(new Intent(MainActivity.this, UserHome.class));
                                     }
+                                    progressDialog.dismiss();
                                 }
                                 else {
                                     progressDialog.dismiss();
@@ -130,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
         linearLayout = findViewById(R.id.lnlayforgot);
         mAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(MainActivity.this);
-        getMaHD();
     }
     @Override
     public void onBackPressed() {

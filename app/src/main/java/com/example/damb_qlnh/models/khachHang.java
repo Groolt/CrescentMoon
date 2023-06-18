@@ -10,8 +10,9 @@ public class khachHang implements Serializable {
     private String SDT;
     private String xepHang;
     private String img;
+    private String id;
 
-    public khachHang(String maKH, String tenKH, String gioiTinh, String SDT, String xepHang, String dob, String img) {
+    public khachHang(String maKH, String tenKH, String gioiTinh, String SDT, String xepHang, String dob, String img, String id) {
         this.maKH = maKH;
         this.tenKH = tenKH;
         this.gioiTinh = gioiTinh;
@@ -19,9 +20,18 @@ public class khachHang implements Serializable {
         this.xepHang = xepHang;
         this.dob = dob;
         this.img = img;
+        this.id = id;
     }
 
     public khachHang() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getImg() {

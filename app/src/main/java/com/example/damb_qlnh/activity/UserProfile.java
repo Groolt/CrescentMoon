@@ -2,6 +2,7 @@ package com.example.damb_qlnh.activity;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,6 +48,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
@@ -117,7 +120,7 @@ public class UserProfile extends AppCompatActivity {
                         startActivity(new Intent(UserProfile.this, UserOrder.class));
                         break;
                     case R.id.action_QR:
-                        Toast.makeText(UserProfile.this, "QR",Toast.LENGTH_SHORT).show();
+                        scanCode();
                         break;
                 }
                 return true;
@@ -160,6 +163,21 @@ public class UserProfile extends AppCompatActivity {
         super.onBackPressed();
         startActivity(new Intent(UserProfile.this, UserHome.class));
     }
+    private void scanCode()
+    {
+        ScanOptions options = new ScanOptions();
+        options.setPrompt("Volume up to flash on");
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(true);
+        options.setCaptureActivity(CaptureAct.class);
+        barLaucher.launch(options);
+    }
+    private ActivityResultLauncher<ScanOptions> barLaucher = registerForActivityResult(new ScanContract(), result->
+    {
+        if(result.getContents() !=null) {
+            UserHome.setmaBan(result.getContents().toString().trim());
+        }
+    });
     public void init(){
         txtName = findViewById(R.id.gdpro_txtnameclient);
         txtRank = findViewById(R.id.gdpro_txtrank);
