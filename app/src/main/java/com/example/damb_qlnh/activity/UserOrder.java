@@ -197,7 +197,7 @@ public class UserOrder extends AppCompatActivity {
 
     public void datBan(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("banAn").whereGreaterThanOrEqualTo("loaiBan", datBan.getNum())
+        db.collection("banAn").whereGreaterThanOrEqualTo("loaiBan", Integer.parseInt(datBan.getNum()))
                 .orderBy("loaiBan")
                 .orderBy("maBan")
                 .get()
@@ -209,6 +209,7 @@ public class UserOrder extends AppCompatActivity {
                                 {
                                     datBan.setMaBan(document.get("maBan").toString());
                                     db.collection("datBan").add(datBan);
+                                    Toast.makeText(this, "aaa", Toast.LENGTH_SHORT).show();
                                     break;
                                 }
                             }

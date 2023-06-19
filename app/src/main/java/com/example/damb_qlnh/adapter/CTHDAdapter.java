@@ -29,7 +29,7 @@ public class CTHDAdapter extends RecyclerView.Adapter<CTHDAdapter.CTHDViewHolder
     @NonNull
     @Override
     public CTHDViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mon_cthd, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mon_cthd_1, parent, false);
         return new CTHDViewHolder(view);
     }
 

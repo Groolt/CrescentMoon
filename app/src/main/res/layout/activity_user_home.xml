@@ -26,7 +26,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/gdhome_txtname"
-                    android:layout_margin="6dp"
+                    android:layout_marginVertical="6dp"
+                    android:layout_marginLeft="3dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     />
@@ -52,7 +53,6 @@
                         android:text="ID: "/>
                     <EditText
                         android:layout_width="48dp"
-
                         android:textColor="@color/black"
                         android:layout_height="wrap_content"
                         android:id="@+id/gdhome_txtid"/>
@@ -63,7 +63,7 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:id="@+id/gdhome_imgUser"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

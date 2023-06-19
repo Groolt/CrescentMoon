@@ -125,7 +125,6 @@ public class CTBanActivity extends AppCompatActivity {
                                 DocumentReference d = db.collection("HoaDon").document(document.getId());
                                 d.update("tinhTrang", 1);
                                 d.update("thoiGian", new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime()));
-                                d.update("tongTien_S", document.getDouble("tongTien_T").intValue());
                             }
                         } else {
                             Toast.makeText(this, "Can't get data", Toast.LENGTH_SHORT).show();

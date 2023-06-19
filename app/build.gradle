@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.damb_qlnh"
-        minSdk 24
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -56,4 +56,7 @@ dependencies {
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
 
     implementation 'com.github.momo-wallet:mobile-sdk:1.0.7'
+    implementation 'org.apache.poi:poi:5.2.2'
+    implementation 'org.apache.poi:poi-ooxml:5.2.2'
+
 }

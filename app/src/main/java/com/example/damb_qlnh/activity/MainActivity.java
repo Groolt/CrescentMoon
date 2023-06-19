@@ -153,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
     public void getMaHD(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("HoaDon")
-                .whereEqualTo("tinhTrang", 1)
                 .count()
                 .get(AggregateSource.SERVER).addOnCompleteListener(new OnCompleteListener<AggregateQuerySnapshot>() {
                     @Override

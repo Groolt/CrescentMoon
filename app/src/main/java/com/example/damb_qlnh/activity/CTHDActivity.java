@@ -2,9 +2,15 @@ package com.example.damb_qlnh.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,12 +18,14 @@ import android.widget.Toast;
 import com.example.damb_qlnh.adapter.monAdapterCTBan;
 import com.example.damb_qlnh.R;
 import com.example.damb_qlnh.models.CTHD;
+import com.example.damb_qlnh.models.ExcelExporter;
 import com.example.damb_qlnh.models.hoaDon;
 import com.example.damb_qlnh.models.monAn;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +35,7 @@ public class CTHDActivity extends AppCompatActivity {
     ArrayList<CTHD> listCTHD;
     int total;
     TextView tv_total;
+    String tenKH = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +57,54 @@ public class CTHDActivity extends AppCompatActivity {
 
         //Thong tin hoa don
         getInfoHD();
+
+        //Xuat file excel
+        ImageView excel = findViewById(R.id.excel);
+        excel.setOnClickListener(view -> {
+            export();
+        });
+    }
+    private void export() {
+        askForPermission(Manifest.permission.READ_EXTERNAL_STORAGE, 100);
+        askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, 200);
+        askForPermission(Manifest.permission.MANAGE_EXTERNAL_STORAGE, 300);
+        ArrayList<Object[]> data =  new ArrayList<>();
+        for (CTHD ct : listCTHD) {
+            data.add(new Object[]{
+                    ct.getMonAn().getMaMA(),
+                    ct.getMonAn().getTenMA(),
+                    ct.getMonAn().getGiaTien(),
+                    ct.getSoLuong()
+            });
+            ExcelExporter excelExporter = new ExcelExporter(this);
+            excelExporter.setInfo(getIntent().getExtras().getString("maHD"),
+                    getIntent().getExtras().getString("maKH"),
+                    tenKH,
+                    getIntent().getExtras().getString("ngayTT")
+                    );
+            excelExporter.setFileName("HoaDon" + getIntent().getExtras().getString("maHD") + ".xlsx");
+            excelExporter.setHeader(Arrays.asList("Mã món", "Tên món", "Đơn giá", "Số lượng"));
+            excelExporter.exportToExcel(data);
+        }
+    }
+    private void askForPermission(String permission, Integer requestCode) {
+        if (ContextCompat.checkSelfPermission(CTHDActivity.this, permission)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    CTHDActivity.this, permission)) {
+
+                //This is called if user has denied the permission before
+                //In this case I am just asking the permission again
+                ActivityCompat.requestPermissions(CTHDActivity.this,
+                        new String[]{permission}, requestCode);
+
+            } else {
+                ActivityCompat.requestPermissions(CTHDActivity.this,
+                        new String[]{permission}, requestCode);
+            }
+        }
     }
 
     private void getInfoHD() {
@@ -57,7 +114,6 @@ public class CTHDActivity extends AppCompatActivity {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        String tenKH = "";
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             tenKH = document.getString("tenKH");
                             break;

@@ -36,9 +36,9 @@ public class datBan {
         return maKH;
     }
 
-    public datBan(String avatar, String maKH, String maBan, String name, String phone, String date, String num, String time, String note) {
-        this.avatar = avatar;
-        this.maKH = maKH;
+
+    public datBan(){}
+    public datBan(String name, String phone, String date, String num, String time, String note, String maBan, String maKH, String avatar) {
         this.maBan = maBan;
         this.name = name;
         this.phone = phone;
@@ -46,8 +46,9 @@ public class datBan {
         this.num = num;
         this.time = time;
         this.note = note;
+        this.avatar = avatar;
+        this.maKH = maKH;
     }
-    public datBan(){}
 
     public datBan(String name, String phone, String date, String num, String time, String note, String maBan) {
         this.maBan = maBan;

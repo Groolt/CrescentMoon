@@ -83,7 +83,7 @@ public class UserCart extends AppCompatActivity {
     private String fee = "0";
     int environment = 0;//developer default
     private String merchantName = "Crescent Moon";
-    private String merchantCode = "SCB01";
+    private String merchantCode = "MOMOC2IC20220510";
     private String merchantNameLabel = "Dịch vụ";
     private String description = "Thanh toán hóa đơn";
     @Override
@@ -188,6 +188,7 @@ public class UserCart extends AppCompatActivity {
         btnCheckout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    amount = String.valueOf(finalNewMoney);
                     requestPayment();
                     dialog.dismiss();
                     db.collection("HoaDon").document(prefs.getString("idHD", "")).update("tongTien_T", totalMoney);
@@ -260,7 +261,6 @@ public class UserCart extends AppCompatActivity {
                                 db.collection("HoaDon").document(prefs.getString("idHD", "")).update("tongTien_T", FieldValue.increment(totalMoney));
 
                             }
-                            db.collection("phong").document(banAn.getPhong()).update("tinhTrang", 1);
                             db.collection("banAn").document(banAn.getId()).update("tinhTrang", 2);
                             cthds.clear();
                             cartAdapter.notifyDataSetChanged();
@@ -301,7 +301,7 @@ public class UserCart extends AppCompatActivity {
                             db.collection("khachHang").document(UserHome.getKhachHang().getId()).update("xepHang", "Diamond");
                         }else if (Money > 30000000) {
                             db.collection("khachHang").document(UserHome.getKhachHang().getId()).update("xepHang", "Gold");
-                        }else if (Money > 50000000) {
+                        }else if (Money > 10000000) {
                             db.collection("khachHang").document(UserHome.getKhachHang().getId()).update("xepHang", "Silver");
                         }
                     } else {
@@ -362,10 +362,10 @@ public class UserCart extends AppCompatActivity {
                         env = "app";
                     }
                     db.collection("banAn").document(banAn.getId()).update("tinhTrang", 0);
-                    db.collection("HoaDon").document(prefs.getString("idHD", "")).update("tinhTrang", 1);
+//                    db.collection("HoaDon").document(prefs.getString("idHD", "")).update("tinhTrang", 1);
                     if(uservoucherAdapter.getVouCher().getGiaTri() != -1){
                         db.collection("HoaDon").document(prefs.getString("idHD", "")).update("maVoucher", uservoucherAdapter.getVouCher().getMaVoucher());
-                        db.collection("HoaDon").document(prefs.getString("idHD", "")).update("soLuong", uservoucherAdapter.getVouCher().getSoLuong() - 1);
+                        db.collection("Voucher").document(uservoucherAdapter.getVouCher().getMaVoucher()).update("soLuong", uservoucherAdapter.getVouCher().getSoLuong() - 1);
                         Map<String, String> data1 = new HashMap<>();
                         data1.put("maKH", maKH);
                         data1.put("maVoucher", uservoucherAdapter.getVouCher().getMaVoucher());

@@ -7,12 +7,15 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,6 +27,7 @@ import com.example.damb_qlnh.adapter.KHAdapter;
 import com.example.damb_qlnh.models.datBan;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -96,17 +100,39 @@ public class QLLichDatActivity extends AppCompatActivity {
         onBackPressed();
         return super.onSupportNavigateUp();
     }
+    public void showDialog(datBan lich){
+        Dialog dialog = new Dialog(this, android.R.style.Theme_Material_Light_Dialog_Alert);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_detail_order);
+        Button btnOkay = dialog.findViewById(R.id.diaorder_btnOkay);
+        TextView ghiChu = dialog.findViewById(R.id.ghichu);
+        ghiChu.setText(lich.getNote().toString().trim());
+        btnOkay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
     private void addToView(datBan lich, ViewGroup viewGroup) {
         View view = LayoutInflater.from(this).inflate(R.layout.item_lichdat, viewGroup, false);
         TextView giodat = view.findViewById(R.id.giodat);
         TextView ban = view.findViewById(R.id.ban);
         TextView ten = view.findViewById(R.id.ten);
+        CardView click = view.findViewById(R.id.click);
         CardView xoa = view.findViewById(R.id.xoa);
         ImageView avatar = view.findViewById(R.id.avatar);
         Glide.with(this).load(lich.getAvatar()).into(avatar);
         giodat.setText(lich.getTime());
         ban.setText("Bàn " + lich.getMaBan());
         ten.setText(lich.getName());
+        click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(lich);
+            }
+        });
 
         ten.setOnClickListener(view1 -> {
             Intent i = new Intent(QLLichDatActivity.this, CTKHActivity.class);
@@ -124,22 +150,22 @@ public class QLLichDatActivity extends AppCompatActivity {
             builder.setTitle("Hủy lịch đặt");
             builder.setMessage("Xác nhận hủy lịch đặt bàn");
             builder.setPositiveButton("Xác nhận", (dialog, which) -> {
-               db.collection("datBan")
-                       .document(lich.getId()).delete()
-                       .addOnSuccessListener(new OnSuccessListener<Void>() {
-                           @Override
-                           public void onSuccess(Void aVoid) {
-                               viewDSLich.removeAllViews();
-                               getListLD();
-                               Toast.makeText(QLLichDatActivity.this, "Hủy lịch thành công", Toast.LENGTH_SHORT).show();
-                           }
-                       })
-                       .addOnFailureListener(new OnFailureListener() {
-                           @Override
-                           public void onFailure(@NonNull Exception e) {
-                               Toast.makeText(QLLichDatActivity.this, "Hủy không thành công", Toast.LENGTH_SHORT).show();
-                           }
-                       });
+                db.collection("datBan")
+                        .document(lich.getId()).delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                viewDSLich.removeAllViews();
+                                getListLD();
+                                Toast.makeText(QLLichDatActivity.this, "Hủy lịch thành công", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(QLLichDatActivity.this, "Hủy không thành công", Toast.LENGTH_SHORT).show();
+                            }
+                        });
             });
             builder.setNegativeButton("Hủy", (dialog, which) -> dialog.cancel());
             AlertDialog alertDialog = builder.create();

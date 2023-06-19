@@ -28,7 +28,11 @@ import com.journeyapps.barcodescanner.ScanOptions;
 
 import org.checkerframework.checker.units.qual.A;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class UserVoucher extends AppCompatActivity {
     private Button btnBack;
@@ -128,9 +132,15 @@ public class UserVoucher extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            if (!lused.contains(document.getId())){
-                                l.add(new vouCher(document.getId(), document.getString("ngayBD"), document.getString("ngayKT"),
-                                        document.getLong("soLuong").intValue(), document.getLong("giaTri").intValue()));
+                            try {
+                                if (!lused.contains(document.getId())
+                                        && new SimpleDateFormat("dd/MM/yyyy").parse(document.get("ngayBD").toString()).before(Calendar.getInstance().getTime())
+                                        && new SimpleDateFormat("dd/MM/yyyy").parse(document.get("ngayKT").toString()).after(Calendar.getInstance().getTime())){
+                                    l.add(new vouCher(document.getId(), document.getString("ngayBD"), document.getString("ngayKT"),
+                                            document.getLong("soLuong").intValue(), document.getLong("giaTri").intValue()));
+                                }
+                            } catch (ParseException e) {
+                                throw new RuntimeException(e);
                             }
                         }
                         voucherAdapter.notifyDataSetChanged();

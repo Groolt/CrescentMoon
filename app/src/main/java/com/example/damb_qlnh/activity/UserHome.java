@@ -166,6 +166,8 @@ public class UserHome extends AppCompatActivity {
                                     banAn.setPhong(document.get("phong").toString());
                                     banAn.setTang(document.getLong("tang").intValue());
                                     banAn.setId(document.getId());
+                                    db.collection("phong").document(banAn.getPhong()).update("tinhTrang", 1);
+                                    db.collection("banAn").document(banAn.getId()).update("tinhTrang", 1);
                                 }
                             } else {
                                 Toast.makeText(UserHome.this, "Can't get data", Toast.LENGTH_SHORT).show();

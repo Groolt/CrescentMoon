@@ -57,6 +57,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/click"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:theme="@style/Theme.MaterialComponents.Light"
